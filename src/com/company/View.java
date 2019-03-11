@@ -5,23 +5,52 @@ import java.awt.*;
 
 public class View extends JFrame{
 
-    private boolean bejelentkezett;
-
     public View() {
         super("Quiz alkalmazás 1.0");
+        fooldalBeallit();
+        bejelentkezes().setVisible(true);
 
+    }
+
+    private JFrame bejelentkezes() {
+        JPanel pan;
+        JLabel nevL;
+        JLabel jelszL;
+        JTextField nevTf;
+        JPasswordField jelszPf;
+        JButton bejelB;
+        JButton regisztB;
+
+        JFrame bejel = new JFrame();
+        bejel.setTitle("Bejelentkezés");
+        setSize(300,200);
+        setLocationRelativeTo(null);
+        super.setResizable(false);
+        pan = new JPanel();
+        pan.setLayout(new GridLayout(3,2,10,10));
+        pan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+        nevL = new JLabel("Felhasználó név:");
+        jelszL = new JLabel("Jelszó:");
+
+        nevTf = new JTextField();
+        nevTf.setColumns(1);
+        jelszPf = new JPasswordField();
+        jelszL.setSize(new Dimension(50,20));
+
+        bejelB = new JButton("Bejelentkezés");
+        return bejel;
+    }
+
+    private void fooldalBeallit() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
         JTabbedPane jt = new JTabbedPane();
-
         jt.addTab("Quiz",quizFul());
         jt.addTab("Szótár",szotarFul());
         jt.addTab("Felhasználó",felhasznaloiFul());
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         super.add(jt);
-        setSize(new Dimension(500,600));
+        //setSize(new Dimension(500,600));
         setVisible(true);
     }
 
