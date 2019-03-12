@@ -11,7 +11,7 @@ public class View extends JFrame{
         if(this.controller==null && controller!=null)
             this.controller=controller;
         fooldalBeallit();
-        diakBejelentkezes().setVisible(true);
+        //diakBejelentkezes().setVisible(true);
 
     }
 
@@ -64,31 +64,6 @@ public class View extends JFrame{
         return bejelFrame;
     }
 
-    /**
-     * Tanári regisztráció bejelentkezési felületért felelős függvény.
-     */
-    private JPanel tanarReg(){
-        JPanel jpTanreg = new JPanel();
-        jpTanreg.setLayout(new GridLayout(2,2,10,10));
-        jpTanreg.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        ButtonGroup bgRadio = new ButtonGroup();
-        JRadioButton jrbDiak = new JRadioButton("Diák");
-        JRadioButton jrbTanar = new JRadioButton("Tanár",true);
-        bgRadio.add(jrbDiak);
-        bgRadio.add(jrbTanar);
-        String tanariS ="Tanári regsisztráció esetén írjon emailt az alábbi email címre: " +
-                "lovas.bertalan97@gmail.com . Az üzenet tárgya legyen a következő:" +
-                "\"Quiz tanári regisztráció\".";
-        System.out.println(tanariS);
-        JLabel jlTanregSzoveg = new JLabel(tanariS);
-        JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
-
-        jpTanreg.add(jrbDiak);
-        jpTanreg.add(jrbTanar);
-        jpTanreg.add(jlTanregSzoveg);
-        jpTanreg.add(jbBejel);
-        return jpTanreg;
-    }
 
     /**
      *Regisztrációs ablak megjelenéséért felelós függvéy.
@@ -130,6 +105,7 @@ public class View extends JFrame{
         JButton jbRegisztracio = new JButton("Regisztráció");
         JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
         jbBejel.addActionListener(ee -> {
+            regisztracioFrame.setVisible(false);
             diakBejelentkezes().setVisible(true);
         });
 
@@ -147,6 +123,32 @@ public class View extends JFrame{
         regisztracioFrame.add(regPan);
         return regisztracioFrame;
     }
+
+    /**
+     * Tanári regisztráció bejelentkezési felületért felelős függvény.
+     */
+    private JPanel tanarReg(){
+        JPanel jpTanreg = new JPanel();
+
+        jpTanreg.setLayout(new GridBagLayout());
+        ButtonGroup bgRadio = new ButtonGroup();
+        JRadioButton jrbDiak = new JRadioButton("Diák");
+        JRadioButton jrbTanar = new JRadioButton("Tanár",true);
+        bgRadio.add(jrbDiak);
+        bgRadio.add(jrbTanar);
+        String tanariS ="Tanári regsisztráció esetén írjon emailt az alábbi email címre: " +
+                "lovas.bertalan97@gmail.com . Az üzenet tárgya legyen a következő:" +
+                "\"Quiz tanári regisztráció\".";
+        JLabel jlTanregSzoveg = new JLabel(tanariS);
+        JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
+
+        jpTanreg.add(jrbDiak);
+        jpTanreg.add(jrbTanar);
+        jpTanreg.add(jlTanregSzoveg);
+        jpTanreg.add(jbBejel);
+        return jpTanreg;
+    }
+
 
     private void fooldalBeallit() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
