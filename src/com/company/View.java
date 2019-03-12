@@ -76,10 +76,13 @@ public class View extends JFrame{
         JRadioButton jrbTanar = new JRadioButton("Tanár",true);
         bgRadio.add(jrbDiak);
         bgRadio.add(jrbTanar);
-        String tanariS ="Tanári regsisztráció esetén írjon emailt az alábbi email címre: lovas.bertalan97@gmail.com . Az üzenet tárgya legyen a következő:" +
+        String tanariS ="Tanári regsisztráció esetén írjon emailt az alábbi email címre: " +
+                "lovas.bertalan97@gmail.com . Az üzenet tárgya legyen a következő:" +
                 "\"Quiz tanári regisztráció\".";
+        System.out.println(tanariS);
         JLabel jlTanregSzoveg = new JLabel(tanariS);
         JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
+
         jpTanreg.add(jrbDiak);
         jpTanreg.add(jrbTanar);
         jpTanreg.add(jlTanregSzoveg);
@@ -99,9 +102,9 @@ public class View extends JFrame{
         regisztracioFrame.setResizable(false);
         regisztracioFrame.setTitle("Regisztráció");
         regisztracioFrame.setLocationRelativeTo(null);
+        regisztracioFrame.setAlwaysOnTop(true);
         regPan.setLayout(new GridLayout(6,2,10,10));
         regPan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        regisztracioFrame.setAlwaysOnTop(true);
         ButtonGroup bgRadio = new ButtonGroup();
 
         JRadioButton jrbDiak = new JRadioButton("Diák",true);
