@@ -4,13 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View extends JFrame{
-    private Controller controller;
+    public Controller controller = null;
 
-    public View() {
+    public View(Controller controller) {
         super("Quiz alkalmazás 1.0");
-        //controller = new Controller();
+        if(this.controller==null && controller!=null)
+            this.controller=controller;
         fooldalBeallit();
-        regisztracio().setVisible(true);
+        bejelentkezes().setVisible(true);
 
     }
 
@@ -26,11 +27,13 @@ public class View extends JFrame{
         JButton bejelB;
         JButton regisztB;
 
+
         JFrame bejelFrame = new JFrame();
+        bejelFrame.setAlwaysOnTop(true);
         bejelFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         bejelFrame.setTitle("Bejelentkezés");
         bejelFrame.setSize(300,200);
-        bejelFrame.setLocationRelativeTo(this);
+        bejelFrame.setLocationRelativeTo(null);
         bejelFrame.setResizable(false);
         pan = new JPanel();
         pan.setLayout(new GridLayout(3,2,10,10));
@@ -46,6 +49,10 @@ public class View extends JFrame{
 
         bejelB = new JButton("Bejelentkezés");
         regisztB = new JButton("Regisztráció");
+        regisztB.addActionListener(e -> {
+            bejelFrame.setVisible(false);
+            regisztracio().setVisible(true);
+        });
 
         pan.add(nevL);
         pan.add(nevTf);
@@ -64,6 +71,7 @@ public class View extends JFrame{
         JFrame regisztracioFrame = new JFrame();
         JPanel regPan = new JPanel();
 
+        regisztracioFrame.setAlwaysOnTop(true);
         ButtonGroup bgRadio = new ButtonGroup();
         JRadioButton jrbDiak = new JRadioButton("Diák",true);
         JRadioButton jrbTanar = new JRadioButton("Tanár");
@@ -77,6 +85,11 @@ public class View extends JFrame{
         JPasswordField jpfMegerosit = new JPasswordField();
         JButton jbRegisztracio = new JButton("Regisztráció");
         JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
+        jbBejel.addActionListener(e -> {
+                    regisztracioFrame.setVisible(false);
+                    bejelentkezes().setVisible(true);
+                }
+                );
 
 
         regisztracioFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -86,7 +99,7 @@ public class View extends JFrame{
         regisztracioFrame.setLocationRelativeTo(null);
         regPan.setLayout(new GridLayout(6,2,10,10));
         regPan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        JButton bejelentkezes = new JButton("Tovább a bejelentkezéshez");
+
 
         bgRadio.add(jrbDiak);
         bgRadio.add(jrbTanar);
