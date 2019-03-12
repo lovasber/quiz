@@ -11,14 +11,14 @@ public class View extends JFrame{
         if(this.controller==null && controller!=null)
             this.controller=controller;
         fooldalBeallit();
-        bejelentkezes().setVisible(true);
+        diakBejelentkezes().setVisible(true);
 
     }
 
     /**
      *Bejelentkezés ablakot jeleníti meg.
      */
-    private JFrame bejelentkezes() {
+    private JFrame diakBejelentkezes() {
         JPanel pan;
         JLabel nevL;
         JLabel jelszL;
@@ -65,16 +65,57 @@ public class View extends JFrame{
     }
 
     /**
+     * Tanári regisztráció bejelentkezési felületért felelős függvény.
+     */
+    private JPanel tanarReg(){
+        JPanel jpTanreg = new JPanel();
+        jpTanreg.setLayout(new GridLayout(2,2,10,10));
+        jpTanreg.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        ButtonGroup bgRadio = new ButtonGroup();
+        JRadioButton jrbDiak = new JRadioButton("Diák");
+        JRadioButton jrbTanar = new JRadioButton("Tanár",true);
+        bgRadio.add(jrbDiak);
+        bgRadio.add(jrbTanar);
+        String tanariS ="Tanári regsisztráció esetén írjon emailt az alábbi email címre: lovas.bertalan97@gmail.com . Az üzenet tárgya legyen a következő:" +
+                "\"Quiz tanári regisztráció\".";
+        JLabel jlTanregSzoveg = new JLabel(tanariS);
+        JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
+        jpTanreg.add(jrbDiak);
+        jpTanreg.add(jrbTanar);
+        jpTanreg.add(jlTanregSzoveg);
+        jpTanreg.add(jbBejel);
+        return jpTanreg;
+    }
+
+    /**
      *Regisztrációs ablak megjelenéséért felelós függvéy.
      */
     private JFrame regisztracio(){
         JFrame regisztracioFrame = new JFrame();
         JPanel regPan = new JPanel();
 
+        regisztracioFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        regisztracioFrame.setSize(500,400);
+        regisztracioFrame.setResizable(false);
+        regisztracioFrame.setTitle("Regisztráció");
+        regisztracioFrame.setLocationRelativeTo(null);
+        regPan.setLayout(new GridLayout(6,2,10,10));
+        regPan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         regisztracioFrame.setAlwaysOnTop(true);
         ButtonGroup bgRadio = new ButtonGroup();
+
         JRadioButton jrbDiak = new JRadioButton("Diák",true);
         JRadioButton jrbTanar = new JRadioButton("Tanár");
+        bgRadio.add(jrbDiak);
+        bgRadio.add(jrbTanar);
+
+        regPan.add(jrbDiak);
+        regPan.add(jrbTanar);
+        jrbTanar.addActionListener(e -> {
+                regisztracioFrame.getContentPane().removeAll();
+                regisztracioFrame.repaint();
+                regisztracioFrame.add(tanarReg());
+        });
         JLabel jlFnev = new JLabel("Felhasználónév");
         JLabel jlTeljesNev = new JLabel("Teljes név");
         JLabel jlJelszo = new JLabel("Jelszó");
@@ -85,26 +126,10 @@ public class View extends JFrame{
         JPasswordField jpfMegerosit = new JPasswordField();
         JButton jbRegisztracio = new JButton("Regisztráció");
         JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
-        jbBejel.addActionListener(e -> {
-                    regisztracioFrame.setVisible(false);
-                    bejelentkezes().setVisible(true);
-                }
-                );
+        jbBejel.addActionListener(ee -> {
+            diakBejelentkezes().setVisible(true);
+        });
 
-
-        regisztracioFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        regisztracioFrame.setSize(500,400);
-        regisztracioFrame.setResizable(false);
-        regisztracioFrame.setTitle("Regisztráció");
-        regisztracioFrame.setLocationRelativeTo(null);
-        regPan.setLayout(new GridLayout(6,2,10,10));
-        regPan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-
-
-        bgRadio.add(jrbDiak);
-        bgRadio.add(jrbTanar);
-        regPan.add(jrbDiak);
-        regPan.add(jrbTanar);
         regPan.add(jlFnev);
         regPan.add(jtfFnev);
         regPan.add(jlTeljesNev);
@@ -128,7 +153,6 @@ public class View extends JFrame{
         jt.addTab("Felhasználó",felhasznaloiFul());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         super.add(jt);
-        //setSize(new Dimension(500,600));
         setVisible(true);
     }
 
@@ -146,16 +170,13 @@ public class View extends JFrame{
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-
         String fnevS = "Felhasnzáló név";
         JLabel fnevL = new JLabel(fnevS);
         String fszintS = "Felhasználó szintje: 1";
         JLabel fszintL = new JLabel(fszintS);
         JButton kijelentezB = new JButton("Kijelentkezés");
         JButton statisztikaB = new JButton("Statisztika");
-
         gbc.weighty = 1;
-
         felh.add(fszintL,gbc);
         felh.add(fnevL,gbc);
         felh.add(kijelentezB,gbc);
@@ -199,18 +220,12 @@ public class View extends JFrame{
         JPanel mainP = new JPanel();
         mainP.setLayout(new FlowLayout());
 
-        //tipusActionListener tipusClick = new tipusActionListener();
-
         JButton kategoria1 = new JButton("Kategória 1");
-//        kategoria1.addActionListener(tipusClick);
         JButton kategoria2 = new JButton("Kategória 2");
-//        kategoria2.addActionListener(tipusClick);
         JButton kategoria3 = new JButton("Kategória 3");
         kategoria3.setEnabled(false);
-//        kategoria3.addActionListener(tipusClick);
         JButton kategoria4 = new JButton("Kategória 4");
         kategoria4.setEnabled(false);
-//        kategoria4.addActionListener(tipusClick);
 
         mainP.add(kategoria1);
         mainP.add(kategoria2);
