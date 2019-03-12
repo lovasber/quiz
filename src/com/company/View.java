@@ -4,14 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View extends JFrame{
+    private Controller controller;
 
     public View() {
         super("Quiz alkalmazás 1.0");
+        //controller = new Controller();
         fooldalBeallit();
-        bejelentkezes().setVisible(true);
+        regisztracio().setVisible(true);
 
     }
 
+    /**
+     *Bejelentkezés ablakot jeleníti meg.
+     */
     private JFrame bejelentkezes() {
         JPanel pan;
         JLabel nevL;
@@ -21,11 +26,12 @@ public class View extends JFrame{
         JButton bejelB;
         JButton regisztB;
 
-        JFrame bejel = new JFrame();
-        bejel.setTitle("Bejelentkezés");
-        setSize(300,200);
-        setLocationRelativeTo(null);
-        super.setResizable(false);
+        JFrame bejelFrame = new JFrame();
+        bejelFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        bejelFrame.setTitle("Bejelentkezés");
+        bejelFrame.setSize(300,200);
+        bejelFrame.setLocationRelativeTo(this);
+        bejelFrame.setResizable(false);
         pan = new JPanel();
         pan.setLayout(new GridLayout(3,2,10,10));
         pan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -39,7 +45,66 @@ public class View extends JFrame{
         jelszL.setSize(new Dimension(50,20));
 
         bejelB = new JButton("Bejelentkezés");
-        return bejel;
+        regisztB = new JButton("Regisztráció");
+
+        pan.add(nevL);
+        pan.add(nevTf);
+        pan.add(jelszL);
+        pan.add(jelszPf);
+        pan.add(bejelB);
+        pan.add(regisztB);
+        bejelFrame.add(pan);
+        return bejelFrame;
+    }
+
+    /**
+     *Regisztrációs ablak megjelenéséért felelós függvéy.
+     */
+    private JFrame regisztracio(){
+        JFrame regisztracioFrame = new JFrame();
+        JPanel regPan = new JPanel();
+
+        ButtonGroup bgRadio = new ButtonGroup();
+        JRadioButton jrbDiak = new JRadioButton("Diák",true);
+        JRadioButton jrbTanar = new JRadioButton("Tanár");
+        JLabel jlFnev = new JLabel("Felhasználónév");
+        JLabel jlTeljesNev = new JLabel("Teljes név");
+        JLabel jlJelszo = new JLabel("Jelszó");
+        JLabel jlJelszomeg = new JLabel("Jelszó megerősítése");
+        JTextField jtfFnev = new JTextField();
+        JTextField jtfTnev = new JTextField();
+        JPasswordField jpfJelszo = new JPasswordField();
+        JPasswordField jpfMegerosit = new JPasswordField();
+        JButton jbRegisztracio = new JButton("Regisztráció");
+        JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
+
+
+        regisztracioFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        regisztracioFrame.setSize(500,400);
+        regisztracioFrame.setResizable(false);
+        regisztracioFrame.setTitle("Regisztráció");
+        regisztracioFrame.setLocationRelativeTo(null);
+        regPan.setLayout(new GridLayout(6,2,10,10));
+        regPan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        JButton bejelentkezes = new JButton("Tovább a bejelentkezéshez");
+
+        bgRadio.add(jrbDiak);
+        bgRadio.add(jrbTanar);
+        regPan.add(jrbDiak);
+        regPan.add(jrbTanar);
+        regPan.add(jlFnev);
+        regPan.add(jtfFnev);
+        regPan.add(jlTeljesNev);
+        regPan.add(jtfTnev);
+        regPan.add(jlJelszo);
+        regPan.add(jpfJelszo);
+        regPan.add(jlJelszomeg);
+        regPan.add(jpfMegerosit);
+        regPan.add(jbRegisztracio);
+        regPan.add(jbBejel);
+
+        regisztracioFrame.add(regPan);
+        return regisztracioFrame;
     }
 
     private void fooldalBeallit() {
