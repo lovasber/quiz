@@ -20,12 +20,12 @@ public class View extends JFrame{
      */
     private JFrame diakBejelentkezes() {
         JPanel pan;
-        JLabel nevL;
-        JLabel jelszL;
-        JTextField nevTf;
-        JPasswordField jelszPf;
-        JButton bejelB;
-        JButton regisztB;
+        JLabel jlNev;
+        JLabel jlJelszo;
+        JTextField jtfNev;
+        JPasswordField jpfJelszo;
+        JButton jbBejel;
+        JButton jbRegisztracio;
 
 
         JFrame bejelFrame = new JFrame();
@@ -39,30 +39,43 @@ public class View extends JFrame{
         pan.setLayout(new GridLayout(3,2,10,10));
         pan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        nevL = new JLabel("Felhasználó név:");
-        jelszL = new JLabel("Jelszó:");
+        jlNev = new JLabel("Felhasználó név:");
+        jlJelszo = new JLabel("Jelszó:");
 
-        nevTf = new JTextField();
-        nevTf.setColumns(1);
-        jelszPf = new JPasswordField();
-        jelszL.setSize(new Dimension(50,20));
+        jtfNev = new JTextField();
+        jtfNev.setColumns(1);
+        jpfJelszo = new JPasswordField();
+        jlJelszo.setSize(new Dimension(50,20));
 
-        bejelB = new JButton("Bejelentkezés");
-        bejelB.addActionListener(e -> {
-            controller.bejelentkezes();
+        jbBejel = new JButton("Bejelentkezés");
+        jbBejel.addActionListener(e -> {
+            if (jpfJelszo.getPassword().length != 0) {
+            if (controller.letezikEfelhasznalo(jtfNev.getText())) {
+                String jelszoS = new String(jpfJelszo.getPassword());
+                if(controller.helyesJelszoE(jtfNev.getText(), jelszoS)){
+                    JOptionPane.showMessageDialog(bejelFrame, "Sikeres Bejelentkezés");
+                }else{
+                    JOptionPane.showMessageDialog(bejelFrame, "Hibás jelszó");
+                }
+            } else {
+                JOptionPane.showMessageDialog(bejelFrame, "Nem létezik ilyen nevű felhasználó!");
+                }
+            }else {
+                JOptionPane.showMessageDialog(bejelFrame, "Kérem adja meg a jelszavát!");
+            }
         });
-        regisztB = new JButton("Regisztráció");
-        regisztB.addActionListener(e -> {
+        jbRegisztracio = new JButton("Regisztráció");
+        jbRegisztracio.addActionListener(e -> {
             bejelFrame.setVisible(false);
             regisztracio().setVisible(true);
         });
 
-        pan.add(nevL);
-        pan.add(nevTf);
-        pan.add(jelszL);
-        pan.add(jelszPf);
-        pan.add(bejelB);
-        pan.add(regisztB);
+        pan.add(jlNev);
+        pan.add(jtfNev);
+        pan.add(jlJelszo);
+        pan.add(jpfJelszo);
+        pan.add(jbBejel);
+        pan.add(jbRegisztracio);
         bejelFrame.add(pan);
         return bejelFrame;
     }
@@ -113,7 +126,7 @@ public class View extends JFrame{
                 String jelszoMeg = new String(jpfMegerosit.getPassword());
                 if (controller.egyezoJelszo(jelszoSzoveg, jelszoMeg)) {
                     if (controller.szabadFelhasznaloNev(jtfFnev.getText())) {
-                        controller.diakRegisztracio(jtfFnev.getText(), jtfTnev.getText(), jelszoSzoveg);
+                        controller.diakRegisztracio(jtfFnev.getText(), jtfTnev.getText(), controller.titkosit(jelszoSzoveg));
                         JOptionPane.showMessageDialog(regisztracioFrame, "Sikeres regisztráció!");
                     } else {
                         JOptionPane.showMessageDialog(regisztracioFrame, "Foglalt felhasználónév!");
