@@ -40,7 +40,8 @@ public class Controller {
      * @param jelszo
      */
     public void diakRegisztracio(String felhasznalonev,String teljesNev,String jelszo){
-            String SQL_UJFELHASZNALOT_LETREHOZZ = "INSERT INTO `felhasznalok` (`id`, `felhasznaloNev`, `teljesNev`, `jelszo`, `szint`, `tipus`, `joValaszDb`, `rosszValaszDb`) VALUES ( NULL , '" + felhasznalonev + "', '" + teljesNev + "','" + jelszo + "', '1', '0', '0', '0')";
+            String SQL_UJFELHASZNALOT_LETREHOZZ = "INSERT INTO `felhasznalok` (`id`, `felhasznaloNev`, `teljesNev`, `jelszo`, `szint`, `tipus`, `joValaszDb`, `rosszValaszDb`) " +
+                    "VALUES ( NULL , '" + felhasznalonev + "', '" + teljesNev + "','" + jelszo + "', '1', '0', '0', '0')";
             try {
                 Statement stm = modell.getCON().createStatement();
                 stm.executeUpdate(SQL_UJFELHASZNALOT_LETREHOZZ);
@@ -62,7 +63,7 @@ public class Controller {
 
     public boolean szabadFelhasznaloNev(String felhasznaloNev){
         boolean szabad = true;
-        String SQL_FELHASZNALOK = "SELECT felhasznalonNev FROM felhasznalok";
+        String SQL_FELHASZNALOK = "SELECT felhasznaloNev FROM felhasznalok";
 
         try {
             Statement stFelhasznalok = modell.getCON().createStatement();

@@ -112,7 +112,7 @@ public class View extends JFrame{
                 String jelszoSzoveg = new String(jpfJelszo.getPassword());
                 String jelszoMeg = new String(jpfMegerosit.getPassword());
                 if (controller.egyezoJelszo(jelszoSzoveg, jelszoMeg)) {
-                    if (!controller.szabadFelhasznaloNev(jtfFnev.getText())) {
+                    if (controller.szabadFelhasznaloNev(jtfFnev.getText())) {
                         controller.diakRegisztracio(jtfFnev.getText(), jtfTnev.getText(), jelszoSzoveg);
                         JOptionPane.showMessageDialog(regisztracioFrame, "Sikeres regisztráció!");
                     } else {
