@@ -12,6 +12,7 @@ public class Modell implements AdatbazisKapcsolat {
     private ArrayList<Kerdes> kerdesekLista;
     private int felhasznaloTipus;
     private int aktualisKerdesDb;
+    private Felhasznalo felhasznalo;
 
 
     public Modell() {
@@ -28,5 +29,13 @@ public class Modell implements AdatbazisKapcsolat {
 
     public Connection getCON() {
         return CON;
+    }
+
+    public void setFelhasznalo(Felhasznalo felhasznalo) {
+        this.felhasznalo = felhasznalo;
+    }
+
+    public Felhasznalo getFelhasznalo() {
+        return felhasznalo;
     }
 }

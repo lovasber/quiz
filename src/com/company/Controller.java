@@ -1,5 +1,7 @@
 package com.company;
 
+import javax.swing.*;
+import java.awt.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -17,28 +19,76 @@ public class Controller {
     }
 
     /**
-     * Bejelentkezés
+     * A függvény ellenőrzi, hogy a felhasználó helyes jelszót adott e meg. Ezt úgy teszi, hogy
+     * ugyanazzal a titkosítási módszerrel titkosítja a user által begépelt jelszót és összeveti az adatbázisban tárolttal.
      * @param fnev
      * @param jelszo
      */
     public boolean helyesJelszoE(String fnev, String jelszo){
         boolean helyesjelszo = false;
         String SQL_JELSZO = "SELECT jelszo FROM felhasznalok WHERE felhasznaloNev='"+fnev+"' AND jelszo=+'"+titkosit(jelszo)+"';";
-
-
         try {
             Statement stFelhasznalok = modell.getCON().createStatement();
             ResultSet rs = stFelhasznalok.executeQuery(SQL_JELSZO);
             if (rs.next() && rs.getString(1).length()!=0){
                 //System.out.println(String.valueOf(rs.getString(1)));
-                String abJelszo = rs.getString(1);
-                System.out.println(abJelszo+"!");
+                //String abJelszo = rs.getString(1);
                 helyesjelszo = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return helyesjelszo;
+    }
+
+
+    /**
+     * A bejelentkezés folyamata. Itt jön létre a Felhasználó objektum.
+     * @param fnev
+     */
+    public void bejelentkezesFolyamat(String fnev) {
+        String SQL_JELSZO = "SELECT id FROM felhasznalok WHERE felhasznalonev='"+ fnev +"';";
+        int felhasznaloId = -1;
+        try {
+            Statement stFelhasznalok = modell.getCON().createStatement();
+            ResultSet rs = stFelhasznalok.executeQuery(SQL_JELSZO);
+            while (rs.next()){
+                felhasznaloId = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        modell.setFelhasznalo(felhasznaloBetolt(felhasznaloId));
+        System.out.println("felhasznalo megvan");
+        felhasznaloPanelBetolt(view.getJt());
+    }
+
+    public void felhasznaloPanelBetolt(JTabbedPane jt) {
+
+        JPanel felh = new JPanel();
+        felh.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        Felhasznalo felhasznalo = felhasznaloGetter();
+
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        String fnevS = "Felhasnzáló név: "+felhasznalo.getFelhasznalonev();
+        JLabel jlNev = new JLabel(fnevS);
+        String fszintS = "Felhasználó szintje: "+felhasznalo.getSzint();
+        JLabel fszintL = new JLabel(fszintS);
+        JButton kijelentezB = new JButton("Kijelentkezés");
+        JButton statisztikaB = new JButton("Statisztika");
+        gbc.weighty = 1;
+        felh.add(fszintL,gbc);
+        felh.add(jlNev,gbc);
+        felh.add(kijelentezB,gbc);
+        felh.add(statisztikaB,gbc);
+        jt.addTab("Felhasználó",felh);
     }
 
     /**
@@ -62,8 +112,7 @@ public class Controller {
     }
 
 
-
-    public char[] titkosit(char[] titkositando){
+    private char[] titkosit(char[] titkositando){
         char[] titkostitott=titkositando;
 
         return titkostitott;
@@ -141,4 +190,28 @@ public class Controller {
         return titkositott;
     }
 
+    /**
+     * A felhasználó id-ja alapján lekéri az adatokat az adatbázisból és a függvény visszatér egy Felhasznalo objektummal.
+     * @param felhasznId
+     * @return
+     */
+    private Felhasznalo felhasznaloBetolt(int felhasznId) {
+            Felhasznalo felhasznalo = null;
+            String SQL_FELHASZNALOIADATOK = "SELECT * FROM felhasznalok WHERE id='"+felhasznId+"';";
+            try{
+                Statement st = modell.getCON().createStatement();
+                ResultSet rs = st.executeQuery(SQL_FELHASZNALOIADATOK);
+                while(rs.next()){
+                    System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getInt(5)+" "+rs.getInt(6)+" "+rs.getInt(7)+" "+rs.getInt(8));
+                    felhasznalo=new Felhasznalo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getInt(8));
+                }
+            }catch (SQLException e){
+               e.printStackTrace();
+            }
+            return felhasznalo;
+    }
+
+    public Felhasznalo felhasznaloGetter(){
+        return modell.getFelhasznalo();
+    }
 }

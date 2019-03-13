@@ -9,14 +9,14 @@ public class Felhasznalo {
     private int szint;
     private int[] statisztika;
 
-    public Felhasznalo(int id, String teljesNev, String felhasznalonev, String jelszo, int tipus, int szint, int[] statisztika) {
+    public Felhasznalo(int id,String felhasznalonev, String teljesNev,  String jelszo,  int szint,int tipus, int joValasz,  int rosszValasz) {
         this.id = id;
         this.teljesNev = teljesNev;
         this.felhasznalonev = felhasznalonev;
         this.jelszo = jelszo;
         this.tipus = tipus;
         this.szint = szint;
-        this.statisztika = statisztika;
+        this.statisztika = new int[]{joValasz, rosszValasz};
     }
 
     public int getId() {

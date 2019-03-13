@@ -5,6 +5,11 @@ import java.awt.*;
 
 public class View extends JFrame{
     public Controller controller = null;
+    JTabbedPane jt;
+
+    public JTabbedPane getJt() {
+        return jt;
+    }
 
     public View(Controller controller) {
         super("Quiz alkalmazás 1.0");
@@ -54,6 +59,8 @@ public class View extends JFrame{
                 String jelszoS = new String(jpfJelszo.getPassword());
                 if(controller.helyesJelszoE(jtfNev.getText(), jelszoS)){
                     JOptionPane.showMessageDialog(bejelFrame, "Sikeres Bejelentkezés");
+                    controller.bejelentkezesFolyamat(jtfNev.getText());
+                    bejelFrame.setVisible(false);
                 }else{
                     JOptionPane.showMessageDialog(bejelFrame, "Hibás jelszó");
                 }
@@ -187,10 +194,11 @@ public class View extends JFrame{
 
     private void fooldalBeallit() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        JTabbedPane jt = new JTabbedPane();
+        setMinimumSize(new Dimension(1000,700));
+        jt = new JTabbedPane();
         jt.addTab("Quiz",quizFul());
         jt.addTab("Szótár",szotarFul());
-        jt.addTab("Felhasználó",felhasznaloiFul());
+        //jt.addTab("Felhasználó",felhasznaloiFul());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         super.add(jt);
         setVisible(true);
@@ -202,25 +210,6 @@ public class View extends JFrame{
      */
     private JPanel felhasznaloiFul() {
         JPanel felh = new JPanel();
-        felh.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.anchor = GridBagConstraints.NORTH;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        String fnevS = "Felhasnzáló név";
-        JLabel fnevL = new JLabel(fnevS);
-        String fszintS = "Felhasználó szintje: 1";
-        JLabel fszintL = new JLabel(fszintS);
-        JButton kijelentezB = new JButton("Kijelentkezés");
-        JButton statisztikaB = new JButton("Statisztika");
-        gbc.weighty = 1;
-        felh.add(fszintL,gbc);
-        felh.add(fnevL,gbc);
-        felh.add(kijelentezB,gbc);
-        felh.add(statisztikaB,gbc);
         return felh;
     }
 
@@ -274,4 +263,6 @@ public class View extends JFrame{
 
         return mainP;
     }
+
+
 }
