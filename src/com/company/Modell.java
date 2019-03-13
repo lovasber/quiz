@@ -1,26 +1,30 @@
 package com.company;
 
-import javax.crypto.SecretKey;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class Modell {
+public class Modell implements AdatbazisKapcsolat {
 
     private Connection CON;
     private Statement ST;
-    private ResultSet rs;
-    private SecretKey secretKey;
+    private ArrayList<Kerdes> kerdesekLista;
+    private int felhasznaloTipus;
+    private int aktualisKerdesDb;
+
 
     public Modell() {
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-
-            CON = DriverManager.getConnection("jdbc:mysql://localhost/quiz","root","");
+            Class.forName(ABDRIVER);
+            CON = DriverManager.getConnection(ABURL,ABFELHASZNALO,ABJELSZO);
             ST = CON.createStatement();
         }catch(Exception e){
             System.out.println("Adatbázis kapcsolódási hiba: "+e.getLocalizedMessage());
         }
+        System.out.println("sikeres adatbázis kapcsolat");
     }
+
+
+
 }

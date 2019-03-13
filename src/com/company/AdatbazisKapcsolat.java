@@ -1,4 +1,8 @@
 package com.company;
 
-public class AdatbazisKapcsolat {
+public interface AdatbazisKapcsolat {
+    String ABDRIVER="com.mysql.jdbc.Driver";
+    String ABURL="jdbc:mysql://localhost/quiz";
+    String ABFELHASZNALO="root";
+    String ABJELSZO="";
 }

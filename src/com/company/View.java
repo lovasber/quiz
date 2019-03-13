@@ -11,7 +11,7 @@ public class View extends JFrame{
         if(this.controller==null && controller!=null)
             this.controller=controller;
         fooldalBeallit();
-        //diakBejelentkezes().setVisible(true);
+        diakBejelentkezes().setVisible(true);
 
     }
 
@@ -48,6 +48,9 @@ public class View extends JFrame{
         jelszL.setSize(new Dimension(50,20));
 
         bejelB = new JButton("Bejelentkezés");
+        bejelB.addActionListener(e -> {
+
+        });
         regisztB = new JButton("Regisztráció");
         regisztB.addActionListener(e -> {
             bejelFrame.setVisible(false);
