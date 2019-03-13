@@ -26,5 +26,7 @@ public class Modell implements AdatbazisKapcsolat {
     }
 
 
-
+    public Connection getCON() {
+        return CON;
+    }
 }

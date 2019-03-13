@@ -49,7 +49,7 @@ public class View extends JFrame{
 
         bejelB = new JButton("Bejelentkezés");
         bejelB.addActionListener(e -> {
-
+            controller.bejelentkezes();
         });
         regisztB = new JButton("Regisztráció");
         regisztB.addActionListener(e -> {
@@ -106,6 +106,25 @@ public class View extends JFrame{
         JPasswordField jpfJelszo = new JPasswordField();
         JPasswordField jpfMegerosit = new JPasswordField();
         JButton jbRegisztracio = new JButton("Regisztráció");
+        jbRegisztracio.addActionListener(e -> {
+            if(!(jtfFnev.getText().isEmpty()||jtfTnev.getText().isEmpty()||jpfJelszo.getPassword().length==0||jpfMegerosit.getPassword().length==0)) {
+                //System.out.println(jpfJelszo.getPassword().toString());
+                String jelszoSzoveg = new String(jpfJelszo.getPassword());
+                String jelszoMeg = new String(jpfMegerosit.getPassword());
+                if (controller.egyezoJelszo(jelszoSzoveg, jelszoMeg)) {
+                    if (!controller.szabadFelhasznaloNev(jtfFnev.getText())) {
+                        controller.diakRegisztracio(jtfFnev.getText(), jtfTnev.getText(), jelszoSzoveg);
+                        JOptionPane.showMessageDialog(regisztracioFrame, "Sikeres regisztráció!");
+                    } else {
+                        JOptionPane.showMessageDialog(regisztracioFrame, "Foglalt felhasználónév!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(regisztracioFrame, "Nem egyezik a két jelszó!");
+                }
+            }else {
+                JOptionPane.showMessageDialog(regisztracioFrame, "Kérem töltse ki az összes mezőt!");
+            }
+        });
         JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
         jbBejel.addActionListener(ee -> {
             regisztracioFrame.setVisible(false);
