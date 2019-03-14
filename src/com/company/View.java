@@ -196,8 +196,8 @@ public class View extends JFrame{
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(1000,700));
         jt = new JTabbedPane();
-        jt.addTab("Quiz",quizFul());
-        jt.addTab("Szótár",szotarFul());
+        //jt.addTab("Quiz",quizFul());//!!!!!!!!!
+        //jt.addTab("Szótár",szotarFul());
         //jt.addTab("Felhasználó",felhasznaloiFul());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         super.add(jt);
@@ -217,7 +217,7 @@ public class View extends JFrame{
      *
      * A szótár fül megjelenését biztosítja.
      */
-    private JPanel szotarFul() {
+    public JPanel szotarFul() {
         JPanel szotarPanel = new JPanel();
 
         szotarPanel.setLayout(new FlowLayout());
@@ -263,6 +263,8 @@ public class View extends JFrame{
 
         return mainP;
     }
+
+
 
 
 }

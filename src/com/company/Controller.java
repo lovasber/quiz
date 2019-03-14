@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class Controller {
     private Modell modell;
     private View view;
@@ -60,7 +59,23 @@ public class Controller {
         }
 
         modell.setFelhasznalo(felhasznaloBetolt(felhasznaloId));
-        System.out.println("felhasznalo megvan");
+        int felhasznaloTipus = felhasznaloBetolt(felhasznaloId).getTipus();
+
+        switch (felhasznaloTipus){
+            case 0:
+                view.getJt().addTab("Quiz",new DiakView());
+                break;
+            case 1:
+                view.getJt().addTab("Quiz",new TanarView());
+                break;
+            case 2:
+                view.getJt().addTab("Quiz",new AdminView());
+                break;
+                default:
+                    System.out.println("Nincs ilyen típus!");
+                    break;
+        }
+        view.getJt().addTab("Szótár",view.szotarFul());
         felhasznaloPanelBetolt(view.getJt());
     }
 
@@ -110,7 +125,6 @@ public class Controller {
         }
         return letezik;
     }
-
 
     private char[] titkosit(char[] titkositando){
         char[] titkostitott=titkositando;
@@ -211,7 +225,14 @@ public class Controller {
             return felhasznalo;
     }
 
+    /**
+     * Felhasználót ad vissza.
+     * @return
+     */
     public Felhasznalo felhasznaloGetter(){
         return modell.getFelhasznalo();
     }
+
+
+
 }

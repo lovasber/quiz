@@ -1,4 +1,8 @@
 package com.company;
 
-public class DiakView {
+import javax.swing.*;
+
+public class DiakView extends JPanel {
+    public DiakView() {
+    }
 }
