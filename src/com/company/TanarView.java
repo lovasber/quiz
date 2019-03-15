@@ -9,7 +9,7 @@ public class TanarView extends JPanel {
         JButton jbKerdesSzerk;
         JButton jbDiakokEredmenyei;
 
-    public TanarView() {
+    public TanarView(Controller controller) {
             super.setLayout(new FlowLayout());
             jbUjKat = new JButton("Új kategória létrehozása");
             jbUjKerdes = new JButton("Új kérdés létrehozása");

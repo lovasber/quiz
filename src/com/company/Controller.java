@@ -63,13 +63,13 @@ public class Controller {
 
         switch (felhasznaloTipus){
             case 0:
-                view.getJt().addTab("Quiz",new DiakView());
+                view.getJt().addTab("Quiz",new DiakView(this));
                 break;
             case 1:
-                view.getJt().addTab("Quiz",new TanarView());
+                view.getJt().addTab("Quiz",new TanarView(this));
                 break;
             case 2:
-                view.getJt().addTab("Quiz",new AdminView());
+                view.getJt().addTab("Quiz",new AdminView(this));
                 break;
                 default:
                     System.out.println("Nincs ilyen típus!");
@@ -231,6 +231,10 @@ public class Controller {
      */
     public Felhasznalo felhasznaloGetter(){
         return modell.getFelhasznalo();
+    }
+
+    public void ujablakmegynit(JFrame fr){
+        fr.setVisible(true);
     }
 
 

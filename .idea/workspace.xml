@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01688142-27e4-4b71-a713-d99c8ee74b72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mysql-connector-java-5.0.8-bin.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_0_8_bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_0_8_bin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/AdminView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Controller.java" afterDir="false" />
@@ -25,22 +23,32 @@
     <SUITE FILE_PATH="coverage/Program$Main.ic" NAME="Main Coverage Results" MODIFIED="1552413157911" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="24133" />
+    <option name="totalTimeSeconds" value="34776" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/company/Modell.java">
+        <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+            <state relative-caret-position="390">
+              <caret line="119" column="46" lean-forward="true" selection-start-line="119" selection-start-column="46" selection-end-line="119" selection-end-column="46" />
               <folding>
-                <element signature="e#896#897#0" expanded="true" />
-                <element signature="e#942#943#0" expanded="true" />
-                <element signature="e#985#986#0" expanded="true" />
-                <element signature="e#1019#1020#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+              <folding>
+                <element signature="e#86#87#0" expanded="true" />
+                <element signature="e#114#115#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -49,8 +57,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/View.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+            <state relative-caret-position="220">
+              <caret line="194" column="35" lean-forward="true" selection-start-line="194" selection-start-column="35" selection-end-line="194" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#191#192#0" expanded="true" />
@@ -61,38 +69,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="77" column="55" lean-forward="true" selection-start-line="77" selection-start-column="55" selection-end-line="77" selection-end-column="55" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3944#3945#0" expanded="true" />
-                <element signature="e#4002#4003#0" expanded="true" />
-                <element signature="e#7797#7798#0" expanded="true" />
-                <element signature="e#7843#7844#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/AdminView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="5" column="34" lean-forward="true" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="6" column="24" lean-forward="true" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+            <state relative-caret-position="431">
+              <caret line="229" column="45" selection-start-line="229" selection-start-column="45" selection-end-line="229" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -103,8 +83,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/DiakView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+            <state>
+              <caret column="20" selection-start-column="20" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,6 +113,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>beje</find>
+      <find>System</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -134,16 +127,16 @@
         <option value="$PROJECT_DIR$/src/com/company/Modell.java" />
         <option value="$PROJECT_DIR$/src/com/company/Felhasznalo.java" />
         <option value="$PROJECT_DIR$/src/com/company/DiakView.java" />
-        <option value="$PROJECT_DIR$/src/com/company/View.java" />
-        <option value="$PROJECT_DIR$/src/com/company/Controller.java" />
         <option value="$PROJECT_DIR$/src/com/company/TanarView.java" />
+        <option value="$PROJECT_DIR$/src/com/company/Controller.java" />
+        <option value="$PROJECT_DIR$/src/com/company/View.java" />
         <option value="$PROJECT_DIR$/src/com/company/AdminView.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-23" />
-    <option name="y" value="-11" />
+    <option name="x" value="-184" />
+    <option name="y" value="-10" />
     <option name="width" value="1366" />
     <option name="height" value="768" />
   </component>
@@ -155,8 +148,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -186,13 +179,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552552036555" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552647874335" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JAVA" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/mysql-connector-java-5.0.8-bin.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -279,11 +272,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4246862" visible="true" weight="0.15279879" />
-      <window_info id="Structure" order="1" sideWeight="0.5753138" side_tool="true" visible="true" weight="0.15279879" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.42372882" visible="true" weight="0.15618336" />
+      <window_info id="Structure" order="1" sideWeight="0.5762712" side_tool="true" visible="true" weight="0.15618336" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -291,15 +284,15 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49848714" visible="true" weight="0.265745" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49848714" visible="true" weight="0.2647975" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39938557" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5015129" side_tool="true" weight="0.39477727" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4969743" weight="0.23809524" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49924356" weight="0.3281412" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4969743" weight="0.23779854" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49924356" weight="0.16510904" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -390,17 +383,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Bejelentkezés Felhasználói panel" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#86#87#0" expanded="true" />
-            <element signature="e#114#115#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.java" />
     <entry file="file://$PROJECT_DIR$/src/com/company/AdatbazisKapcsolat.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -479,37 +461,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/DiakView.java">
+    <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+        <state relative-caret-position="68">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+          <folding>
+            <element signature="e#86#87#0" expanded="true" />
+            <element signature="e#114#115#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="6" column="24" lean-forward="true" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+        <state relative-caret-position="323">
+          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/AdminView.java">
+    <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="5" column="34" lean-forward="true" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
+        <state relative-caret-position="390">
+          <caret line="119" column="46" lean-forward="true" selection-start-line="119" selection-start-column="46" selection-end-line="119" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/DiakView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="20" selection-start-column="20" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+        <state relative-caret-position="220">
+          <caret line="194" column="35" lean-forward="true" selection-start-line="194" selection-start-column="35" selection-end-line="194" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#191#192#0" expanded="true" />
@@ -518,16 +511,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
+    <entry file="file://$PROJECT_DIR$/src/com/company/AdminView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="77" column="55" lean-forward="true" selection-start-line="77" selection-start-column="55" selection-end-line="77" selection-end-column="55" />
+        <state relative-caret-position="431">
+          <caret line="229" column="45" selection-start-line="229" selection-start-column="45" selection-end-line="229" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3944#3945#0" expanded="true" />
-            <element signature="e#4002#4003#0" expanded="true" />
-            <element signature="e#7797#7798#0" expanded="true" />
-            <element signature="e#7843#7844#0" expanded="true" />
           </folding>
         </state>
       </provider>
