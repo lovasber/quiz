@@ -4,6 +4,7 @@ import com.sun.javaws.util.JfxHelper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class AdminView extends JPanel {
     JButton jbUjKat;
@@ -11,8 +12,10 @@ public class AdminView extends JPanel {
     JButton jbKerdesSzerk;
     JButton jbDiakokEredmenyei;
     JButton jbFelhasznalok;
+    Controller cont;
 
     public AdminView(Controller conntroller) {
+        this.cont = conntroller;
         super.setLayout(new FlowLayout());
         jbUjKat = new JButton("Új kategória létrehozása");
         jbUjKat.addActionListener(e -> {
@@ -224,13 +227,59 @@ public class AdminView extends JPanel {
         jfFelh.setTitle("Quiz 1.0");
         jfFelh.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jfFelh.setMinimumSize(new Dimension(1000,700));
+        JPanel jpMain = new JPanel();
+
         JPanel jpFelh = new JPanel();
+        jpFelh.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10,10,10,20);
 
-        JScrollPane jScrollPane = new JScrollPane();
-        jScrollPane.add(new JLabel("HEllo"));
+        gbc.gridx = 0;
+        jpFelh.add(new JLabel("Felhasználó név"));
+        gbc.gridx = 1;
+        jpFelh.add(new JLabel("Teljes név"));
+        gbc.gridx = 2;
+        jpFelh.add(new JLabel("Felhasználó aktív"));
+        gbc.gridx = 3;
+        jpFelh.add(new JLabel("Felhasználó tipusa"));
 
-        jpFelh.add(jScrollPane);
-        jfFelh.add(jpFelh);
+        gbc.gridy = 1;
+        ArrayList<Felhasznalo> flist = cont.felhasznalokLista();
+        for (int i = 0; i <flist.size() ; i++) {
+            gbc.gridx = 0;
+            jpFelh.add(new JLabel(flist.get(i).getFelhasznalonev()),gbc);
+            gbc.gridx = 1;
+            jpFelh.add(new JLabel(flist.get(i).getTeljesNev()),gbc);
+            gbc.gridx = 2;
+            JComboBox jcbAktiv = new JComboBox();
+            jcbAktiv.addItem(0);
+            jcbAktiv.addItem(1);
+            jcbAktiv.setPrototypeDisplayValue(0);
+            jcbAktiv.setSelectedItem(flist.get(i).getAktiv());
+            jpFelh.add(jcbAktiv,gbc);
+
+            gbc.gridx = 3;
+            JComboBox jcbTipus = new JComboBox();
+            jcbTipus.addItem(cont.felhtipus.get("Diák"));
+            jcbTipus.addItem(cont.felhtipus.get("Tanár"));
+            jcbTipus.addItem(cont.felhtipus.get("Admin"));
+            jcbTipus.setPrototypeDisplayValue("Admin");
+            jcbTipus.setSelectedItem(flist.get(i).getTipus());
+            jpFelh.add(jcbTipus,gbc);
+
+            gbc.gridy++;
+            gbc.gridx = 0;
+        }
+
+
+
+        JScrollPane jScrollPane = new JScrollPane(jpFelh);
+        jScrollPane.setPreferredSize(new Dimension(600,400));
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+
+        jpMain.add(jScrollPane);
+        jfFelh.add(jpMain);
         return jfFelh;
     }
 

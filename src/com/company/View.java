@@ -16,14 +16,14 @@ public class View extends JFrame{
         if(this.controller==null && controller!=null)
             this.controller=controller;
         fooldalBeallit();
-        diakBejelentkezes().setVisible(true);
+        bejelentkezes().setVisible(true);
 
     }
 
     /**
      *Bejelentkezés ablakot jeleníti meg.
      */
-    private JFrame diakBejelentkezes() {
+    private JFrame bejelentkezes() {
         JPanel pan;
         JLabel jlNev;
         JLabel jlJelszo;
@@ -58,9 +58,16 @@ public class View extends JFrame{
             if (controller.letezikEfelhasznalo(jtfNev.getText())) {
                 String jelszoS = new String(jpfJelszo.getPassword());
                 if(controller.helyesJelszoE(jtfNev.getText(), jelszoS)){
-                    JOptionPane.showMessageDialog(bejelFrame, "Sikeres Bejelentkezés");
-                    controller.bejelentkezesFolyamat(jtfNev.getText());
-                    bejelFrame.setVisible(false);
+                    //JOptionPane.showMessageDialog(bejelFrame, "Sikeres Bejelentkezés");
+                    if (controller.aktiveE(jtfNev.getText())) {
+                        controller.bejelentkezesFolyamat(jtfNev.getText());
+                        bejelFrame.setVisible(false);
+                    }else{
+                        JOptionPane.showMessageDialog(bejelFrame,
+                                "Inaktív Felhasználó nem jelentkezhet be!",
+                                "Inaktív felhasználó",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                 }else{
                     JOptionPane.showMessageDialog(bejelFrame, "Hibás jelszó");
                 }
@@ -148,7 +155,7 @@ public class View extends JFrame{
         JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
         jbBejel.addActionListener(ee -> {
             regisztracioFrame.setVisible(false);
-            diakBejelentkezes().setVisible(true);
+            bejelentkezes().setVisible(true);
         });
 
         regPan.add(jlFnev);

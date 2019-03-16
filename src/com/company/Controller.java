@@ -7,14 +7,24 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller {
     private Modell modell;
     private View view;
+    public HashMap<String,Integer> felhtipus;
+
+
 
     public Controller() {
         modell = new Modell();
         view = new View(this);
+
+        felhtipus = new HashMap<>();
+        felhtipus.put("Diák",0);
+        felhtipus.put("Tanár",1);
+        felhtipus.put("Admin",2);
     }
 
     /**
@@ -40,6 +50,20 @@ public class Controller {
         return helyesjelszo;
     }
 
+    public boolean aktiveE(String fnev){
+        boolean aktiv = false;
+        String SQL_JELSZO = "SELECT aktiv FROM felhasznalok WHERE felhasznaloNev='"+fnev+"';";
+        try {
+            Statement stFelhasznalok = modell.getCON().createStatement();
+            ResultSet rs = stFelhasznalok.executeQuery(SQL_JELSZO);
+            if (rs.next() && rs.getInt(1)==0){
+                aktiv = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return aktiv;
+    }
 
     /**
      * A bejelentkezés folyamata. Itt jön létre a Felhasználó objektum.
@@ -217,7 +241,7 @@ public class Controller {
                 ResultSet rs = st.executeQuery(SQL_FELHASZNALOIADATOK);
                 while(rs.next()){
                     System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getInt(5)+" "+rs.getInt(6)+" "+rs.getInt(7)+" "+rs.getInt(8));
-                    felhasznalo=new Felhasznalo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getInt(8));
+                    felhasznalo=new Felhasznalo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getInt(9));
                 }
             }catch (SQLException e){
                e.printStackTrace();
@@ -235,6 +259,24 @@ public class Controller {
 
     public void ujablakmegynit(JFrame fr){
         fr.setVisible(true);
+    }
+
+    public ArrayList<Felhasznalo> felhasznalokLista(){
+        ArrayList<Felhasznalo> felhasznL = new ArrayList<>();
+
+        String SQL_FELHASZNALOK = "SELECT * FROM felhasznalok";
+
+        try {
+            Statement st = modell.getCON().createStatement();
+            ResultSet rs = st.executeQuery(SQL_FELHASZNALOK);
+            while (rs.next()){
+                felhasznL.add(new Felhasznalo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getInt(9)));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return felhasznL;
     }
 
 
