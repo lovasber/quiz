@@ -126,6 +126,8 @@ public class AdminView extends JPanel {
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5,5,5,5);
+        JPanel jpMain = new JPanel();
+        jpMain.setLayout(new SpringLayout());
         JPanel jpUjkerdes = new JPanel();
         jpUjkerdes.setLayout(gbl);
 
@@ -202,8 +204,8 @@ public class AdminView extends JPanel {
         gbc.gridwidth = 2;
         gbc.fill = 2;
         jpUjkerdes.add(jbOk,gbc);
-
-        jfUjkerdes.add(jpUjkerdes);
+        jpMain.add(jpUjkerdes);
+        jfUjkerdes.add(jpMain);
         return jfUjkerdes;
     }
 
@@ -228,10 +230,15 @@ public class AdminView extends JPanel {
         jfFelh.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jfFelh.setMinimumSize(new Dimension(1000,700));
         JPanel jpMain = new JPanel();
+        jpMain.setLayout(new GridBagLayout());
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.anchor = GridBagConstraints.WEST;
+        gbcMain.fill = GridBagConstraints.NONE;
 
         JPanel jpFelh = new JPanel();
         jpFelh.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(10,10,10,20);
 
         gbc.gridx = 0;
@@ -277,8 +284,74 @@ public class AdminView extends JPanel {
         jScrollPane.setPreferredSize(new Dimension(600,400));
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+        jpMain.add(jScrollPane,gbcMain);
 
-        jpMain.add(jScrollPane);
+        JPanel jpUjFelhasznalo = new JPanel();
+        jpUjFelhasznalo.setLayout(new GridBagLayout());
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        gbc2.insets = new Insets(5,5,5,5);
+        JLabel jlFnev = new JLabel("Felhasználó név");
+        JLabel jlTeljesNev = new JLabel("Teljes név");
+        JLabel jlJelszo = new JLabel("Jelszó");
+        JLabel jlTipus = new JLabel("Típus");
+        JLabel jlAktiv = new JLabel("Aktiv");
+
+        JTextField jtfFelhasznalonev = new JTextField(20);
+        JTextField jtfTeljesnev = new JTextField(20);
+        JPasswordField jpfJelszo = new JPasswordField(20);
+        JComboBox jcbTipus = new JComboBox();
+        jcbTipus.setPrototypeDisplayValue("szint");
+        jcbTipus.addItem(0);
+        jcbTipus.addItem(1);
+        jcbTipus.addItem(2);
+        JComboBox jcbAktiv = new JComboBox();
+        jcbAktiv.setPrototypeDisplayValue("akt");
+        jcbAktiv.addItem(0);
+        jcbAktiv.addItem(1);
+        JButton jbLetrehoz = new JButton("Felhasználót létrehoz");
+        jbLetrehoz.addActionListener(e -> {
+            cont.regisztracio(jtfFelhasznalonev.getText(),jtfTeljesnev.getText(),cont.titkosit(new String(jpfJelszo.getPassword())),(int)jcbTipus.getSelectedItem(),(int)jcbAktiv.getSelectedItem());
+            JOptionPane.showMessageDialog(jfFelh,"Sikeresen létrehozta a felhasználót");
+        });
+
+        jpUjFelhasznalo.add(jlFnev,gbc2);
+        gbc2.gridx = 1;
+        jpUjFelhasznalo.add(jtfFelhasznalonev,gbc2);
+        gbc2.gridy=1;
+        gbc2.gridx=0;
+        jpUjFelhasznalo.add(jlTeljesNev,gbc2);
+        gbc2.gridy=1;
+        gbc2.gridx=1;
+        jpUjFelhasznalo.add(jtfTeljesnev,gbc2);
+        gbc2.gridy=2;
+        gbc2.gridx=0;
+        jpUjFelhasznalo.add(jlJelszo,gbc2);
+        gbc2.gridy=2;
+        gbc2.gridx=1;
+        jpUjFelhasznalo.add(jpfJelszo,gbc2);
+        gbc2.gridy=3;
+        gbc2.gridx=0;
+        jpUjFelhasznalo.add(jlTipus,gbc2);
+        gbc2.gridy=3;
+        gbc2.gridx=1;
+        jpUjFelhasznalo.add(jcbTipus,gbc2);
+        gbc2.gridy=4;
+        gbc2.gridx=0;
+        jpUjFelhasznalo.add(jlAktiv,gbc2);
+        gbc2.gridy=4;
+        gbc2.gridx=1;
+        jpUjFelhasznalo.add(jcbAktiv,gbc2);
+        gbc2.gridy=5;
+        gbc2.gridx=0;
+        gbc2.gridwidth = 2;
+        gbc2.fill=2;
+        jpUjFelhasznalo.add(jbLetrehoz,gbc2);
+
+
+        JScrollPane jscUjfelh = new JScrollPane(jpUjFelhasznalo);
+
+        gbcMain.gridx=1;
+        jpMain.add(jscUjfelh,gbcMain );
         jfFelh.add(jpMain);
         return jfFelh;
     }

@@ -174,6 +174,23 @@ public class Controller {
     }
 
     /**
+     * Ez a metódus létrehozza a felhasználókat az adatbázisban
+     * @param felhasznalonev
+     * @param teljesNev
+     * @param jelszo
+     */
+    public void regisztracio(String felhasznalonev, String teljesNev, String jelszo,int tipus,int aktiv){
+        String SQL_UJFELHASZNALOT_LETREHOZZ = "INSERT INTO `felhasznalok` (`id`, `felhasznaloNev`, `teljesNev`, `jelszo`, `szint`, `tipus`, `joValaszDb`, `rosszValaszDb`,`aktiv`) " +
+                "VALUES ( NULL , '" + felhasznalonev + "', '" + teljesNev + "','" + jelszo + "', '1', '"+tipus+"', '0', '0','"+aktiv+"')";
+        try {
+            Statement stm = modell.getCON().createStatement();
+            stm.executeUpdate(SQL_UJFELHASZNALOT_LETREHOZZ);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Két String típusu változót vet össze a függvény, megnézi, hogy egyeznek-e.
      * @param jelszo
      * @param jelszomeg
