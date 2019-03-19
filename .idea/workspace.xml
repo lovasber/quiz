@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="01688142-27e4-4b71-a713-d99c8ee74b72" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/AdatbazisKapcsolat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/AdatbazisKapcsolat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/AdminView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Kerdes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Kerdes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/TanarView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/TanarView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/View.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,7 +20,7 @@
     <SUITE FILE_PATH="coverage/Program$Main.ic" NAME="Main Coverage Results" MODIFIED="1552413157911" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="59696" />
+    <option name="totalTimeSeconds" value="61422" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
   </component>
@@ -33,28 +29,38 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="279" column="23" selection-start-line="279" selection-start-column="23" selection-end-line="279" selection-end-column="23" />
+            <state relative-caret-position="409">
+              <caret line="39" column="13" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9964#9965#0" expanded="true" />
-                <element signature="e#10010#10011#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/company/Modell.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#896#897#0" expanded="true" />
-                <element signature="e#942#943#0" expanded="true" />
-                <element signature="e#985#986#0" expanded="true" />
-                <element signature="e#1019#1020#0" expanded="true" />
+                <element signature="docComment;method#letezikEfelhasznalo#0;class#Controller#0" />
+                <element signature="method#letezikEfelhasznalo#0;class#Controller#0" />
+                <element signature="docComment;method#diakRegisztracio#0;class#Controller#0" />
+                <element signature="method#diakRegisztracio#0;class#Controller#0" />
+                <element signature="docComment;method#regisztracio#0;class#Controller#0" />
+                <element signature="method#regisztracio#0;class#Controller#0" />
+                <element signature="e#7148#7283#0" />
+                <element signature="docComment;method#egyezoJelszo#0;class#Controller#0" />
+                <element signature="docComment;method#szabadFelhasznaloNev#0;class#Controller#0" />
+                <element signature="method#szabadFelhasznaloNev#0;class#Controller#0" />
+                <element signature="docComment;method#titkosit#1;class#Controller#0" />
+                <element signature="method#titkosit#1;class#Controller#0" />
+                <element signature="docComment;method#felhasznaloBetolt#0;class#Controller#0" />
+                <element signature="method#felhasznaloBetolt#0;class#Controller#0" />
+                <element signature="docComment;method#felhasznaloGetter#0;class#Controller#0" />
+                <element signature="method#felhasznalokLista#0;class#Controller#0" />
+                <element signature="method#kerdesLetrehoz#0;class#Controller#0" />
+                <element signature="docComment;method#letezoFoKategoriak#0;class#Controller#0" />
+                <element signature="method#letezoFoKategoriak#0;class#Controller#0" />
+                <element signature="docComment;method#letezoAlKategoriak#0;class#Controller#0" />
+                <element signature="method#letezoAlKategoriak#0;class#Controller#0" />
+                <element signature="e#12727#12946#0" />
+                <element signature="docComment;method#fokatLetrehoz#0;class#Controller#0" />
+                <element signature="method#fokatLetrehoz#0;class#Controller#0" />
+                <element signature="docComment;method#alkatLetrehoz#0;class#Controller#0" />
+                <element signature="method#alkatLetrehoz#0;class#Controller#0" />
+                <element signature="docComment;method#kerdesLetrehoz#1;class#Controller#0" />
+                <element signature="method#kerdesLetrehoz#1;class#Controller#0" />
               </folding>
             </state>
           </provider>
@@ -63,50 +69,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/View.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-66">
-              <caret line="264" column="19" selection-start-line="264" selection-start-column="19" selection-end-line="264" selection-end-column="19" />
+            <state relative-caret-position="255">
+              <caret line="278" column="22" lean-forward="true" selection-start-line="278" selection-start-column="22" selection-end-line="278" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#269#270#0" expanded="true" />
-                <element signature="e#327#328#0" expanded="true" />
-                <element signature="e#247#248#0" expanded="true" />
-                <element signature="e#287#288#0" expanded="true" />
-                <element signature="e#191#192#0" expanded="true" />
-                <element signature="e#216#217#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/company/Kerdes.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
-              <folding>
-                <element signature="e#720#721#0" expanded="true" />
-                <element signature="e#749#750#0" expanded="true" />
-                <element signature="e#777#778#0" expanded="true" />
-                <element signature="e#812#813#0" expanded="true" />
-                <element signature="e#843#844#0" expanded="true" />
-                <element signature="e#883#884#0" expanded="true" />
-                <element signature="e#919#920#0" expanded="true" />
-                <element signature="e#958#959#0" expanded="true" />
-                <element signature="e#993#994#0" expanded="true" />
-                <element signature="e#1037#1038#0" expanded="true" />
-                <element signature="e#1077#1078#0" expanded="true" />
-                <element signature="e#1109#1110#0" expanded="true" />
-                <element signature="e#1140#1141#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+            <state relative-caret-position="187">
+              <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -123,11 +99,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/AdminView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2718">
-              <caret line="151" column="22" lean-forward="true" selection-start-line="151" selection-start-column="22" selection-end-line="151" selection-end-column="22" />
+            <state relative-caret-position="444">
+              <caret line="317" column="38" selection-start-line="317" selection-start-column="38" selection-end-line="317" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -176,11 +152,11 @@
         <option value="$PROJECT_DIR$/src/com/company/DiakView.java" />
         <option value="$PROJECT_DIR$/src/com/company/Felhasznalo.java" />
         <option value="$PROJECT_DIR$/src/com/company/View.java" />
-        <option value="$PROJECT_DIR$/src/com/company/AdminView.java" />
-        <option value="$PROJECT_DIR$/src/com/company/Controller.java" />
         <option value="$PROJECT_DIR$/src/com/company/AdatbazisKapcsolat.java" />
         <option value="$PROJECT_DIR$/src/com/company/Kerdes.java" />
         <option value="$PROJECT_DIR$/src/com/company/TanarView.java" />
+        <option value="$PROJECT_DIR$/src/com/company/Controller.java" />
+        <option value="$PROJECT_DIR$/src/com/company/AdminView.java" />
       </list>
     </option>
   </component>
@@ -340,15 +316,22 @@
       <option name="project" value="LOCAL" />
       <updated>1552920195787</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Kategória létrehozás Front-back, Kérdes Osztály">
+      <created>1553001689896</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1553001689896</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.41396105" visible="true" weight="0.2238806" />
-      <window_info id="Structure" order="1" sideWeight="0.58603895" side_tool="true" visible="true" weight="0.2238806" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.41233766" visible="true" weight="0.2260128" />
+      <window_info id="Structure" order="1" sideWeight="0.58766234" side_tool="true" visible="true" weight="0.2260128" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -455,7 +438,8 @@
     <MESSAGE value="AdminView gombok" />
     <MESSAGE value="AdminView Felhasználók megjelennek" />
     <MESSAGE value="Admin tud felhasználót létrehozni" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin tud felhasználót létrehozni" />
+    <MESSAGE value="Kategória létrehozás Front-back, Kérdes Osztály" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kategória létrehozás Front-back, Kérdes Osztály" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.java" />
@@ -495,20 +479,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/Felhasznalo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/DiakView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -527,9 +497,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/DiakView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/Modell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#896#897#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
+            <element signature="e#985#986#0" expanded="true" />
+            <element signature="e#1019#1020#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/Kerdes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
+        <state relative-caret-position="357">
           <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
           <folding>
             <element signature="e#720#721#0" expanded="true" />
@@ -549,62 +540,75 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/View.java">
+    <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-66">
-          <caret line="264" column="19" selection-start-line="264" selection-start-column="19" selection-end-line="264" selection-end-column="19" />
+        <state relative-caret-position="187">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#269#270#0" expanded="true" />
-            <element signature="e#327#328#0" expanded="true" />
-            <element signature="e#247#248#0" expanded="true" />
-            <element signature="e#287#288#0" expanded="true" />
-            <element signature="e#191#192#0" expanded="true" />
-            <element signature="e#216#217#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="278" column="22" lean-forward="true" selection-start-line="278" selection-start-column="22" selection-end-line="278" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="279" column="23" selection-start-line="279" selection-start-column="23" selection-end-line="279" selection-end-column="23" />
+        <state relative-caret-position="409">
+          <caret line="39" column="13" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9964#9965#0" expanded="true" />
-            <element signature="e#10010#10011#0" expanded="true" />
+            <element signature="docComment;method#letezikEfelhasznalo#0;class#Controller#0" />
+            <element signature="method#letezikEfelhasznalo#0;class#Controller#0" />
+            <element signature="docComment;method#diakRegisztracio#0;class#Controller#0" />
+            <element signature="method#diakRegisztracio#0;class#Controller#0" />
+            <element signature="docComment;method#regisztracio#0;class#Controller#0" />
+            <element signature="method#regisztracio#0;class#Controller#0" />
+            <element signature="e#7148#7283#0" />
+            <element signature="docComment;method#egyezoJelszo#0;class#Controller#0" />
+            <element signature="docComment;method#szabadFelhasznaloNev#0;class#Controller#0" />
+            <element signature="method#szabadFelhasznaloNev#0;class#Controller#0" />
+            <element signature="docComment;method#titkosit#1;class#Controller#0" />
+            <element signature="method#titkosit#1;class#Controller#0" />
+            <element signature="docComment;method#felhasznaloBetolt#0;class#Controller#0" />
+            <element signature="method#felhasznaloBetolt#0;class#Controller#0" />
+            <element signature="docComment;method#felhasznaloGetter#0;class#Controller#0" />
+            <element signature="method#felhasznalokLista#0;class#Controller#0" />
+            <element signature="method#kerdesLetrehoz#0;class#Controller#0" />
+            <element signature="docComment;method#letezoFoKategoriak#0;class#Controller#0" />
+            <element signature="method#letezoFoKategoriak#0;class#Controller#0" />
+            <element signature="docComment;method#letezoAlKategoriak#0;class#Controller#0" />
+            <element signature="method#letezoAlKategoriak#0;class#Controller#0" />
+            <element signature="e#12727#12946#0" />
+            <element signature="docComment;method#fokatLetrehoz#0;class#Controller#0" />
+            <element signature="method#fokatLetrehoz#0;class#Controller#0" />
+            <element signature="docComment;method#alkatLetrehoz#0;class#Controller#0" />
+            <element signature="method#alkatLetrehoz#0;class#Controller#0" />
+            <element signature="docComment;method#kerdesLetrehoz#1;class#Controller#0" />
+            <element signature="method#kerdesLetrehoz#1;class#Controller#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/Modell.java">
+    <entry file="file://$PROJECT_DIR$/src/com/company/Felhasznalo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#896#897#0" expanded="true" />
-            <element signature="e#942#943#0" expanded="true" />
-            <element signature="e#985#986#0" expanded="true" />
-            <element signature="e#1019#1020#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/AdminView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2718">
-          <caret line="151" column="22" lean-forward="true" selection-start-line="151" selection-start-column="22" selection-end-line="151" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+        <state relative-caret-position="444">
+          <caret line="317" column="38" selection-start-line="317" selection-start-column="38" selection-end-line="317" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

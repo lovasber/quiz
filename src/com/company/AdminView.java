@@ -8,7 +8,7 @@ import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AdminView extends JPanel {
+public class AdminView extends JPanel implements AdatbazisKapcsolat {
     JButton jbUjKat;
     JButton jbUjKerdes;
     JButton jbKerdesSzerk;
@@ -111,55 +111,42 @@ public class AdminView extends JPanel {
         });
 
         gbc.insets = new Insets(5,5,5,5);
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         jpUjkat.add(jlCim,gbc);
-
         gbc.gridx = 0;
         gbc.gridy=1;
         jpUjkat.add(jlFokat,gbc);
-
         gbc.gridx = 1;
         gbc.gridy = 1;
         jpUjkat.add(jtfFokat,gbc);
-
         gbc.gridx = 0;
         gbc.gridy= 2;
         jpUjkat.add(jlFokatLeir,gbc);
-
         gbc.gridx = 1;
         gbc.gridy = 2;
         jpUjkat.add(jtfFokatLeir,gbc);
-
         gbc.gridx = 2;
         gbc.gridy = 2;
         jpUjkat.add(jbFokatOk,gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 3;
         jpUjkat.add(jlFokatValaszt,gbc);
-
         gbc.gridx = 1;
         gbc.gridy = 3;
         jpUjkat.add(jcKategoriak,gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 4;
         jpUjkat.add(jlAlkat,gbc);
-
         gbc.gridx = 1;
         gbc.gridy = 4;
         jpUjkat.add(jtfAlkat,gbc);
-
         gbc.gridx = 1;
         gbc.gridy = 5;
         jpUjkat.add(jtfAlkatLeir,gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 5;
         jpUjkat.add(jlAlkatLeir,gbc);
-
         gbc.gridx = 2;
         gbc.gridy = 5;
         jpUjkat.add(jbAlkatOk,gbc);
@@ -315,19 +302,20 @@ public class AdminView extends JPanel {
             jpFelh.add(new JLabel(flist.get(i).getTeljesNev()),gbc);
             gbc.gridx = 2;
             JComboBox jcbAktiv = new JComboBox();
-            jcbAktiv.addItem(0);
-            jcbAktiv.addItem(1);
-            jcbAktiv.setPrototypeDisplayValue(0);
-            jcbAktiv.setSelectedItem(flist.get(i).getAktiv());
+            jcbAktiv.addItem("Aktív");
+            jcbAktiv.addItem("Nem aktív");
+            jcbAktiv.setPrototypeDisplayValue("Nem aktiv");
+            jcbAktiv.setSelectedIndex(flist.get(i).getAktiv());
             jpFelh.add(jcbAktiv,gbc);
 
             gbc.gridx = 3;
             JComboBox jcbTipus = new JComboBox();
-            jcbTipus.addItem(cont.felhtipus.get("Diák"));
-            jcbTipus.addItem(cont.felhtipus.get("Tanár"));
-            jcbTipus.addItem(cont.felhtipus.get("Admin"));
+            for (int j = 0; j < FELHASZNLAOKTIPUS.length; j++) {
+                jcbTipus.addItem(FELHASZNLAOKTIPUS[j]);
+            }
+
             jcbTipus.setPrototypeDisplayValue("Admin");
-            jcbTipus.setSelectedItem(flist.get(i).getTipus());
+            jcbTipus.setSelectedIndex(flist.get(i).getTipus());
             jpFelh.add(jcbTipus,gbc);
 
             gbc.gridy++;
@@ -359,20 +347,20 @@ public class AdminView extends JPanel {
         JPasswordField jpfJelszoMeg = new JPasswordField(20);
         JComboBox jcbTipus = new JComboBox();
         jcbTipus.setPrototypeDisplayValue("szint");
-        jcbTipus.addItem(0);
-        jcbTipus.addItem(1);
-        jcbTipus.addItem(2);
+        for (int i = 0; i < FELHASZNLAOKTIPUS.length; i++) {
+            jcbTipus.addItem(FELHASZNLAOKTIPUS[i]);
+        }
         JComboBox jcbAktiv = new JComboBox();
-        jcbAktiv.setPrototypeDisplayValue("akt");
-        jcbAktiv.addItem(0);
-        jcbAktiv.addItem(1);
+        jcbAktiv.setPrototypeDisplayValue("nem aktív");
+        jcbAktiv.addItem("aktív");
+        jcbAktiv.addItem("nem aktív");
         JButton jbLetrehoz = new JButton("Felhasználót létrehoz");
         jbLetrehoz.addActionListener(e -> {
             String jelszo = new String(jpfJelszo.getPassword());
             String jelszoMeg = new String(jpfJelszoMeg.getPassword());
 
             if (jelszo.equals(jelszoMeg)){
-                cont.regisztracio(jtfFelhasznalonev.getText(),jtfTeljesnev.getText(),cont.titkosit(new String(jpfJelszo.getPassword())),(int)jcbTipus.getSelectedItem(),(int)jcbAktiv.getSelectedItem());
+                cont.regisztracio(jtfFelhasznalonev.getText(),jtfTeljesnev.getText(),cont.titkosit(new String(jpfJelszo.getPassword())),jcbTipus.getSelectedIndex(),(int)jcbAktiv.getSelectedIndex());
                 JOptionPane.showMessageDialog(jfFelh,"Sikeresen létrehozta a felhasználót");
             }else{
                 JOptionPane.showMessageDialog(jfFelh,"Nem egyezik a két jelszó!\nA felhasználó nem jött létre");

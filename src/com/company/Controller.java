@@ -157,11 +157,7 @@ public class Controller {
         return letezik;
     }
 
-    private char[] titkosit(char[] titkositando){
-        char[] titkostitott=titkositando;
 
-        return titkostitott;
-    }
 
     /**
      * Ez a metódus létrehozza a diák felhasználókat az adatbázisban
