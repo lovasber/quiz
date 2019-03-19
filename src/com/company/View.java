@@ -2,10 +2,20 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class View extends JFrame{
     public Controller controller = null;
-    JTabbedPane jt;
+    private JTabbedPane jt;
+    private JFrame regisztracioFrame;
+
+    public void setRegisztracioFrame(JFrame regisztracioFrame) {
+        this.regisztracioFrame = regisztracioFrame;
+    }
+
+    public JFrame getRegisztracioFrame() {
+        return regisztracioFrame;
+    }
 
     public JTabbedPane getJt() {
         return jt;
@@ -60,7 +70,11 @@ public class View extends JFrame{
                 if(controller.helyesJelszoE(jtfNev.getText(), jelszoS)){
                     //JOptionPane.showMessageDialog(bejelFrame, "Sikeres Bejelentkezés");
                     if (controller.aktiveE(jtfNev.getText())) {
-                        controller.bejelentkezesFolyamat(jtfNev.getText());
+                        try {
+                            controller.bejelentkezesFolyamat(jtfNev.getText());
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
                         bejelFrame.setVisible(false);
                     }else{
                         JOptionPane.showMessageDialog(bejelFrame,
@@ -99,7 +113,13 @@ public class View extends JFrame{
      *Regisztrációs ablak megjelenéséért felelós függvéy.
      */
     private JFrame regisztracio(){
-        JFrame regisztracioFrame = new JFrame();
+        regisztracioFrame = new JFrame();
+
+        regisztracioFrame.add(diakReg());
+        return regisztracioFrame;
+    }
+
+    private JPanel diakReg(){
         JPanel regPan = new JPanel();
 
         regisztracioFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -120,9 +140,14 @@ public class View extends JFrame{
         regPan.add(jrbDiak);
         regPan.add(jrbTanar);
         jrbTanar.addActionListener(e -> {
+            if (jrbTanar.isSelected()) {
                 regisztracioFrame.getContentPane().removeAll();
+
+
+                regisztracioFrame.getContentPane().add(tanarReg());
+                regisztracioFrame.revalidate();
                 regisztracioFrame.repaint();
-                regisztracioFrame.add(tanarReg());
+            }
         });
         JLabel jlFnev = new JLabel("Felhasználónév");
         JLabel jlTeljesNev = new JLabel("Teljes név");
@@ -168,9 +193,7 @@ public class View extends JFrame{
         regPan.add(jpfMegerosit);
         regPan.add(jbRegisztracio);
         regPan.add(jbBejel);
-
-        regisztracioFrame.add(regPan);
-        return regisztracioFrame;
+        return regPan;
     }
 
     /**
@@ -180,21 +203,45 @@ public class View extends JFrame{
         JPanel jpTanreg = new JPanel();
 
         jpTanreg.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
         ButtonGroup bgRadio = new ButtonGroup();
         JRadioButton jrbDiak = new JRadioButton("Diák");
+        jrbDiak.addActionListener(e -> {
+            if (jrbDiak.isSelected()){
+                regisztracioFrame.getContentPane().removeAll();
+                regisztracioFrame.getContentPane().add(diakReg());
+                regisztracioFrame.revalidate();
+            }
+        });
         JRadioButton jrbTanar = new JRadioButton("Tanár",true);
         bgRadio.add(jrbDiak);
         bgRadio.add(jrbTanar);
-        String tanariS ="Tanári regsisztráció esetén írjon emailt az alábbi email címre: " +
-                "lovas.bertalan97@gmail.com . Az üzenet tárgya legyen a következő:" +
-                "\"Quiz tanári regisztráció\".";
+        String tanariS ="<html>Tanári regsisztráció esetén írjon emailt az alábbi email címre: " +
+                "<br>lovas.bertalan97@gmail.com . Az üzenet tárgya legyen a következő:" +
+                "<br> \"Quiz tanári regisztráció\".</html>";
         JLabel jlTanregSzoveg = new JLabel(tanariS);
         JButton jbBejel = new JButton("Tovább a bejelentkezéshez");
+        jbBejel.addActionListener(ee -> {
+            regisztracioFrame.setVisible(false);
+            bejelentkezes().setVisible(true);
+        });
 
-        jpTanreg.add(jrbDiak);
-        jpTanreg.add(jrbTanar);
-        jpTanreg.add(jlTanregSzoveg);
-        jpTanreg.add(jbBejel);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        jpTanreg.add(jrbDiak,gbc);
+        gbc.gridx++;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10,5,10,5);
+        jpTanreg.add(jrbTanar,gbc);
+        gbc.gridx=0;
+        gbc.gridy++;
+        gbc.gridwidth=2;
+        jpTanreg.add(jlTanregSzoveg,gbc);
+        gbc.gridwidth=2;
+        gbc.gridy++;
+        jpTanreg.add(jbBejel,gbc);
         return jpTanreg;
     }
 

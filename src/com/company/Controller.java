@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -69,7 +70,7 @@ public class Controller {
      * A bejelentkezés folyamata. Itt jön létre a Felhasználó objektum.
      * @param fnev
      */
-    public void bejelentkezesFolyamat(String fnev) {
+    public void bejelentkezesFolyamat(String fnev) throws SQLException {
         String SQL_JELSZO = "SELECT id FROM felhasznalok WHERE felhasznalonev='"+ fnev +"';";
         int felhasznaloId = -1;
         try {
@@ -88,12 +89,18 @@ public class Controller {
         switch (felhasznaloTipus){
             case 0:
                 view.getJt().addTab("Quiz",new DiakView(this));
+                view.getContentPane().setBackground(new Color(164, 197, 249));
+                view.setTitle("DiakQuiz");
                 break;
             case 1:
                 view.getJt().addTab("Quiz",new TanarView(this));
+                view.getContentPane().setBackground(new Color(249, 244, 164));
+                view.setTitle("TanarQuiz");
                 break;
             case 2:
                 view.getJt().addTab("Quiz",new AdminView(this));
+                view.getContentPane().setBackground(new Color(249, 164, 164));
+                view.setTitle("AdminQuiz");
                 break;
                 default:
                     System.out.println("Nincs ilyen típus!");
@@ -157,7 +164,7 @@ public class Controller {
     }
 
     /**
-     * Ez a metódus létrehozza a felhasználókat az adatbázisban
+     * Ez a metódus létrehozza a diák felhasználókat az adatbázisban
      * @param felhasznalonev
      * @param teljesNev
      * @param jelszo
@@ -295,6 +302,117 @@ public class Controller {
 
         return felhasznL;
     }
+
+    public void kerdesLetrehoz(){
+        //String SQL_UJFELHASZNALOT_LETREHOZZ = "INSERT INTO `felhasznalok` (`id`, `felhasznaloNev`, `teljesNev`, `jelszo`, `szint`, `tipus`, `joValaszDb`, `rosszValaszDb`,`aktiv`) " +
+          //      "VALUES ( NULL , '" + felhasznalonev + "', '" + teljesNev + "','" + jelszo + "', '1', '"+tipus+"', '0', '0','"+aktiv+"')";
+        try {
+            Statement stm = modell.getCON().createStatement();
+            //stm.executeUpdate(SQL_UJFELHASZNALOT_LETREHOZZ);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Az összes eddig létrhozott kategóriát adja vissza egy ArrayList ben
+     * @return
+     */
+    public ArrayList<String> letezoFoKategoriak() {
+        ArrayList<String> katList = new ArrayList<>();
+        String SQL_KATEGORIAK = "SELECT katAzon FROM fokategoriamagyarazat";
+
+        Statement stm = null;
+        try {
+            stm = modell.getCON().createStatement();
+            ResultSet res = stm.executeQuery(SQL_KATEGORIAK);
+            while (res.next()){
+                katList.add(res.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return katList;
+    }
+
+
+    /**
+     * Az összes eddig létrhozott kategóriát adja vissza egy ArrayList ben
+     * @return
+     */
+    public ArrayList<String> letezoAlKategoriak() {
+        ArrayList<String> katList = new ArrayList<>();
+        String SQL_KATEGORIAK = "SELECT katAzon FROM alkategoriamagyarazat";
+        Statement stm = null;
+        try {
+            stm = modell.getCON().createStatement();
+            ResultSet res = stm.executeQuery(SQL_KATEGORIAK);
+            while (res.next()){
+                katList.add(res.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return katList;
+    }
+
+    /**
+     *Új főkategóriát hoz létre az adatbázisban
+     * @param katnev
+     */
+    public void fokatLetrehoz(String katnev,String katleiras){
+        String SQL_KATBESZUR = "INSERT into fokategoriamagyarazat VALUES('"+katnev+"','"+katleiras+"')";
+
+        try {
+            Statement st = modell.getCON().createStatement();
+            st.executeUpdate(SQL_KATBESZUR);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * Alkategóriát hoz létre.
+     * @param katnev
+     * @param fokat
+     * @param katleiras
+     */
+    public void alkatLetrehoz(String katnev,String fokat,String katleiras){
+        String SQL_ALKATBESZUR = "INSERT INTO `alkategoriamagyarazat` (`katAzon`, `fokatid`, `katLeiras`, `pelda`) VALUES ('"+katnev+"', '"+fokat+"', '"+katleiras+"', NULL)";
+
+        try {
+            Statement st = modell.getCON().createStatement();
+            st.executeUpdate(SQL_ALKATBESZUR);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Új kérdést hoz létre.
+     * @param fokatnev
+     * @param alkat
+     */
+    public void kerdesLetrehoz(String fokatnev,String alkat,int tipus){
+        String SQL_ALKATBESZUR = "INSERT INTO `kerdes` (`id`, `foKategoria`, `alKategoria`, `kerdesSzovege`, `valasz`, `pontszam`) VALUES (NULL, '"+fokatnev+"', '"+alkat+"', '', '', '')";
+
+        try {
+            Statement st = modell.getCON().createStatement();
+            st.executeUpdate(SQL_ALKATBESZUR);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 
 
 

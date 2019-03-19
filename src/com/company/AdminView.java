@@ -1,9 +1,11 @@
 package com.company;
 
 import com.sun.javaws.util.JfxHelper;
+import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AdminView extends JPanel {
@@ -14,12 +16,16 @@ public class AdminView extends JPanel {
     JButton jbFelhasznalok;
     Controller cont;
 
-    public AdminView(Controller conntroller) {
+    public AdminView(Controller conntroller)  throws SQLException {
         this.cont = conntroller;
         super.setLayout(new FlowLayout());
         jbUjKat = new JButton("Új kategória létrehozása");
         jbUjKat.addActionListener(e -> {
-            conntroller.ujablakmegynit(ujKategoria());
+            try {
+                conntroller.ujablakmegynit(ujKategoria());
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
         });
         jbUjKerdes = new JButton("Új kérdés létrehozása");
         jbUjKerdes.addActionListener(e -> {
@@ -49,7 +55,7 @@ public class AdminView extends JPanel {
 
 
 
-    private JFrame ujKategoria(){
+    private JFrame ujKategoria() throws SQLException {
         JFrame jfUjkat = new JFrame();
         jfUjkat.setTitle("Quiz 1.0");
         jfUjkat.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -61,16 +67,48 @@ public class AdminView extends JPanel {
         GridBagConstraints gbc =  new GridBagConstraints();
         JLabel jlCim = new JLabel("Új kategória létrehozása");
         JLabel jlFokat = new JLabel("Fő kategória");
-        JTextField jtfFokat = new JTextField();
-        jtfFokat.setColumns(20);
+        JLabel jlFokatLeir = new JLabel("Fő kategória leírása");
+        JTextField jtfFokat = new JTextField(20);
+        JTextField jtfFokatLeir = new JTextField(20);
+
         JButton jbFokatOk = new JButton("OK");
+        jbFokatOk.addActionListener(e -> {
+            if (jtfFokat.getText().length()!=0 && jtfFokatLeir.getText().length()!=0){
+                if (cont.letezoFoKategoriak().contains(jtfFokat.getText())){
+                    JOptionPane.showMessageDialog(jfUjkat,"Ilyen főkategóra már létezik!");
+                }else{
+                    cont.fokatLetrehoz(jtfFokat.getText(),jtfFokatLeir.getText());
+                    JOptionPane.showMessageDialog(jfUjkat,"Sikeresen létrehozott egy főkategóriaát");
+                }
+            }else{
+                JOptionPane.showMessageDialog(jfUjkat,"Kérem töltse ki az összes mezőt!");
+            }
+
+        });
         JLabel jlFokatValaszt = new JLabel("Fő kategória kiválasztása");
         JComboBox jcKategoriak = new JComboBox();
         jcKategoriak.setPrototypeDisplayValue("Kategóriák");
+        for (int i = 0; i < cont.letezoFoKategoriak().size(); i++) {
+            jcKategoriak.addItem(cont.letezoFoKategoriak().get(i));
+        }
         JLabel jlAlkat = new JLabel("Alkategória létreozása");
-        JTextField jtfAlkat = new JTextField();
-        jtfAlkat.setColumns(20);
+        JLabel jlAlkatLeir = new JLabel("Alkategória leírása");
+        JTextField jtfAlkat = new JTextField(20);
+        JTextField jtfAlkatLeir = new JTextField(20);
+
         JButton jbAlkatOk = new JButton("OK");
+        jbAlkatOk.addActionListener( e->{
+            if(jtfAlkat.getText().length()!=0 && jtfAlkatLeir.getText().length()!=0){
+                if (cont.letezoAlKategoriak().contains(jbAlkatOk.getText())){
+                    JOptionPane.showMessageDialog(jfUjkat,"Ilyen alkategória már létezik");
+                }else{
+                    cont.alkatLetrehoz(jtfAlkat.getText(),jcKategoriak.getSelectedItem().toString(),jtfAlkatLeir.getText());
+                    JOptionPane.showMessageDialog(jfUjkat,"Sikeresen létrehozott egy alkategóriát");
+                }
+            }else{
+                JOptionPane.showMessageDialog(jfUjkat,"Kérem töltse ki az összes mezőt!");
+            }
+        });
 
         gbc.insets = new Insets(5,5,5,5);
 
@@ -79,25 +117,31 @@ public class AdminView extends JPanel {
         jpUjkat.add(jlCim,gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy=1;
         jpUjkat.add(jlFokat,gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         jpUjkat.add(jtfFokat,gbc);
 
-        gbc.gridwidth = 1;
-
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        jpUjkat.add(jbFokatOk,gbc);
-
         gbc.gridx = 0;
-        gbc.gridy = 2;
-        jpUjkat.add(jlFokatValaszt,gbc);
+        gbc.gridy= 2;
+        jpUjkat.add(jlFokatLeir,gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
+        jpUjkat.add(jtfFokatLeir,gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        jpUjkat.add(jbFokatOk,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        jpUjkat.add(jlFokatValaszt,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
         jpUjkat.add(jcKategoriak,gbc);
 
         gbc.gridx = 0;
@@ -108,8 +152,16 @@ public class AdminView extends JPanel {
         gbc.gridy = 4;
         jpUjkat.add(jtfAlkat,gbc);
 
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        jpUjkat.add(jtfAlkatLeir,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        jpUjkat.add(jlAlkatLeir,gbc);
+
         gbc.gridx = 2;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         jpUjkat.add(jbAlkatOk,gbc);
 
         jfUjkat.add(jpUjkat);
@@ -212,6 +264,10 @@ public class AdminView extends JPanel {
     private JFrame kerdesSzerk() {
         JFrame jfKerdesSzerk = new JFrame();
         JPanel jpKerdesSzerk = new JPanel();
+        JLabel jlFokat = new JLabel("Főkategória");
+
+
+
         jfKerdesSzerk.add(jpKerdesSzerk);
         return jfKerdesSzerk;
     }
@@ -293,12 +349,14 @@ public class AdminView extends JPanel {
         JLabel jlFnev = new JLabel("Felhasználó név");
         JLabel jlTeljesNev = new JLabel("Teljes név");
         JLabel jlJelszo = new JLabel("Jelszó");
+        JLabel jlJelszoMeg = new JLabel("Jelszó megerősítése");
         JLabel jlTipus = new JLabel("Típus");
         JLabel jlAktiv = new JLabel("Aktiv");
 
         JTextField jtfFelhasznalonev = new JTextField(20);
         JTextField jtfTeljesnev = new JTextField(20);
         JPasswordField jpfJelszo = new JPasswordField(20);
+        JPasswordField jpfJelszoMeg = new JPasswordField(20);
         JComboBox jcbTipus = new JComboBox();
         jcbTipus.setPrototypeDisplayValue("szint");
         jcbTipus.addItem(0);
@@ -310,8 +368,16 @@ public class AdminView extends JPanel {
         jcbAktiv.addItem(1);
         JButton jbLetrehoz = new JButton("Felhasználót létrehoz");
         jbLetrehoz.addActionListener(e -> {
-            cont.regisztracio(jtfFelhasznalonev.getText(),jtfTeljesnev.getText(),cont.titkosit(new String(jpfJelszo.getPassword())),(int)jcbTipus.getSelectedItem(),(int)jcbAktiv.getSelectedItem());
-            JOptionPane.showMessageDialog(jfFelh,"Sikeresen létrehozta a felhasználót");
+            String jelszo = new String(jpfJelszo.getPassword());
+            String jelszoMeg = new String(jpfJelszoMeg.getPassword());
+
+            if (jelszo.equals(jelszoMeg)){
+                cont.regisztracio(jtfFelhasznalonev.getText(),jtfTeljesnev.getText(),cont.titkosit(new String(jpfJelszo.getPassword())),(int)jcbTipus.getSelectedItem(),(int)jcbAktiv.getSelectedItem());
+                JOptionPane.showMessageDialog(jfFelh,"Sikeresen létrehozta a felhasználót");
+            }else{
+                JOptionPane.showMessageDialog(jfFelh,"Nem egyezik a két jelszó!\nA felhasználó nem jött létre");
+            }
+
         });
 
         jpUjFelhasznalo.add(jlFnev,gbc2);
@@ -329,20 +395,28 @@ public class AdminView extends JPanel {
         gbc2.gridy=2;
         gbc2.gridx=1;
         jpUjFelhasznalo.add(jpfJelszo,gbc2);
-        gbc2.gridy=3;
+        gbc2.gridy++;
+        gbc2.gridx=0;
+        jpUjFelhasznalo.add(jlJelszoMeg,gbc2);
+        //gbc2.gridy++;
+        gbc2.gridx=1;
+        jpUjFelhasznalo.add(jpfJelszoMeg,gbc2);
+        gbc2.gridy++;
         gbc2.gridx=0;
         jpUjFelhasznalo.add(jlTipus,gbc2);
-        gbc2.gridy=3;
+        //gbc2.gridy++;
         gbc2.gridx=1;
         jpUjFelhasznalo.add(jcbTipus,gbc2);
-        gbc2.gridy=4;
+        gbc2.gridy++;
         gbc2.gridx=0;
         jpUjFelhasznalo.add(jlAktiv,gbc2);
-        gbc2.gridy=4;
+        //gbc2.gridy++;
         gbc2.gridx=1;
         jpUjFelhasznalo.add(jcbAktiv,gbc2);
-        gbc2.gridy=5;
+        gbc2.gridy++;
         gbc2.gridx=0;
+
+
         gbc2.gridwidth = 2;
         gbc2.fill=2;
         jpUjFelhasznalo.add(jbLetrehoz,gbc2);
