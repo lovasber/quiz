@@ -178,9 +178,25 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JLabel jlPontszam = new JLabel("Elérhető pontszám");
 
         JComboBox jcbFokat = new JComboBox();
-        jcbFokat.setPrototypeDisplayValue("Főkategória");
         JComboBox jcbAlkat = new JComboBox();
-        jcbAlkat.setPrototypeDisplayValue("Alkategória");
+        for (int i = 0; i < cont.letezoFoKategoriak().size(); i++) {
+            jcbFokat.addItem(cont.letezoFoKategoriak().get(i));
+        }
+        jcbFokat.setSelectedIndex(0);
+        jcbFokat.addActionListener(e -> {
+            jcbAlkat.removeAllItems();
+            for (int i = 0; i < cont.fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).size(); i++) {
+                jcbAlkat.addItem(cont.fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).get(i));
+            }
+        });
+
+        JLabel jlTipus = new JLabel("Kérdés típusa");
+        JComboBox jcbTipus = new JComboBox();
+        for (int i = 0; i < KERDESTIPUS.length; i++) {
+            jcbTipus.addItem(KERDESTIPUS[i]);
+        }
+
+
         JTextField jtfSzoveg  = new JTextField();
         jtfSzoveg.setColumns(50);
         JTextField jtfValasz  = new JTextField();
@@ -192,54 +208,57 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jcbPontszam.addItem(3);
         jcbPontszam.addItem(4);
         jcbPontszam.addItem(5);
+
         JButton jbOk = new JButton("Ok");
+        jbOk.addActionListener(e -> {
+            if (jtfSzoveg.getText().length()!=0 && jtfValasz.getText().length()!=0){
+                cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),"<html>"+jtfSzoveg.getText()+"</html>","<html>"+jtfValasz.getText()+"</html>",(int)jcbPontszam.getSelectedItem());
+            }else{
+                JOptionPane.showMessageDialog(jfUjkerdes,"Kérem töltsön ki minden mezőt");
+            }
+        });
 
         gbc.gridx = 0;
         gbc.gridy = 0;
         jpUjkerdes.add(jlCim,gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 1;
         jpUjkerdes.add(jlKerdesFokat,gbc);
-
         gbc.gridx = 1;
         gbc.gridy = 1;
         jpUjkerdes.add(jcbFokat,gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 2;
         jpUjkerdes.add(jlKerdesAlkat,gbc);
-
         gbc.gridx = 1;
         gbc.gridy = 2;
         jpUjkerdes.add(jcbAlkat,gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 3;
+        jpUjkerdes.add(jlTipus,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        jpUjkerdes.add(jcbTipus,gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
         jpUjkerdes.add(jlKerdesSzoveg,gbc);
-
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         jpUjkerdes.add(jtfSzoveg,gbc);
-
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         jpUjkerdes.add(jlValasz,gbc);
-
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         jpUjkerdes.add(jtfValasz,gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        jpUjkerdes.add(jlPontszam,gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 5;
-        jpUjkerdes.add(jcbPontszam,gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 6;
+        jpUjkerdes.add(jlPontszam,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        jpUjkerdes.add(jcbPontszam,gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.fill = 2;
         jpUjkerdes.add(jbOk,gbc);
@@ -404,11 +423,9 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         gbc2.gridy++;
         gbc2.gridx=0;
 
-
         gbc2.gridwidth = 2;
         gbc2.fill=2;
         jpUjFelhasznalo.add(jbLetrehoz,gbc2);
-
 
         JScrollPane jscUjfelh = new JScrollPane(jpUjFelhasznalo);
 

@@ -395,9 +395,9 @@ public class Controller {
      * @param fokatnev
      * @param alkat
      */
-    public void kerdesLetrehoz(String fokatnev,String alkat,int tipus){
-        String SQL_ALKATBESZUR = "INSERT INTO `kerdes` (`id`, `foKategoria`, `alKategoria`, `kerdesSzovege`, `valasz`, `pontszam`) VALUES (NULL, '"+fokatnev+"', '"+alkat+"', '', '', '')";
-
+    public void kerdesLetrehoz(String fokatnev,String alkat,int tipus,String kerdesSzoveg,String valasz,int pontszam){
+        String SQL_ALKATBESZUR = "INSERT INTO `kerdes` (`id`, `foKategoria`, `alKategoria`, `tipus`, `kerdesSzovege`, `valasz`, `pontszam`) " +
+                "VALUES (NULL, '"+fokatnev+"', '"+alkat+"','"+tipus+"','"+kerdesSzoveg+"', '"+valasz+"', '"+pontszam+"')";
         try {
             Statement st = modell.getCON().createStatement();
             st.executeUpdate(SQL_ALKATBESZUR);
@@ -407,8 +407,26 @@ public class Controller {
 
     }
 
+    /**
+     * Az adott főkategóriához tartozó alkategóriákat adja vissze.
+     * @param fokat
+     * @return
+     */
+    public ArrayList<String> fokatAlkategoriai(String fokat){
+        ArrayList<String> list = new ArrayList<>();
+        String SQL_KATAZON = "SELECT katAzon FROM alkategoriamagyarazat WHERE fokatid='"+fokat+"'";
+        try{
+            Statement st = modell.getCON().createStatement();
+            ResultSet res = st.executeQuery(SQL_KATAZON);
+            while(res.next()){
+                list.add(res.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-
+        return list;
+    }
 
 
 
