@@ -175,6 +175,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JLabel jlKerdesAlkat = new JLabel("Kérdés alkategóriája");
         JLabel jlKerdesSzoveg = new JLabel("Kérdés szövege");
         JLabel jlValasz = new JLabel("Válasz");
+        JLabel jlValaszLehet = new JLabel("Válasz lehetőségek");
         JLabel jlPontszam = new JLabel("Elérhető pontszám");
 
         JComboBox jcbFokat = new JComboBox();
@@ -200,6 +201,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JTextField jtfSzoveg  = new JTextField();
         jtfSzoveg.setColumns(50);
         JTextField jtfValasz  = new JTextField();
+        JTextField jtfValaszLehetosegek  = new JTextField(50);
         jtfValasz.setColumns(50);
         JComboBox jcbPontszam = new JComboBox();
         jcbPontszam.setPrototypeDisplayValue("pont");
@@ -211,8 +213,10 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
         JButton jbOk = new JButton("Ok");
         jbOk.addActionListener(e -> {
-            if (jtfSzoveg.getText().length()!=0 && jtfValasz.getText().length()!=0){
-                cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),"<html>"+jtfSzoveg.getText()+"</html>","<html>"+jtfValasz.getText()+"</html>",(int)jcbPontszam.getSelectedItem());
+            if (jtfSzoveg.getText().length()!=0 && jtfValasz.getText().length()!=0 && jcbAlkat.getSelectedItem()!=null){
+                cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),"<html>"+jtfSzoveg.getText()+"</html>","<html>"+jtfValasz.getText()+"</html>"
+                        ,"<html>"+jtfValaszLehetosegek.getText()+"</html>",(int)jcbPontszam.getSelectedItem());
+                JOptionPane.showMessageDialog(jfUjkerdes,"Sikeresen létrehozott egy kérdést!");
             }else{
                 JOptionPane.showMessageDialog(jfUjkerdes,"Kérem töltsön ki minden mezőt");
             }
@@ -253,12 +257,18 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpUjkerdes.add(jtfValasz,gbc);
         gbc.gridx = 0;
         gbc.gridy = 6;
-        jpUjkerdes.add(jlPontszam,gbc);
+        jpUjkerdes.add(jlValaszLehet,gbc);
         gbc.gridx = 1;
         gbc.gridy = 6;
-        jpUjkerdes.add(jcbPontszam,gbc);
+        jpUjkerdes.add(jtfValaszLehetosegek,gbc);
         gbc.gridx = 0;
         gbc.gridy = 7;
+        jpUjkerdes.add(jlPontszam,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        jpUjkerdes.add(jcbPontszam,gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 8;
         gbc.gridwidth = 2;
         gbc.fill = 2;
         jpUjkerdes.add(jbOk,gbc);
@@ -269,12 +279,70 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
     private JFrame kerdesSzerk() {
         JFrame jfKerdesSzerk = new JFrame();
-        JPanel jpKerdesSzerk = new JPanel();
-        JLabel jlFokat = new JLabel("Főkategória");
+        jfKerdesSzerk.setTitle("Quiz 1.0");
+        jfKerdesSzerk.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        jfKerdesSzerk.setMinimumSize(new Dimension(1000,700));
+        JPanel jpMain = new JPanel(new GridBagLayout());
+        JPanel jpKerdesSzerk = new JPanel(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2,5,2,5);
+        JLabel jlFokat = new JLabel("<html><u>Főkategória</u></html>");
+        JLabel jlAlkat = new JLabel("<html><u>Alkategória</u></html>");
+        JLabel jlTipus = new JLabel("<html><u>Típus<u></html>");
+        JLabel jlKerdesSzovege = new JLabel("<html><u>Kérdés szövege</u></html>");
+        JLabel jlValasz = new JLabel("<html><u>Válasz</u></html>");
+        JLabel jlValaszLehet = new JLabel("<html><u>Válasz lehetőségek</u></html>");
+        JLabel jlPontszam = new JLabel("<html><u>Pontszám</u></html>");
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        jpKerdesSzerk.add(jlFokat,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        jpKerdesSzerk.add(jlAlkat,gbc);
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        jpKerdesSzerk.add(jlTipus,gbc);
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        jpKerdesSzerk.add(jlKerdesSzovege,gbc);
+        gbc.gridx = 4;
+        gbc.gridy = 0;
+        jpKerdesSzerk.add(jlValasz,gbc);
+        gbc.gridx = 5;
+        gbc.gridy = 0;
+        jpKerdesSzerk.add(jlValaszLehet,gbc);
+        gbc.gridx = 6;
+        gbc.gridy = 0;
+        jpKerdesSzerk.add(jlPontszam,gbc);
+
+        gbc.gridy=1;
+        for (int i = 0; i < cont.letezoKerdesek().size(); i++) {
+            gbc.gridx=0;
+            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getFoKategoria()),gbc);
+            gbc.gridx++;
+            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getAlkategoria()),gbc);
+            gbc.gridx++;
+            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getTipusNev()),gbc);
+            gbc.gridx++;
+            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getKerdesSzovege()),gbc);
+            gbc.gridx++;
+            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getHelyesValasz()),gbc);
+            gbc.gridx++;
+            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getValaszlehetosegek()),gbc);
+            gbc.gridx++;
+            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getPontszam()+""),gbc);
+            gbc.gridy++;
+        }
 
 
-
-        jfKerdesSzerk.add(jpKerdesSzerk);
+        JScrollPane jsPane = new JScrollPane(jpKerdesSzerk);
+        //jsPane.setPreferredSize(new Dimension(600,400));
+        jsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //jpKerdesSzerk.add(jsPane);
+        jpMain.add(jsPane);
+        jfKerdesSzerk.add(jpMain);
         return jfKerdesSzerk;
     }
 

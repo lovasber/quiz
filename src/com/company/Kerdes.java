@@ -3,16 +3,20 @@ package com.company;
 public class Kerdes implements AdatbazisKapcsolat{
     private int id;
     private int tipus;
+    private String foKategoria;
+    private String alkategoria;
     private String tipusNev;
     private String kerdesSzovege;
     private String helyesValasz;
     private String valaszlehetosegek;
     private int pontszam;
 
-    public Kerdes(int id, int tipus, String kerdesSzovege, String helyesValasz, String valaszlehetosegek, int pontszam) {
+    public Kerdes(int id, String foKategoria, String alkategoria, int tipus,String kerdesSzovege, String helyesValasz, String valaszlehetosegek, int pontszam) {
         this.id = id;
         this.tipus = tipus;
-        this.tipusNev = KERDESTIPUS[tipus];
+        this.foKategoria = foKategoria;
+        this.alkategoria = alkategoria;
+        this.tipusNev =KERDESTIPUS[tipus];
         this.kerdesSzovege = kerdesSzovege;
         this.helyesValasz = helyesValasz;
         this.valaszlehetosegek = valaszlehetosegek;
@@ -25,6 +29,14 @@ public class Kerdes implements AdatbazisKapcsolat{
 
     public int getTipus() {
         return tipus;
+    }
+
+    public String getFoKategoria() {
+        return foKategoria;
+    }
+
+    public String getAlkategoria() {
+        return alkategoria;
     }
 
     public String getTipusNev() {
@@ -52,6 +64,8 @@ public class Kerdes implements AdatbazisKapcsolat{
         return "Kerdes{" +
                 "id=" + id +
                 ", tipus=" + tipus +
+                ", foKategoria='" + foKategoria + '\'' +
+                ", alkategoria='" + alkategoria + '\'' +
                 ", tipusNev='" + tipusNev + '\'' +
                 ", kerdesSzovege='" + kerdesSzovege + '\'' +
                 ", helyesValasz='" + helyesValasz + '\'' +

@@ -259,6 +259,7 @@ public class Controller {
             try{
                 Statement st = modell.getCON().createStatement();
                 ResultSet rs = st.executeQuery(SQL_FELHASZNALOIADATOK);
+                felhasznalo=null;
                 while(rs.next()){
                     System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getInt(5)+" "+rs.getInt(6)+" "+rs.getInt(7)+" "+rs.getInt(8));
                     felhasznalo=new Felhasznalo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getInt(8),rs.getInt(9));
@@ -299,12 +300,22 @@ public class Controller {
         return felhasznL;
     }
 
-    public void kerdesLetrehoz(){
-        //String SQL_UJFELHASZNALOT_LETREHOZZ = "INSERT INTO `felhasznalok` (`id`, `felhasznaloNev`, `teljesNev`, `jelszo`, `szint`, `tipus`, `joValaszDb`, `rosszValaszDb`,`aktiv`) " +
-          //      "VALUES ( NULL , '" + felhasznalonev + "', '" + teljesNev + "','" + jelszo + "', '1', '"+tipus+"', '0', '0','"+aktiv+"')";
+    /**
+     * Új kérdést hoz létre az adatbázisban
+     * @param foKategoria
+     * @param alKategoria
+     * @param tipus
+     * @param kerdesSzovege
+     * @param valasz
+     * @param valaszlehetosegek
+     * @param pontszam
+     */
+    public void kerdesLetrehoz(String foKategoria, String alKategoria, int tipus, String kerdesSzovege, String valasz, String valaszlehetosegek, int pontszam){
+        String SQL_KERDESLETREHOZ = "INSERT INTO `kerdes` (`id`, `foKategoria`, `alKategoria`, `tipus`, `kerdesSzovege`, `valasz`, `valaszlehetosegek`, `pontszam`) " +
+                "VALUES (NULL, '"+foKategoria+"', '"+alKategoria+"', '"+tipus+"', '"+kerdesSzovege+"', '"+valasz+"', '"+valaszlehetosegek+"', '"+pontszam+"')";
         try {
             Statement stm = modell.getCON().createStatement();
-            //stm.executeUpdate(SQL_UJFELHASZNALOT_LETREHOZZ);
+            stm.executeUpdate(SQL_KERDESLETREHOZ);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -318,10 +329,8 @@ public class Controller {
     public ArrayList<String> letezoFoKategoriak() {
         ArrayList<String> katList = new ArrayList<>();
         String SQL_KATEGORIAK = "SELECT katAzon FROM fokategoriamagyarazat";
-
-        Statement stm = null;
         try {
-            stm = modell.getCON().createStatement();
+            Statement stm = modell.getCON().createStatement();
             ResultSet res = stm.executeQuery(SQL_KATEGORIAK);
             while (res.next()){
                 katList.add(res.getString(1));
@@ -390,11 +399,7 @@ public class Controller {
 
     }
 
-    /**
-     * Új kérdést hoz létre.
-     * @param fokatnev
-     * @param alkat
-     */
+  /*
     public void kerdesLetrehoz(String fokatnev,String alkat,int tipus,String kerdesSzoveg,String valasz,int pontszam){
         String SQL_ALKATBESZUR = "INSERT INTO `kerdes` (`id`, `foKategoria`, `alKategoria`, `tipus`, `kerdesSzovege`, `valasz`, `pontszam`) " +
                 "VALUES (NULL, '"+fokatnev+"', '"+alkat+"','"+tipus+"','"+kerdesSzoveg+"', '"+valasz+"', '"+pontszam+"')";
@@ -406,7 +411,7 @@ public class Controller {
         }
 
     }
-
+*/
     /**
      * Az adott főkategóriához tartozó alkategóriákat adja vissze.
      * @param fokat
@@ -420,6 +425,24 @@ public class Controller {
             ResultSet res = st.executeQuery(SQL_KATAZON);
             while(res.next()){
                 list.add(res.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public ArrayList<Kerdes> letezoKerdesek(){
+        ArrayList<Kerdes> list = new ArrayList<>();
+        String SQL_KERDESEK = "SELECT * FROM kerdes";
+
+        try{
+            Statement st = modell.getCON().createStatement();
+            ResultSet res = st.executeQuery(SQL_KERDESEK);
+            while (res.next()){
+                list.add(new Kerdes(res.getInt(1),res.getString(2),res.getString(3),res.getInt(4),res.getString(5),
+                        res.getString(6),res.getString(7),res.getInt(8)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
