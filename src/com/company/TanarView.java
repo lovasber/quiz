@@ -95,55 +95,42 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
                 });
 
                 gbc.insets = new Insets(5,5,5,5);
-
                 gbc.gridx = 0;
                 gbc.gridy = 0;
                 jpUjkat.add(jlCim,gbc);
-
                 gbc.gridx = 0;
                 gbc.gridy=1;
                 jpUjkat.add(jlFokat,gbc);
-
                 gbc.gridx = 1;
                 gbc.gridy = 1;
                 jpUjkat.add(jtfFokat,gbc);
-
                 gbc.gridx = 0;
                 gbc.gridy= 2;
                 jpUjkat.add(jlFokatLeir,gbc);
-
                 gbc.gridx = 1;
                 gbc.gridy = 2;
                 jpUjkat.add(jtfFokatLeir,gbc);
-
                 gbc.gridx = 2;
                 gbc.gridy = 2;
                 jpUjkat.add(jbFokatOk,gbc);
-
                 gbc.gridx = 0;
                 gbc.gridy = 3;
                 jpUjkat.add(jlFokatValaszt,gbc);
-
                 gbc.gridx = 1;
                 gbc.gridy = 3;
                 jpUjkat.add(jcKategoriak,gbc);
-
                 gbc.gridx = 0;
                 gbc.gridy = 4;
                 jpUjkat.add(jlAlkat,gbc);
-
                 gbc.gridx = 1;
                 gbc.gridy = 4;
                 jpUjkat.add(jtfAlkat,gbc);
-
                 gbc.gridx = 1;
                 gbc.gridy = 5;
                 jpUjkat.add(jtfAlkatLeir,gbc);
-
                 gbc.gridx = 0;
                 gbc.gridy = 5;
                 jpUjkat.add(jlAlkatLeir,gbc);
-
                 gbc.gridx = 2;
                 gbc.gridy = 5;
                 jpUjkat.add(jbAlkatOk,gbc);
@@ -377,7 +364,6 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
                         jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getRosszValasz()+""),gbc);
                         gbc.gridy++;
                 }
-
 
                 JScrollPane jscp = new JScrollPane(jpDiakEredmeny);
                 jscp.setPreferredSize(new Dimension(600,400));

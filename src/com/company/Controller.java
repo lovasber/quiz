@@ -486,6 +486,13 @@ public class Controller {
 
     }
 
+    public ArrayList<String> alkatKerdesei(String alkat){
+        ArrayList<String> list = new ArrayList<>();
+        String SQL_ALKATKERDESEI = "SELECT * FROM ";
+
+        return list;
+    }
+
 
 
 }
