@@ -1,8 +1,5 @@
 package com.company;
 
-import com.sun.javaws.util.JfxHelper;
-import jdk.nashorn.internal.scripts.JO;
-import sun.misc.JavaLangAccess;
 
 import javax.swing.*;
 import java.awt.*;
@@ -495,12 +492,19 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jbLetrehoz.addActionListener(e -> {
             String jelszo = new String(jpfJelszo.getPassword());
             String jelszoMeg = new String(jpfJelszoMeg.getPassword());
-
-            if (jelszo.equals(jelszoMeg)){
-                cont.regisztracio(jtfFelhasznalonev.getText(),jtfTeljesnev.getText(),cont.titkosit(new String(jpfJelszo.getPassword())),jcbTipus.getSelectedIndex(),(int)jcbAktiv.getSelectedIndex());
-                JOptionPane.showMessageDialog(jfFelh,"Sikeresen létrehozta a felhasználót");
-            }else{
-                JOptionPane.showMessageDialog(jfFelh,"Nem egyezik a két jelszó!\nA felhasználó nem jött létre");
+            if (jtfFelhasznalonev.getText().length()==0 || jtfTeljesnev.getText().length()==0||jpfJelszo.getPassword().length==0||jcbTipus.getSelectedItem().toString().length()==0||jcbAktiv.getSelectedItem().toString().length()==0){
+                JOptionPane.showMessageDialog(jfFelh, "Töltse ki az összes mezőt");
+            }else {
+                if (jelszo.equals(jelszoMeg)) {
+                    if (!cont.letezikEfelhasznalo(jtfFelhasznalonev.getText())) {
+                        cont.regisztracio(jtfFelhasznalonev.getText(), jtfTeljesnev.getText(), cont.titkosit(new String(jpfJelszo.getPassword())), jcbTipus.getSelectedIndex(), (int) jcbAktiv.getSelectedIndex());
+                        JOptionPane.showMessageDialog(jfFelh, "Sikeresen létrehozta a felhasználót");
+                    } else {
+                        JOptionPane.showMessageDialog(jfFelh, "Ilyen nevű felhasználó már létezik!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(jfFelh, "Nem egyezik a két jelszó!\nA felhasználó nem jött létre");
+                }
             }
 
         });
