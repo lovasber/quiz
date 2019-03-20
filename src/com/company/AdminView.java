@@ -2,6 +2,7 @@ package com.company;
 
 import com.sun.javaws.util.JfxHelper;
 import jdk.nashorn.internal.scripts.JO;
+import sun.misc.JavaLangAccess;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
     public AdminView(Controller conntroller)  throws SQLException {
         this.cont = conntroller;
-        super.setLayout(new FlowLayout());
+        this.setLayout(new FlowLayout());
         jbUjKat = new JButton("Új kategória létrehozása");
         jbUjKat.addActionListener(e -> {
             try {
@@ -45,11 +46,11 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             conntroller.ujablakmegynit(felhSzerk());
         });
 
-        super.add(jbUjKat);
-        super.add(jbUjKerdes);
-        super.add(jbKerdesSzerk);
-        super.add(jbDiakokEredmenyei);
-        super.add(jbFelhasznalok);
+        this.add(jbUjKat);
+        this.add(jbUjKerdes);
+        this.add(jbKerdesSzerk);
+        this.add(jbDiakokEredmenyei);
+        this.add(jbFelhasznalok);
     }
 
 
@@ -349,8 +350,43 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
     private JFrame jbDiakokEredmenyei() {
         JFrame jfdiakEredmeny = new JFrame();
+        jfdiakEredmeny.setTitle("Quiz 1.0");
+        jfdiakEredmeny.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        jfdiakEredmeny.setMinimumSize(new Dimension(1000,700));
+        JPanel jpMain = new JPanel();
         JPanel jpDiakEredmeny = new JPanel();
-        jfdiakEredmeny.add(jpDiakEredmeny);
+        jpDiakEredmeny.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        JLabel jlFnev = new JLabel("<html><u>Diák neve</u></html>");
+        JLabel jlJovalasDb = new JLabel("<html><u>Jó válaszok száma</u></html>");
+        JLabel jlRosszvalasDb = new JLabel("<html><u>Rossz válaszok száma</u></html>");
+
+        gbc.insets = new Insets(5,10,5,10);
+        gbc.gridx=0;
+        gbc.gridy=0;
+        jpDiakEredmeny.add(jlFnev,gbc);
+        gbc.gridx++;
+        jpDiakEredmeny.add(jlJovalasDb,gbc);
+        gbc.gridx++;
+        jpDiakEredmeny.add(jlRosszvalasDb,gbc);
+        gbc.gridy=1;
+        for (int i = 0; i < cont.osszesDiak().size(); i++) {
+            gbc.gridx=0;
+            jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getTeljesNev()),gbc);
+            gbc.gridx++;
+            jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getJoValasz()+""),gbc);
+            gbc.gridx++;
+            jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getRosszValasz()+""),gbc);
+            gbc.gridy++;
+        }
+
+
+        JScrollPane jscp = new JScrollPane(jpDiakEredmeny);
+        jscp.setPreferredSize(new Dimension(600,400));
+        jscp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jpMain.add(jscp);
+        jfdiakEredmeny.add(jpMain);
         return jfdiakEredmeny;
     }
 

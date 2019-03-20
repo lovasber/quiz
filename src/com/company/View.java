@@ -9,14 +9,6 @@ public class View extends JFrame{
     private JTabbedPane jt;
     private JFrame regisztracioFrame;
 
-    public void setRegisztracioFrame(JFrame regisztracioFrame) {
-        this.regisztracioFrame = regisztracioFrame;
-    }
-
-    public JFrame getRegisztracioFrame() {
-        return regisztracioFrame;
-    }
-
     public JTabbedPane getJt() {
         return jt;
     }
@@ -142,8 +134,6 @@ public class View extends JFrame{
         jrbTanar.addActionListener(e -> {
             if (jrbTanar.isSelected()) {
                 regisztracioFrame.getContentPane().removeAll();
-
-
                 regisztracioFrame.getContentPane().add(tanarReg());
                 regisztracioFrame.revalidate();
                 regisztracioFrame.repaint();
@@ -250,9 +240,6 @@ public class View extends JFrame{
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(1000,700));
         jt = new JTabbedPane();
-        //jt.addTab("Quiz",quizFul());//!!!!!!!!!
-        //jt.addTab("Szótár",szotarFul());
-        //jt.addTab("Felhasználó",felhasznaloiFul());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         super.add(jt);
         setVisible(true);

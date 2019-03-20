@@ -16,7 +16,9 @@ public class Controller {
     private View view;
     public HashMap<String,Integer> felhtipus;
 
-
+    public View getView() {
+        return view;
+    }
 
     public Controller() {
         modell = new Modell();
@@ -399,19 +401,6 @@ public class Controller {
 
     }
 
-  /*
-    public void kerdesLetrehoz(String fokatnev,String alkat,int tipus,String kerdesSzoveg,String valasz,int pontszam){
-        String SQL_ALKATBESZUR = "INSERT INTO `kerdes` (`id`, `foKategoria`, `alKategoria`, `tipus`, `kerdesSzovege`, `valasz`, `pontszam`) " +
-                "VALUES (NULL, '"+fokatnev+"', '"+alkat+"','"+tipus+"','"+kerdesSzoveg+"', '"+valasz+"', '"+pontszam+"')";
-        try {
-            Statement st = modell.getCON().createStatement();
-            st.executeUpdate(SQL_ALKATBESZUR);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-*/
     /**
      * Az adott főkategóriához tartozó alkategóriákat adja vissze.
      * @param fokat
@@ -447,8 +436,28 @@ public class Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
+    }
+
+    public ArrayList<Felhasznalo> osszesDiak(){
+        ArrayList<Felhasznalo> list = new ArrayList<>();
+        String SQL_DIAKERED = "SELECT * FROM felhasznalok WHERE tipus=0";
+        try{
+            Statement st = modell.getCON().createStatement();
+            ResultSet res = st.executeQuery(SQL_DIAKERED);
+            while(res.next()){
+                list.add(new Felhasznalo(res.getInt(1),res.getString(2),res.getString(3),res.getString(4),res.getInt(5),res.getInt(6),res.getInt(7),res.getInt(8),res.getInt(9)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public void ujPaneletolt(JFrame jf,JPanel jpUj){
+        jf.getContentPane().removeAll();
+        jf.add(jpUj);
+        jf.revalidate();
     }
 
 

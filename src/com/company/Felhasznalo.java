@@ -10,7 +10,8 @@ public class Felhasznalo {
     private int tipus;
     private int szint;
     private int aktiv;
-    private int[] statisztika;
+    private int joValasz;
+    private int rosszValasz;
 
 
 
@@ -22,7 +23,16 @@ public class Felhasznalo {
         this.tipus = tipus;
         this.szint = szint;
         this.aktiv = aktiv;
-        this.statisztika = new int[]{joValasz, rosszValasz};
+        this.joValasz = joValasz;
+        this.rosszValasz = rosszValasz;
+    }
+
+    public int getJoValasz() {
+        return joValasz;
+    }
+
+    public int getRosszValasz() {
+        return rosszValasz;
     }
 
     public int getId() {
@@ -58,12 +68,9 @@ public class Felhasznalo {
                 ", jelszo='" + jelszo + '\'' +
                 ", tipus=" + tipus +
                 ", szint=" + szint +
-                ", statisztika=" + Arrays.toString(statisztika) +
+                ", aktiv=" + aktiv +
+                ", joValasz=" + joValasz +
+                ", rosszValasz=" + rosszValasz +
                 '}';
-    }
-
-
-    public int[] getStatisztika() {
-        return statisztika;
     }
 }
