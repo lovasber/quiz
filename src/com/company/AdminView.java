@@ -38,7 +38,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         });
         jbDiakokEredmenyei = new JButton("Diákok eredményei");
         jbDiakokEredmenyei.addActionListener(e -> {
-            conntroller.ujablakmegynit(jbDiakokEredmenyei());
+            conntroller.ujablakmegynit(diakokEredmenyei());
         });
 
         jbFelhasznalok = new JButton("Felhasználók szerkesztése");
@@ -348,7 +348,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
     }
 
 
-    private JFrame jbDiakokEredmenyei() {
+    private JFrame diakokEredmenyei() {
         JFrame jfdiakEredmeny = new JFrame();
         jfdiakEredmeny.setTitle("Quiz 1.0");
         jfdiakEredmeny.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -405,7 +405,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpFelh.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(10,10,10,20);
+        gbc.insets = new Insets(10,20,10,20);
 
         gbc.gridx = 0;
         jpFelh.add(new JLabel("Felhasználó név"));
@@ -415,9 +415,12 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpFelh.add(new JLabel("Felhasználó aktív"));
         gbc.gridx = 3;
         jpFelh.add(new JLabel("Felhasználó tipusa"));
+        gbc.gridx = 4;
+        jpFelh.add(new JLabel("Felhasználó ID-ja"));
 
         gbc.gridy = 1;
         ArrayList<Felhasznalo> flist = cont.felhasznalokLista();
+
         for (int i = 0; i <flist.size() ; i++) {
             gbc.gridx = 0;
             jpFelh.add(new JLabel(flist.get(i).getFelhasznalonev()),gbc);
@@ -441,6 +444,17 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             jcbTipus.setSelectedIndex(flist.get(i).getTipus());
             jpFelh.add(jcbTipus,gbc);
 
+            gbc.gridx=4;
+            JLabel jlId = new JLabel(flist.get(i).getId()+"");
+            jpFelh.add(jlId,gbc);
+
+            gbc.gridx=5;
+            JButton jbMent = new JButton("Elment");
+            jbMent.addActionListener(e -> {
+                cont.felhasznaloFrissit(jcbAktiv.getSelectedIndex(),jcbTipus.getSelectedIndex(),Integer.parseInt(jlId.getText()));
+            });
+            jpFelh.add(jbMent,gbc);
+
             gbc.gridy++;
             gbc.gridx = 0;
         }
@@ -448,7 +462,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
 
         JScrollPane jScrollPane = new JScrollPane(jpFelh);
-        jScrollPane.setPreferredSize(new Dimension(600,400));
+        jScrollPane.setPreferredSize(new Dimension(800,400));
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         jpMain.add(jScrollPane,gbcMain);

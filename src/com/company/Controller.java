@@ -422,6 +422,10 @@ public class Controller {
         return list;
     }
 
+    /**
+     * Visszaadja a létező kérdéseket egy listában
+     * @return
+     */
     public ArrayList<Kerdes> letezoKerdesek(){
         ArrayList<Kerdes> list = new ArrayList<>();
         String SQL_KERDESEK = "SELECT * FROM kerdes";
@@ -439,6 +443,10 @@ public class Controller {
         return list;
     }
 
+    /**
+     * Visszaadja a diákokat egy Felhasznalo típusú listában.
+     * @return
+     */
     public ArrayList<Felhasznalo> osszesDiak(){
         ArrayList<Felhasznalo> list = new ArrayList<>();
         String SQL_DIAKERED = "SELECT * FROM felhasznalok WHERE tipus=0";
@@ -454,10 +462,28 @@ public class Controller {
         return list;
     }
 
-    public void ujPaneletolt(JFrame jf,JPanel jpUj){
-        jf.getContentPane().removeAll();
-        jf.add(jpUj);
-        jf.revalidate();
+
+    public void ujPaneletolt(JPanel jpRegi,JPanel jpUj){
+        jpRegi.removeAll();
+        jpRegi.add(jpUj);
+        jpRegi.revalidate();
+    }
+
+    /**
+     * Frissíti az adatbázisban lévő felhasználói adatokat.
+     * @param aktiv
+     * @param tipus
+     * @param id
+     */
+    public void felhasznaloFrissit(int aktiv,int tipus,int id){
+        String SQL_FELHASZNFRISSIT = "UPDATE felhasznalok SET aktiv='"+aktiv+"', tipus='"+tipus+"' WHERE id='"+id+"'";
+        try {
+            Statement st = modell.getCON().createStatement();
+            st.executeUpdate(SQL_FELHASZNFRISSIT);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

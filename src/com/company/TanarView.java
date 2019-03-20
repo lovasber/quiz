@@ -274,18 +274,116 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
                 return jfUjkerdes;
         }
 
+
         private JFrame kerdesSzerk() {
                 JFrame jfKerdesSzerk = new JFrame();
-                JPanel jpKerdesSzerk = new JPanel();
-                jfKerdesSzerk.add(jpKerdesSzerk);
+                jfKerdesSzerk.setTitle("Quiz 1.0");
+                jfKerdesSzerk.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                jfKerdesSzerk.setMinimumSize(new Dimension(1000,700));
+                JPanel jpMain = new JPanel(new GridBagLayout());
+                JPanel jpKerdesSzerk = new JPanel(new GridBagLayout());
+
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.insets = new Insets(2,5,2,5);
+                JLabel jlFokat = new JLabel("<html><u>Főkategória</u></html>");
+                JLabel jlAlkat = new JLabel("<html><u>Alkategória</u></html>");
+                JLabel jlTipus = new JLabel("<html><u>Típus<u></html>");
+                JLabel jlKerdesSzovege = new JLabel("<html><u>Kérdés szövege</u></html>");
+                JLabel jlValasz = new JLabel("<html><u>Válasz</u></html>");
+                JLabel jlValaszLehet = new JLabel("<html><u>Válasz lehetőségek</u></html>");
+                JLabel jlPontszam = new JLabel("<html><u>Pontszám</u></html>");
+
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                jpKerdesSzerk.add(jlFokat,gbc);
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                jpKerdesSzerk.add(jlAlkat,gbc);
+                gbc.gridx = 2;
+                gbc.gridy = 0;
+                jpKerdesSzerk.add(jlTipus,gbc);
+                gbc.gridx = 3;
+                gbc.gridy = 0;
+                jpKerdesSzerk.add(jlKerdesSzovege,gbc);
+                gbc.gridx = 4;
+                gbc.gridy = 0;
+                jpKerdesSzerk.add(jlValasz,gbc);
+                gbc.gridx = 5;
+                gbc.gridy = 0;
+                jpKerdesSzerk.add(jlValaszLehet,gbc);
+                gbc.gridx = 6;
+                gbc.gridy = 0;
+                jpKerdesSzerk.add(jlPontszam,gbc);
+
+                gbc.gridy=1;
+                for (int i = 0; i < cont.letezoKerdesek().size(); i++) {
+                        gbc.gridx=0;
+                        jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getFoKategoria()),gbc);
+                        gbc.gridx++;
+                        jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getAlkategoria()),gbc);
+                        gbc.gridx++;
+                        jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getTipusNev()),gbc);
+                        gbc.gridx++;
+                        jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getKerdesSzovege()),gbc);
+                        gbc.gridx++;
+                        jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getHelyesValasz()),gbc);
+                        gbc.gridx++;
+                        jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getValaszlehetosegek()),gbc);
+                        gbc.gridx++;
+                        jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getPontszam()+""),gbc);
+                        gbc.gridy++;
+                }
+
+
+                JScrollPane jsPane = new JScrollPane(jpKerdesSzerk);
+                //jsPane.setPreferredSize(new Dimension(600,400));
+                jsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                //jpKerdesSzerk.add(jsPane);
+                jpMain.add(jsPane);
+                jfKerdesSzerk.add(jpMain);
                 return jfKerdesSzerk;
         }
 
 
         private JFrame diakokEredmenyei() {
                 JFrame jfdiakEredmeny = new JFrame();
+                jfdiakEredmeny.setTitle("Quiz 1.0");
+                jfdiakEredmeny.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                jfdiakEredmeny.setMinimumSize(new Dimension(1000,700));
+                JPanel jpMain = new JPanel();
                 JPanel jpDiakEredmeny = new JPanel();
-                jfdiakEredmeny.add(jpDiakEredmeny);
+                jpDiakEredmeny.setLayout(new GridBagLayout());
+                GridBagConstraints gbc = new GridBagConstraints();
+
+                JLabel jlFnev = new JLabel("<html><u>Diák neve</u></html>");
+                JLabel jlJovalasDb = new JLabel("<html><u>Jó válaszok száma</u></html>");
+                JLabel jlRosszvalasDb = new JLabel("<html><u>Rossz válaszok száma</u></html>");
+
+                gbc.insets = new Insets(5,10,5,10);
+                gbc.gridx=0;
+                gbc.gridy=0;
+                jpDiakEredmeny.add(jlFnev,gbc);
+                gbc.gridx++;
+                jpDiakEredmeny.add(jlJovalasDb,gbc);
+                gbc.gridx++;
+                jpDiakEredmeny.add(jlRosszvalasDb,gbc);
+                gbc.gridy=1;
+                for (int i = 0; i < cont.osszesDiak().size(); i++) {
+                        gbc.gridx=0;
+                        jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getTeljesNev()),gbc);
+                        gbc.gridx++;
+                        jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getJoValasz()+""),gbc);
+                        gbc.gridx++;
+                        jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getRosszValasz()+""),gbc);
+                        gbc.gridy++;
+                }
+
+
+                JScrollPane jscp = new JScrollPane(jpDiakEredmeny);
+                jscp.setPreferredSize(new Dimension(600,400));
+                jscp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                jpMain.add(jscp);
+                jfdiakEredmeny.add(jpMain);
                 return jfdiakEredmeny;
         }
 }
