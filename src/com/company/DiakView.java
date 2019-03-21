@@ -1,7 +1,12 @@
 package com.company;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.xml.bind.annotation.XmlType;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DiakView extends JPanel implements AdatbazisKapcsolat{
@@ -9,7 +14,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
     private JPanel jpFooldal;
     private String fokategoria="";
     private String alkategoria="";
-    private int aktualisKerdesIndex=0;
+
 
     public DiakView(Controller controller) {
         this.setLayout(new FlowLayout());
@@ -25,7 +30,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         for (int i = 0; i < cont.letezoFoKategoriak().size(); i++) {
             gombokList.add(new JButton(cont.letezoFoKategoriak().get(i)));
         }
-
 
         for (int i = 0; i < gombokList.size(); i++) {
 
@@ -49,6 +53,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         fokategoria=fokat;
         ArrayList<String> alkatokL = cont.fokatAlkategoriai(fokat);
         JPanel jpanUj = new JPanel();
+        JPanel jpVissza = new JPanel();
+        jpVissza.setLayout(new GridBagLayout());
         jpanUj.setLayout(new FlowLayout());
 
         for (int i = 0; i < alkatokL.size(); i++) {
@@ -74,8 +80,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
             this.repaint();
             this.revalidate();
         });
-        jpanUj.add(jbVissza);
-
+        jpVissza.add(jbVissza);
+        jpanUj.add(jpVissza);
         return jpanUj;
     }
 
@@ -101,25 +107,19 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         ArrayList<Kerdes> klist  = cont.alkatKerdesei(alkat);
 
         for (int i = 0; i < klist.size(); i++) {
-            /*JPanel jpCard = new JPanel();
-            jpCard.setLayout(cl);
-            //jpCard.add(new JLabel(klist.get(i).getKerdesSzovege()));
-            jpCard.add(new JTextField(20));
-            */
-
-            switch (klist.get(i).getTipus()){
+            switch (klist.get(i).getTipus()) {
                 case 0:
-                    jpanKerdesek.add(jpHianyos(klist.get(i)),(i+1)+"");
+                    jpanKerdesek.add(jpHianyos(klist.get(i)), (i + 1) + "");
                     break;
                 case 1:
-                    jpanKerdesek.add(jpsokKep1JoValasz(klist.get(i)),(i+1)+"");
+                    jpanKerdesek.add(jpsokKep1JoValasz(klist.get(i)), (i + 1) + "");
                     break;
-                case 2:break;
-                case 3:break;
+                case 2:
+                    jpanKerdesek.add(egyKep1Valasz(klist.get(i)), (i + 1) + "");
+                    break;
+                case 3:
+                    break;
             }
-
-
-            //jpanKerdesek.add(jpCard,(i+1)+"");
         }
 
         for (int i = 0; i < klist.size(); i++) {
@@ -152,6 +152,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         jpMain.add(jpLepeget,gbcMain);
         return jpMain;
     }
+
+
 
 
     private JPanel jpHianyos(Kerdes kerdes){
@@ -196,20 +198,83 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         gbcMain.gridx = 0;
         gbcMain.gridy = 0;
         JPanel jpKepek = new JPanel();
+        jpKepek.setLayout(new GridBagLayout());
+        GridBagConstraints gbcKepek = new GridBagConstraints();
+        gbcKepek.gridx = 0;
+        gbcKepek.gridy = 0;
         JPanel jpValasz = new JPanel();
+        jpValasz.setLayout(new GridBagLayout());
+        GridBagConstraints gbcvalasz = new GridBagConstraints();
+        gbcvalasz.gridx = 0;
+        gbcvalasz.gridy = 0;
+
+        JLabel jlCim = new JLabel("Jelölje ki a megfelelő képet!");
+
+        String kerdesSzov = "<html>"+kerdes.getKerdesSzovege()+"</html>";
+        String[] valaszLehet = kerdes.getValaszlehetosegek().split("\\;");
 
 
+        ButtonGroup bgroup = new ButtonGroup();
+        gbcKepek.insets = new Insets(5,5,5,5);
 
 
+        for (int i = 0; i < valaszLehet.length; i++) {
+            System.out.println(valaszLehet[i]+" - tölt...");
+            BufferedImage kep = null;
+            try {
+                //Forrás: https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel
+                kep = ImageIO.read(new File("Images/"+valaszLehet[i]));
+                Image image = kep.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
+                ImageIcon imageIcon = new ImageIcon(image);
+               JRadioButton jrb = new JRadioButton(imageIcon);
+               jrb.addChangeListener(e -> {
+                   JRadioButton jrbut = (JRadioButton)e.getSource();
+                   if(jrbut.isSelected()){
+                       //jrbut.setBackground(Color.ORANGE);
+                       jrbut.setBackground(new Color(8, 67, 109));
+                   }else{
+                       jrbut.setBackground(jpMain.getBackground());
+                   }
+               });
 
+                bgroup.add(jrb);
+                jpKepek.add(jrb,gbcKepek);
+                gbcKepek.gridx++;
+                if (gbcKepek.gridx%2==0){
+                    gbcKepek.gridx=0;
+                    gbcKepek.gridy++;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        jpMain.add(jpKepek,gbcMain);
-        gbcMain.gridx++;
+        }
+
+        JLabel jlKerdes = new JLabel(kerdesSzov);
+
+        jpValasz.add(jlKerdes,gbcvalasz);
+
         jpMain.add(jpValasz,gbcMain);
+        gbcMain.gridy++;
+        jpMain.add(jpKepek,gbcMain);
+
+
         return jpMain;
     }
 
+    private JPanel egyKep1Valasz(Kerdes kerdes) {
+        JPanel jpMain = new JPanel();
+        GridBagLayout gbl = new GridBagLayout();
+        jpMain.setLayout(gbl);
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        JPanel jpKep = new JPanel();
+        jpKep.setLayout(gbl);
+        GridBagConstraints gbcKep = new GridBagConstraints();
 
+
+        jpMain.add(jpKep,gbcMain);
+        return jpMain;
+    }
 
 
 
