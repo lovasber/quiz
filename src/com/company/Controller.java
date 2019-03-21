@@ -486,9 +486,20 @@ public class Controller {
 
     }
 
-    public ArrayList<String> alkatKerdesei(String alkat){
-        ArrayList<String> list = new ArrayList<>();
-        String SQL_ALKATKERDESEI = "SELECT * FROM ";
+    public ArrayList<Kerdes> alkatKerdesei(String alkat){
+        ArrayList<Kerdes> list = new ArrayList<>();
+        String SQL_ALKATKERDESEI = "SELECT * FROM kerdes WHERE alKategoria='"+alkat+"'";
+
+        try {
+            Statement st = modell.getCON().createStatement();
+            ResultSet res = st.executeQuery(SQL_ALKATKERDESEI);
+            while (res.next()){
+                list.add(new Kerdes(res.getInt(1),res.getString(2),res.getString(3),res.getInt(4),res.getString(5),res.getString(6),res.getString(7),res.getInt(8)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
         return list;
     }
