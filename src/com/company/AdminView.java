@@ -212,8 +212,8 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JButton jbOk = new JButton("Ok");
         jbOk.addActionListener(e -> {
             if (jtfSzoveg.getText().length()!=0 && jtfValasz.getText().length()!=0 && jcbAlkat.getSelectedItem()!=null){
-                cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),"<html>"+jtfSzoveg.getText()+"</html>","<html>"+jtfValasz.getText()+"</html>"
-                        ,"<html>"+jtfValaszLehetosegek.getText()+"</html>",(int)jcbPontszam.getSelectedItem());
+                cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfSzoveg.getText(),jtfValasz.getText()
+                        ,jtfValaszLehetosegek.getText(),(int)jcbPontszam.getSelectedItem());
                 JOptionPane.showMessageDialog(jfUjkerdes,"Sikeresen létrehozott egy kérdést!");
             }else{
                 JOptionPane.showMessageDialog(jfUjkerdes,"Kérem töltsön ki minden mezőt");

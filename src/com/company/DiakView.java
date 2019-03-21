@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class DiakView extends JPanel {
-    Controller cont;
-    JPanel jpFooldal;
-    String fokategoria="";
-    String alkategoria="";
+public class DiakView extends JPanel implements AdatbazisKapcsolat{
+    private Controller cont;
+    private JPanel jpFooldal;
+    private String fokategoria="";
+    private String alkategoria="";
+    private int aktualisKerdesIndex=0;
 
     public DiakView(Controller controller) {
         this.setLayout(new FlowLayout());
@@ -55,7 +56,7 @@ public class DiakView extends JPanel {
             b.addActionListener(e -> {
                 JButton button = (JButton)e.getSource();
                 alkategoria = button.getText();
-                //System.out.println(alkategoria);
+                
                 this.removeAll();
                 this.add(kerdesek(alkategoria));
                 this.repaint();
@@ -79,31 +80,136 @@ public class DiakView extends JPanel {
     }
 
     private JPanel kerdesek(String alkat){
+        JPanel jpMain = new JPanel();
+        jpMain.setLayout(new GridBagLayout());
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.gridx = 0;
+        gbcMain.gridy = 0;
+
         JPanel jpanKerdesek = new JPanel();
-        jpanKerdesek.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        CardLayout cl = new CardLayout();
+        jpanKerdesek.setLayout(cl);
+
+
+        JPanel jpLepeget = new JPanel();
+        jpLepeget.setLayout(new GridBagLayout());
+        GridBagConstraints gbcLepeget = new GridBagConstraints();
+        gbcLepeget.gridx = 0;
+        gbcLepeget.gridy = 0;
+        gbcLepeget.insets = new Insets(10,5,0,5);
 
         ArrayList<Kerdes> klist  = cont.alkatKerdesei(alkat);
+
         for (int i = 0; i < klist.size(); i++) {
-            jpanKerdesek.add(new JLabel(klist.get(i).getKerdesSzovege()),gbc);
-            gbc.gridy++;
-            System.out.println(klist.get(i).getKerdesSzovege());
+            /*JPanel jpCard = new JPanel();
+            jpCard.setLayout(cl);
+            //jpCard.add(new JLabel(klist.get(i).getKerdesSzovege()));
+            jpCard.add(new JTextField(20));
+            */
+
+            switch (klist.get(i).getTipus()){
+                case 0:
+                    jpanKerdesek.add(jpHianyos(klist.get(i)),(i+1)+"");
+                    break;
+                case 1:
+                    jpanKerdesek.add(jpsokKep1JoValasz(klist.get(i)),(i+1)+"");
+                    break;
+                case 2:break;
+                case 3:break;
+            }
+
+
+            //jpanKerdesek.add(jpCard,(i+1)+"");
+        }
+
+        for (int i = 0; i < klist.size(); i++) {
+            JButton jbLepeget = new JButton((i+1)+"");
+            jbLepeget.addActionListener(e -> {
+                JButton but = (JButton)e.getSource();
+                cl.show(jpanKerdesek,but.getText());
+            });
+            jpLepeget.add(jbLepeget,gbcLepeget);
+            gbcLepeget.gridx++;
         }
         JButton vissza = new JButton("Vissza");
         vissza.addActionListener(e -> {
+
             this.removeAll();
             this.add(alkatBetolt(fokategoria));
             this.repaint();
             this.revalidate();
 
+
+
         });
-        jpanKerdesek.add(vissza);
+        gbcLepeget.gridx=0;
+        gbcLepeget.gridy++;
+        jpLepeget.add(vissza,gbcLepeget);
 
 
-        return jpanKerdesek;
+        jpMain.add(jpanKerdesek,gbcMain);
+        gbcMain.gridy++;
+        jpMain.add(jpLepeget,gbcMain);
+        return jpMain;
     }
+
+
+    private JPanel jpHianyos(Kerdes kerdes){
+        JPanel jphiany = new JPanel();
+        jphiany.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        JLabel jlCim = new JLabel("Egészítse ki az alábbi mondatot");
+
+        String[] kerdesT = kerdes.getKerdesSzovege().split("\\;");
+
+        String kerdesResz1 = "<html>"+kerdesT[0]+"</html>";
+        String valasz = kerdesT[1];
+        String kerdesResz2 = "<html>"+kerdesT[2]+"</html>";
+
+        JLabel jlKerd1 = new JLabel(kerdesResz1);
+        JTextField jtfValasz = new JTextField(valasz.length());
+        JLabel jlKerd2 = new JLabel(kerdesResz2);
+
+
+        jphiany.add(jlCim,gbc);
+        gbc.insets = new Insets(20,5,20,5);
+        gbc.gridy++;
+        gbc.gridx=0;
+        jphiany.add(jlKerd1,gbc);
+        gbc.gridx++;
+        jphiany.add(jtfValasz,gbc);
+        gbc.gridx++;
+        jphiany.add(jlKerd2,gbc);
+
+        return jphiany;
+    }
+
+
+    private JPanel jpsokKep1JoValasz(Kerdes kerdes) {
+        JPanel jpMain = new JPanel();
+        jpMain.setLayout(new GridBagLayout());
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.gridx = 0;
+        gbcMain.gridy = 0;
+        JPanel jpKepek = new JPanel();
+        JPanel jpValasz = new JPanel();
+
+
+
+
+
+
+        jpMain.add(jpKepek,gbcMain);
+        gbcMain.gridx++;
+        jpMain.add(jpValasz,gbcMain);
+        return jpMain;
+    }
+
+
 
 
 

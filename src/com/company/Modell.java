@@ -9,16 +9,23 @@ public class Modell implements AdatbazisKapcsolat {
 
     private Connection CON;
     private Statement ST;
-    private ArrayList<Kerdes> kerdesekLista;
+    //private ArrayList<Kerdes> kerdesekLista;
     private int felhasznaloTipus;
     private int aktualisKerdesDb;
     private Felhasznalo felhasznalo;
 
 
+
+
     public Modell() {
+        adatbazisKapcsolatLetrehoz();
+        //kerdesekLista = new ArrayList<>();
+    }
+
+    private void adatbazisKapcsolatLetrehoz() {
         try{
             Class.forName(ABDRIVER);
-            CON = DriverManager.getConnection(ABURL,ABFELHASZNALO,ABJELSZO);
+            CON = DriverManager.getConnection(ABURL,ABFELHASZNALO,"");
             ST = CON.createStatement();
         }catch(Exception e){
             System.out.println("Adatbázis kapcsolódási hiba: "+e.getLocalizedMessage());
@@ -38,4 +45,8 @@ public class Modell implements AdatbazisKapcsolat {
     public Felhasznalo getFelhasznalo() {
         return felhasznalo;
     }
+
+//    public ArrayList<Kerdes> getKerdesekLista() {
+//        return kerdesekLista;
+//    }
 }

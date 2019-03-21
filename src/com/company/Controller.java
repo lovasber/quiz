@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Controller {
+
+
     private Modell modell;
     private View view;
     public HashMap<String,Integer> felhtipus;
@@ -495,6 +496,7 @@ public class Controller {
             ResultSet res = st.executeQuery(SQL_ALKATKERDESEI);
             while (res.next()){
                 list.add(new Kerdes(res.getInt(1),res.getString(2),res.getString(3),res.getInt(4),res.getString(5),res.getString(6),res.getString(7),res.getInt(8)));
+                //modell.getKerdesekLista().add(new Kerdes(res.getInt(1),res.getString(2),res.getString(3),res.getInt(4),res.getString(5),res.getString(6),res.getString(7),res.getInt(8)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
