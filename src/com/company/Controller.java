@@ -1,7 +1,14 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -506,6 +513,69 @@ public class Controller {
         return list;
     }
 
+    public KeyListener gepelFiegyel(JTextField jtf, int index, String[] list){
+
+
+    KeyListener klGepel = new KeyListener() {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            list[index]=jtf.getText();
+            System.out.println("index: " + index);
+            for (int i = 0; i < list.length; i++) {
+                System.out.print(list[i]+" ");
+            }
+
+        }
+
+
+    };
+    return klGepel;
+    }
+
+    public ActionListener kepnevTombhoz(JRadioButton jrb, String[] tomb, int index,String filenev){
+        ActionListener al = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("kep: "+filenev+"");
+                tomb[index]=filenev;
+                for (int i = 0; i < tomb.length; i++) {
+                    System.out.print(tomb[i]+" ");
+                }
+
+            }
+        };
+        return al;
+    }
+
+    public void testEllenoriz(ArrayList<Kerdes> kerdesek,String[] valaszok){
+        for (int i = 0; i < valaszok.length; i++) {
+
+            String[] spl = kerdesek.get(i).getHelyesValasz().split("\\;");
+            if (spl.length!=0){
+                for (int j = 0; j < spl.length; j++) {
+                    if (spl[j].equals(valaszok[i])){
+                        //mekapja a pontszamot
+                    }
+                }
+            }else {
+                if (valaszok[i].equals(kerdesek.get(i).getHelyesValasz())){
+                    //megkapja a pontszamot
+                }
+            }
+
+        }
+    }
 
 
 }

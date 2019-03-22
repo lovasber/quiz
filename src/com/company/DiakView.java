@@ -15,6 +15,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     private String fokategoria = "";
     private String alkategoria = "";
     ArrayList<Kerdes> klist;
+    //ArrayList<String> valaszok;
+    String[] valaszok;
 
 
     public DiakView(Controller controller) {
@@ -22,6 +24,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         cont = controller;
         jpFooldal = fooldalFeltolt();
         this.add(jpFooldal);
+
     }
 
     private JPanel fooldalFeltolt() {
@@ -51,6 +54,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     }
 
     private JPanel alkatBetolt(String fokat) {
+
         fokategoria = fokat;
         ArrayList<String> alkatokL = cont.fokatAlkategoriai(fokat);
         JPanel jpanUj = new JPanel();
@@ -99,6 +103,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         jpanKerdesek.setLayout(cl);
 
 
+
         JPanel jpLepeget = new JPanel();
         jpLepeget.setLayout(new GridBagLayout());
         GridBagConstraints gbcLepeget = new GridBagConstraints();
@@ -107,36 +112,42 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbcLepeget.insets = new Insets(10, 5, 0, 5);
 
         klist = cont.alkatKerdesei(alkat);
-
+        valaszok = new String[klist.size()];
         for (int i = 0; i < klist.size(); i++) {
             switch (klist.get(i).getTipus()) {
                 case 0:
-                    jpanKerdesek.add(jpHianyos(klist.get(i)), (i + 1) + "");
+                    jpanKerdesek.add(jpHianyos(klist.get(i),i), (i + 1) + "");
                     break;
                 case 1:
-                    jpanKerdesek.add(jpsokKep1JoValasz(klist.get(i)), (i + 1) + "");
+                    jpanKerdesek.add(jpsokKep1JoValasz(klist.get(i),i), (i + 1) + "");
                     break;
                 case 2:
-                    jpanKerdesek.add(jpegyKep1Valasz(klist.get(i)), (i + 1) + "");
+                    jpanKerdesek.add(jpegyKep1Valasz(klist.get(i),i), (i + 1) + "");
                     break;
                 case 3:
-                    jpanKerdesek.add(jpFordítas(klist.get(i)), (i + 1) + "");
+                    jpanKerdesek.add(jpFordítas(klist.get(i),i), (i + 1) + "");
                     break;
                 case 4:
-                    jpanKerdesek.add(jpKerdesValasz(klist.get(i)), (i + 1) + "");
+                    jpanKerdesek.add(jpKerdesValasz(klist.get(i),i), (i + 1) + "");
                     break;
             }
         }
 
+        //Lépegetés a kérdések között
         for (int i = 0; i < klist.size(); i++) {
             JButton jbLepeget = new JButton((i + 1) + "");
             jbLepeget.addActionListener(e -> {
                 JButton but = (JButton) e.getSource();
                 cl.show(jpanKerdesek, but.getText());
+
             });
             jpLepeget.add(jbLepeget, gbcLepeget);
             gbcLepeget.gridx++;
         }
+        JButton jbKiertekel = new JButton("<html>"+"<u>Teszt kiértékelése</u>"+"</html>");
+        jbKiertekel.addActionListener(e -> {
+            //cont.testkiertekel(klist,)
+        });
         JButton vissza = new JButton("Vissza");
         vissza.addActionListener(e -> {
 
@@ -144,8 +155,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
             this.add(alkatBetolt(fokategoria));
             this.repaint();
             this.revalidate();
-
-
         });
         gbcLepeget.gridx = 0;
         gbcLepeget.gridy++;
@@ -159,7 +168,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     }
 
 
-    private JPanel jpHianyos(Kerdes kerdes) {
+    private JPanel jpHianyos(Kerdes kerdes, int index) {
         JPanel jphiany = new JPanel();
         jphiany.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -177,6 +186,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
 
         JLabel jlKerd1 = new JLabel(kerdesResz1);
         JTextField jtfValasz = new JTextField(valasz.length());
+        jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));
         JLabel jlKerd2 = new JLabel(kerdesResz2);
 
 
@@ -194,7 +204,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     }
 
 
-    private JPanel jpsokKep1JoValasz(Kerdes kerdes) {
+    private JPanel jpsokKep1JoValasz(Kerdes kerdes, int index) {
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new GridBagLayout());
         GridBagConstraints gbcMain = new GridBagConstraints();
@@ -230,7 +240,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                 Image image = kep.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(image);
                 JRadioButton jrb = new JRadioButton(imageIcon);
-                jrb.addChangeListener(e -> {
+                /*jrb.addChangeListener(e -> {
                     JRadioButton jrbut = (JRadioButton) e.getSource();
                     if (jrbut.isSelected()) {
                         //jrbut.setBackground(Color.ORANGE);
@@ -238,7 +248,11 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                     } else {
                         jrbut.setBackground(jpMain.getBackground());
                     }
-                });
+                });*/
+                //jrb.addChangeListener(cont.kepnevTombhoz(jrb,valaszok,index));
+
+                jrb.addActionListener(cont.kepnevTombhoz(jrb,valaszok,index,valaszLehet[i]));
+
 
                 bgroup.add(jrb);
                 jpKepek.add(jrb, gbcKepek);
@@ -265,7 +279,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         return jpMain;
     }
 
-    private JPanel jpegyKep1Valasz(Kerdes kerdes) {
+    private JPanel jpegyKep1Valasz(Kerdes kerdes, int index) {
         JPanel jpMain = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
         jpMain.setLayout(gbl);
@@ -299,6 +313,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         }
         JLabel jlKerdes = new JLabel(kerdesSzov);
         JTextField jtfValasz = new JTextField(kerdes.getHelyesValasz().length());
+        jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));
         jpValasz.add(jlKerdes,gbcValasz);
         gbcValasz.gridy++;
         jpValasz.add(jtfValasz,gbcValasz);
@@ -309,7 +324,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     }
 
 
-    private JPanel jpFordítas(Kerdes kerdes) {
+    private JPanel jpFordítas(Kerdes kerdes, int index) {
         JPanel jpMain = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
         jpMain.setLayout(gbl);
@@ -328,6 +343,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         JLabel jlCim = new JLabel("Fordítsa le az alábbi szöveget!");
         JLabel jlKerdes = new JLabel("<html>"+kerdes.getKerdesSzovege()+"</html>");
         JTextField jtfValasz = new JTextField(20);
+        jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));
         jpKerdes.add(jlCim,gbcKerdes);
         gbcKerdes.gridy++;
         jpKerdes.add(jlKerdes,gbcKerdes);
@@ -339,7 +355,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         return jpMain;
     }
 
-    private JPanel jpKerdesValasz(Kerdes kerdes) {
+    private JPanel jpKerdesValasz(Kerdes kerdes, int index) {
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new GridBagLayout());
         GridBagConstraints gbcMain = new GridBagConstraints();
@@ -350,6 +366,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         JLabel jlCim = new JLabel("Válaszoljon a kérdésre");
         JLabel jlKerdes = new JLabel("<html>"+kerdes.getKerdesSzovege()+"</html>");
         JTextField jtfValasz = new JTextField(20);
+        jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));
 
         jpMain.add(jlCim,gbcMain);
         gbcMain.gridy++;
