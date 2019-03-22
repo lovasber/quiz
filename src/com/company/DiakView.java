@@ -9,11 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DiakView extends JPanel implements AdatbazisKapcsolat{
+public class DiakView extends JPanel implements AdatbazisKapcsolat {
     private Controller cont;
     private JPanel jpFooldal;
-    private String fokategoria="";
-    private String alkategoria="";
+    private String fokategoria = "";
+    private String alkategoria = "";
+    ArrayList<Kerdes> klist;
 
 
     public DiakView(Controller controller) {
@@ -23,7 +24,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         this.add(jpFooldal);
     }
 
-    private JPanel fooldalFeltolt(){
+    private JPanel fooldalFeltolt() {
         JPanel jpFooldal = new JPanel();
         ArrayList<JButton> gombokList = new ArrayList<>();
 
@@ -34,7 +35,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         for (int i = 0; i < gombokList.size(); i++) {
 
             gombokList.get(i).addActionListener(e -> {
-                JButton b = (JButton)e.getSource();
+                JButton b = (JButton) e.getSource();
                 this.removeAll();
                 this.add(alkatBetolt(b.getText()));
                 this.repaint();
@@ -49,8 +50,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         return jpFooldal;
     }
 
-    private JPanel alkatBetolt(String fokat){
-        fokategoria=fokat;
+    private JPanel alkatBetolt(String fokat) {
+        fokategoria = fokat;
         ArrayList<String> alkatokL = cont.fokatAlkategoriai(fokat);
         JPanel jpanUj = new JPanel();
         JPanel jpVissza = new JPanel();
@@ -60,9 +61,9 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         for (int i = 0; i < alkatokL.size(); i++) {
             JButton b = new JButton(alkatokL.get(i));
             b.addActionListener(e -> {
-                JButton button = (JButton)e.getSource();
+                JButton button = (JButton) e.getSource();
                 alkategoria = button.getText();
-                
+
                 this.removeAll();
                 this.add(kerdesek(alkategoria));
                 this.repaint();
@@ -73,8 +74,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
 
         JButton jbVissza = new JButton("vissza");
         jbVissza.addActionListener(e -> {
-            JButton b = (JButton)e.getSource();
-            alkategoria= b.getText();
+            JButton b = (JButton) e.getSource();
+            alkategoria = b.getText();
             this.removeAll();
             this.add(fooldalFeltolt());
             this.repaint();
@@ -85,7 +86,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         return jpanUj;
     }
 
-    private JPanel kerdesek(String alkat){
+    private JPanel kerdesek(String alkat) {
+
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new GridBagLayout());
         GridBagConstraints gbcMain = new GridBagConstraints();
@@ -102,9 +104,9 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
         GridBagConstraints gbcLepeget = new GridBagConstraints();
         gbcLepeget.gridx = 0;
         gbcLepeget.gridy = 0;
-        gbcLepeget.insets = new Insets(10,5,0,5);
+        gbcLepeget.insets = new Insets(10, 5, 0, 5);
 
-        ArrayList<Kerdes> klist  = cont.alkatKerdesei(alkat);
+        klist = cont.alkatKerdesei(alkat);
 
         for (int i = 0; i < klist.size(); i++) {
             switch (klist.get(i).getTipus()) {
@@ -115,20 +117,24 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
                     jpanKerdesek.add(jpsokKep1JoValasz(klist.get(i)), (i + 1) + "");
                     break;
                 case 2:
-                    jpanKerdesek.add(egyKep1Valasz(klist.get(i)), (i + 1) + "");
+                    jpanKerdesek.add(jpegyKep1Valasz(klist.get(i)), (i + 1) + "");
                     break;
                 case 3:
+                    jpanKerdesek.add(jpFordítas(klist.get(i)), (i + 1) + "");
+                    break;
+                case 4:
+                    jpanKerdesek.add(jpKerdesValasz(klist.get(i)), (i + 1) + "");
                     break;
             }
         }
 
         for (int i = 0; i < klist.size(); i++) {
-            JButton jbLepeget = new JButton((i+1)+"");
+            JButton jbLepeget = new JButton((i + 1) + "");
             jbLepeget.addActionListener(e -> {
-                JButton but = (JButton)e.getSource();
-                cl.show(jpanKerdesek,but.getText());
+                JButton but = (JButton) e.getSource();
+                cl.show(jpanKerdesek, but.getText());
             });
-            jpLepeget.add(jbLepeget,gbcLepeget);
+            jpLepeget.add(jbLepeget, gbcLepeget);
             gbcLepeget.gridx++;
         }
         JButton vissza = new JButton("Vissza");
@@ -140,23 +146,20 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
             this.revalidate();
 
 
-
         });
-        gbcLepeget.gridx=0;
+        gbcLepeget.gridx = 0;
         gbcLepeget.gridy++;
-        jpLepeget.add(vissza,gbcLepeget);
+        jpLepeget.add(vissza, gbcLepeget);
 
 
-        jpMain.add(jpanKerdesek,gbcMain);
+        jpMain.add(jpanKerdesek, gbcMain);
         gbcMain.gridy++;
-        jpMain.add(jpLepeget,gbcMain);
+        jpMain.add(jpLepeget, gbcMain);
         return jpMain;
     }
 
 
-
-
-    private JPanel jpHianyos(Kerdes kerdes){
+    private JPanel jpHianyos(Kerdes kerdes) {
         JPanel jphiany = new JPanel();
         jphiany.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -168,24 +171,24 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
 
         String[] kerdesT = kerdes.getKerdesSzovege().split("\\;");
 
-        String kerdesResz1 = "<html>"+kerdesT[0]+"</html>";
+        String kerdesResz1 = "<html>" + kerdesT[0] + "</html>";
         String valasz = kerdesT[1];
-        String kerdesResz2 = "<html>"+kerdesT[2]+"</html>";
+        String kerdesResz2 = "<html>" + kerdesT[2] + "</html>";
 
         JLabel jlKerd1 = new JLabel(kerdesResz1);
         JTextField jtfValasz = new JTextField(valasz.length());
         JLabel jlKerd2 = new JLabel(kerdesResz2);
 
 
-        jphiany.add(jlCim,gbc);
-        gbc.insets = new Insets(20,5,20,5);
+        jphiany.add(jlCim, gbc);
+        gbc.insets = new Insets(20, 5, 20, 5);
         gbc.gridy++;
-        gbc.gridx=0;
-        jphiany.add(jlKerd1,gbc);
+        gbc.gridx = 0;
+        jphiany.add(jlKerd1, gbc);
         gbc.gridx++;
-        jphiany.add(jtfValasz,gbc);
+        jphiany.add(jtfValasz, gbc);
         gbc.gridx++;
-        jphiany.add(jlKerd2,gbc);
+        jphiany.add(jlKerd2, gbc);
 
         return jphiany;
     }
@@ -210,38 +213,38 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
 
         JLabel jlCim = new JLabel("Jelölje ki a megfelelő képet!");
 
-        String kerdesSzov = "<html>"+kerdes.getKerdesSzovege()+"</html>";
+        String kerdesSzov = "<html>" + kerdes.getKerdesSzovege() + "</html>";
         String[] valaszLehet = kerdes.getValaszlehetosegek().split("\\;");
 
 
         ButtonGroup bgroup = new ButtonGroup();
-        gbcKepek.insets = new Insets(5,5,5,5);
+        gbcKepek.insets = new Insets(5, 5, 5, 5);
 
 
         for (int i = 0; i < valaszLehet.length; i++) {
-            System.out.println(valaszLehet[i]+" - tölt...");
+            System.out.println(valaszLehet[i] + " - tölt...");
             BufferedImage kep = null;
             try {
                 //Forrás: https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel
-                kep = ImageIO.read(new File("Images/"+valaszLehet[i]));
+                kep = ImageIO.read(new File("Images/" + valaszLehet[i]));
                 Image image = kep.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(image);
-               JRadioButton jrb = new JRadioButton(imageIcon);
-               jrb.addChangeListener(e -> {
-                   JRadioButton jrbut = (JRadioButton)e.getSource();
-                   if(jrbut.isSelected()){
-                       //jrbut.setBackground(Color.ORANGE);
-                       jrbut.setBackground(new Color(8, 67, 109));
-                   }else{
-                       jrbut.setBackground(jpMain.getBackground());
-                   }
-               });
+                JRadioButton jrb = new JRadioButton(imageIcon);
+                jrb.addChangeListener(e -> {
+                    JRadioButton jrbut = (JRadioButton) e.getSource();
+                    if (jrbut.isSelected()) {
+                        //jrbut.setBackground(Color.ORANGE);
+                        jrbut.setBackground(new Color(8, 67, 109));
+                    } else {
+                        jrbut.setBackground(jpMain.getBackground());
+                    }
+                });
 
                 bgroup.add(jrb);
-                jpKepek.add(jrb,gbcKepek);
+                jpKepek.add(jrb, gbcKepek);
                 gbcKepek.gridx++;
-                if (gbcKepek.gridx%2==0){
-                    gbcKepek.gridx=0;
+                if (gbcKepek.gridx % 2 == 0) {
+                    gbcKepek.gridx = 0;
                     gbcKepek.gridy++;
                 }
             } catch (IOException e) {
@@ -252,30 +255,109 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat{
 
         JLabel jlKerdes = new JLabel(kerdesSzov);
 
-        jpValasz.add(jlKerdes,gbcvalasz);
+        jpValasz.add(jlKerdes, gbcvalasz);
 
-        jpMain.add(jpValasz,gbcMain);
+        jpMain.add(jpValasz, gbcMain);
         gbcMain.gridy++;
-        jpMain.add(jpKepek,gbcMain);
+        jpMain.add(jpKepek, gbcMain);
 
 
         return jpMain;
     }
 
-    private JPanel egyKep1Valasz(Kerdes kerdes) {
+    private JPanel jpegyKep1Valasz(Kerdes kerdes) {
         JPanel jpMain = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
         jpMain.setLayout(gbl);
         GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.gridx = 0;
+        gbcMain.gridy = 0;
+
         JPanel jpKep = new JPanel();
         jpKep.setLayout(gbl);
         GridBagConstraints gbcKep = new GridBagConstraints();
 
+        JPanel jpValasz = new JPanel();
+        //jpValasz.setLayout(gbl);
+        GridBagConstraints gbcValasz = new GridBagConstraints();
+        gbcValasz.gridx = 0;
+        gbcValasz.gridy = 0;
 
-        jpMain.add(jpKep,gbcMain);
+        String[] szovEsKep = kerdes.getKerdesSzovege().split("\\;");
+        String kerdesSzov = "<html>"+szovEsKep[0]+"</html>";
+        String kepPath = szovEsKep[1];
+
+        BufferedImage kep = null;
+        try {
+            //Forrás: https://stackoverflow.com/questions/16343098/resize-a-picture-to-fit-a-jlabel
+            kep = ImageIO.read(new File("Images/" + kepPath));
+            Image image = kep.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(image);
+            jpKep.add(new JLabel(imageIcon));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JLabel jlKerdes = new JLabel(kerdesSzov);
+        JTextField jtfValasz = new JTextField(kerdes.getHelyesValasz().length());
+        jpValasz.add(jlKerdes,gbcValasz);
+        gbcValasz.gridy++;
+        jpValasz.add(jtfValasz,gbcValasz);
+        jpMain.add(jpKep, gbcMain);
+        gbcMain.gridx++;
+        jpMain.add(jpValasz,gbcMain);
         return jpMain;
     }
 
 
+    private JPanel jpFordítas(Kerdes kerdes) {
+        JPanel jpMain = new JPanel();
+        GridBagLayout gbl = new GridBagLayout();
+        jpMain.setLayout(gbl);
+        GridBagConstraints gbcMain = new GridBagConstraints();
+
+        gbcMain.gridx = 0;
+        gbcMain.gridy = 0;
+
+        JPanel jpKerdes = new JPanel();
+        jpKerdes.setLayout(gbl);
+        GridBagConstraints gbcKerdes = new GridBagConstraints();
+        gbcKerdes.insets = new Insets(5,5,5,5);
+        gbcKerdes.gridx = 0;
+        gbcKerdes.gridy = 0;
+
+        JLabel jlCim = new JLabel("Fordítsa le az alábbi szöveget!");
+        JLabel jlKerdes = new JLabel("<html>"+kerdes.getKerdesSzovege()+"</html>");
+        JTextField jtfValasz = new JTextField(20);
+        jpKerdes.add(jlCim,gbcKerdes);
+        gbcKerdes.gridy++;
+        jpKerdes.add(jlKerdes,gbcKerdes);
+        gbcKerdes.gridx++;
+        jpKerdes.add(jtfValasz,gbcKerdes);
+
+        jpMain.add(jpKerdes,gbcMain);
+        gbcMain.gridx++;
+        return jpMain;
+    }
+
+    private JPanel jpKerdesValasz(Kerdes kerdes) {
+        JPanel jpMain = new JPanel();
+        jpMain.setLayout(new GridBagLayout());
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.insets = new Insets(5,5,5,5);
+        gbcMain.gridx = 0;
+        gbcMain.gridy = 0;
+
+        JLabel jlCim = new JLabel("Válaszoljon a kérdésre");
+        JLabel jlKerdes = new JLabel("<html>"+kerdes.getKerdesSzovege()+"</html>");
+        JTextField jtfValasz = new JTextField(20);
+
+        jpMain.add(jlCim,gbcMain);
+        gbcMain.gridy++;
+        jpMain.add(jlKerdes,gbcMain);
+        gbcMain.gridx++;
+        jpMain.add(jtfValasz,gbcMain);
+
+        return jpMain;
+    }
 
 }
