@@ -3,12 +3,16 @@ package com.company;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -242,6 +246,7 @@ public class Controller {
      * @return
      */
     public String titkosit(String titkositando){
+        //Forrás: https://www.youtube.com/watch?v=9eisErB4MO8&t=525s
         String titkositott="";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -560,7 +565,6 @@ public class Controller {
 
     public void testEllenoriz(ArrayList<Kerdes> kerdesek,String[] valaszok){
         for (int i = 0; i < valaszok.length; i++) {
-
             String[] spl = kerdesek.get(i).getHelyesValasz().split("\\;");
             if (spl.length!=0){
                 for (int j = 0; j < spl.length; j++) {
@@ -573,9 +577,77 @@ public class Controller {
                     //megkapja a pontszamot
                 }
             }
+        }
+        System.out.println("Teszt vége");
+    }
 
+    public ActionListener fileChooserMegynit(JFileChooser jfc){
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jfc.showDialog(null,"Válasszon egy filet");
+
+            }
+        };
+        return al;
+    }
+
+    public ActionListener fileNevBeir(JFileChooser jfc,JTextField jtf){
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    jtf.setText(jfc.getSelectedFile().getName());
+                //System.out.println(jfc.getSelectedFile().getPath());
+            }
+        };
+        return al;
+    }
+
+    public PopupMenuListener fajlNevek(JTextField jtf,JTextField jtf2, JTextField jtf3,JTextField jtf4,JComboBox jcbValasz){
+        PopupMenuListener ppls = new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                jcbValasz.removeAllItems();
+                if (jtf.getText().length()!=0){
+                    jcbValasz.addItem(jtf.getText());
+                }
+                if (jtf2.getText().length()!=0){
+                    jcbValasz.addItem(jtf2.getText());
+                }
+                if (jtf3.getText().length()!=0){
+                    jcbValasz.addItem(jtf3.getText());
+                }
+                if (jtf4.getText().length()!=0){
+                    jcbValasz.addItem(jtf4.getText());
+                }
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+
+            }
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+
+            }
+        };
+        return ppls;
+    }
+
+
+    public void fileMasol(File forras) {
+
+        File cel = new File("./Images/"+forras.getName());
+        System.out.println("cél: "+Paths.get("/Images"));
+        System.out.println("forrás: "+forras.getAbsolutePath());
+      try {
+         Files.copy(forras.toPath(),cel.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 
 
 }

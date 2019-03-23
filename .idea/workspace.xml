@@ -4,10 +4,31 @@
     <bookmark url="file://$PROJECT_DIR$/src/com/company/Modell.java" line="9" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01688142-27e4-4b71-a713-d99c8ee74b72" name="Default Changelist" comment="">
+    <list default="true" id="01688142-27e4-4b71-a713-d99c8ee74b72" name="Default Changelist" comment="Tanár és admin -View kérdések szerkesztése felhasználó barát, képek a program gyökerében levő mappába másolódnak kiválasztáskor.">
+      <change afterPath="$PROJECT_DIR$/out/production/quiz/com/company/AdatbazisKapcsolat.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/cake.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/cake.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/coffee.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/coffee.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/gadget1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/gadget1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/gadget2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/gadget2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/gadget3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/gadget3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/gadget4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/gadget4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/island.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/island.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/mammal1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/mammal1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/mammal2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/mammal2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/mammal3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/mammal3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/mammal4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/mammal4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/presentC1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/presentC2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/presentC3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/presentC4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/quiz/com/company/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/quiz/com/company/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/quiz/com/company/DiakView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/quiz/com/company/DiakView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/quiz/com/company/TanarView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/quiz/com/company/TanarView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/AdminView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/DiakView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DiakView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/TanarView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/TanarView.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,7 +41,7 @@
     <SUITE FILE_PATH="coverage/Program$Main.ic" NAME="Main Coverage Results" MODIFIED="1552413157911" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="61422" />
+    <option name="totalTimeSeconds" value="142727" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
   </component>
@@ -29,62 +50,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="39" column="13" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+            <state relative-caret-position="244">
+              <caret line="248" column="66" selection-start-line="248" selection-start-column="66" selection-end-line="248" selection-end-column="66" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;method#letezikEfelhasznalo#0;class#Controller#0" />
-                <element signature="method#letezikEfelhasznalo#0;class#Controller#0" />
-                <element signature="docComment;method#diakRegisztracio#0;class#Controller#0" />
-                <element signature="method#diakRegisztracio#0;class#Controller#0" />
-                <element signature="docComment;method#regisztracio#0;class#Controller#0" />
-                <element signature="method#regisztracio#0;class#Controller#0" />
-                <element signature="e#7148#7283#0" />
-                <element signature="docComment;method#egyezoJelszo#0;class#Controller#0" />
-                <element signature="docComment;method#szabadFelhasznaloNev#0;class#Controller#0" />
-                <element signature="method#szabadFelhasznaloNev#0;class#Controller#0" />
-                <element signature="docComment;method#titkosit#1;class#Controller#0" />
-                <element signature="method#titkosit#1;class#Controller#0" />
-                <element signature="docComment;method#felhasznaloBetolt#0;class#Controller#0" />
-                <element signature="method#felhasznaloBetolt#0;class#Controller#0" />
-                <element signature="docComment;method#felhasznaloGetter#0;class#Controller#0" />
-                <element signature="method#felhasznalokLista#0;class#Controller#0" />
-                <element signature="method#kerdesLetrehoz#0;class#Controller#0" />
-                <element signature="docComment;method#letezoFoKategoriak#0;class#Controller#0" />
-                <element signature="method#letezoFoKategoriak#0;class#Controller#0" />
-                <element signature="docComment;method#letezoAlKategoriak#0;class#Controller#0" />
-                <element signature="method#letezoAlKategoriak#0;class#Controller#0" />
-                <element signature="e#12727#12946#0" />
-                <element signature="docComment;method#fokatLetrehoz#0;class#Controller#0" />
-                <element signature="method#fokatLetrehoz#0;class#Controller#0" />
-                <element signature="docComment;method#alkatLetrehoz#0;class#Controller#0" />
-                <element signature="method#alkatLetrehoz#0;class#Controller#0" />
-                <element signature="docComment;method#kerdesLetrehoz#1;class#Controller#0" />
-                <element signature="method#kerdesLetrehoz#1;class#Controller#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/company/View.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="278" column="22" lean-forward="true" selection-start-line="278" selection-start-column="22" selection-end-line="278" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#10645#10646#0" expanded="true" />
+                <element signature="e#10680#10681#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,17 +63,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/DiakView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+            <state relative-caret-position="461">
+              <caret line="379" column="24" lean-forward="true" selection-start-line="379" selection-start-column="24" selection-end-line="379" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="19" selection-end-column="38" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/company/AdminView.java">
+        <entry file="file://$PROJECT_DIR$/out/production/quiz/com/company/DiakView.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="317" column="38" selection-start-line="317" selection-start-column="38" selection-end-line="317" selection-end-column="38" />
+            <state relative-caret-position="-1530">
+              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -112,10 +94,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/company/Felhasznalo.java">
+        <entry file="file://$PROJECT_DIR$/src/com/company/AdminView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+            <state relative-caret-position="510">
+              <caret line="225" column="18" lean-forward="true" selection-start-line="225" selection-start-column="18" selection-end-line="225" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -135,10 +120,12 @@
       <find>System</find>
       <find>fill</find>
       <find>letezoKategoriak</find>
+      <find>gbc</find>
     </findStrings>
     <replaceStrings>
       <replace>bejelentkezes</replace>
       <replace>letezoFoKategoriak</replace>
+      <replace>gbcKerd</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -148,21 +135,21 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/com/company/Main.java" />
-        <option value="$PROJECT_DIR$/src/com/company/Modell.java" />
-        <option value="$PROJECT_DIR$/src/com/company/DiakView.java" />
         <option value="$PROJECT_DIR$/src/com/company/Felhasznalo.java" />
         <option value="$PROJECT_DIR$/src/com/company/View.java" />
-        <option value="$PROJECT_DIR$/src/com/company/AdatbazisKapcsolat.java" />
         <option value="$PROJECT_DIR$/src/com/company/Kerdes.java" />
+        <option value="$PROJECT_DIR$/src/com/company/AdatbazisKapcsolat.java" />
+        <option value="$PROJECT_DIR$/src/com/company/Modell.java" />
         <option value="$PROJECT_DIR$/src/com/company/TanarView.java" />
         <option value="$PROJECT_DIR$/src/com/company/Controller.java" />
         <option value="$PROJECT_DIR$/src/com/company/AdminView.java" />
+        <option value="$PROJECT_DIR$/src/com/company/DiakView.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-36" />
-    <option name="y" value="-16" />
+    <option name="x" value="436" />
+    <option name="y" value="-15" />
     <option name="width" value="1366" />
     <option name="height" value="768" />
   </component>
@@ -175,12 +162,55 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Program" type="b2602c69:ProjectViewProjectNode" />
               <item name="Program" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Program" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Program" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Program" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Program" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Program" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Program" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="Program" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Program" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Program" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="quiz" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Program" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Program" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="quiz" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Program" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Program" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="quiz" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Program" type="b2602c69:ProjectViewProjectNode" />
@@ -201,11 +231,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552921113889" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553377968102" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JAVA" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/mysql-connector-java-5.0.8-bin.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -323,15 +352,36 @@
       <option name="project" value="LOCAL" />
       <updated>1553001689896</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Hiányos Kérdés mintának megfelelő kirajzolása">
+      <created>1553191078624</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1553191078624</updated>
+    </task>
+    <task id="LOCAL-00012" summary="SokKép megjelenítése">
+      <created>1553209349338</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1553209349338</updated>
+    </task>
+    <task id="LOCAL-00013" summary="DiakView kész kiértékelésre vár">
+      <created>1553250498057</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1553250498058</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.41233766" visible="true" weight="0.2260128" />
-      <window_info id="Structure" order="1" sideWeight="0.58766234" side_tool="true" visible="true" weight="0.2260128" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.40633246" visible="true" weight="0.17910448" />
+      <window_info id="Structure" order="1" sideWeight="0.59366757" side_tool="true" visible="true" weight="0.17910448" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -339,15 +389,15 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49848714" visible="true" weight="0.36033228" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4978678" weight="0.24195223" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39938557" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5015129" side_tool="true" weight="0.39477727" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4969743" weight="0.23779854" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49924356" weight="0.16510904" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5021322" side_tool="true" weight="0.36033228" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.4969743" visible="true" weight="0.6064382" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49924356" weight="0.3904465" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -439,7 +489,12 @@
     <MESSAGE value="AdminView Felhasználók megjelennek" />
     <MESSAGE value="Admin tud felhasználót létrehozni" />
     <MESSAGE value="Kategória létrehozás Front-back, Kérdes Osztály" />
-    <option name="LAST_COMMIT_MESSAGE" value="Kategória létrehozás Front-back, Kérdes Osztály" />
+    <MESSAGE value="Hiányos Kérdés mintának megfelelő kirajzolása" />
+    <MESSAGE value="SokKép megjelenítése" />
+    <MESSAGE value="TanarView elso tipp" />
+    <MESSAGE value="DiakView kész kiértékelésre vár" />
+    <MESSAGE value="Tanár és admin -View kérdések szerkesztése felhasználó barát, képek a program gyökerében levő mappába másolódnak kiválasztáskor." />
+    <option name="LAST_COMMIT_MESSAGE" value="Tanár és admin -View kérdések szerkesztése felhasználó barát, képek a program gyökerében levő mappába másolódnak kiválasztáskor." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.java" />
@@ -490,34 +545,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/AdatbazisKapcsolat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/DiakView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/Modell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#896#897#0" expanded="true" />
-            <element signature="e#942#943#0" expanded="true" />
-            <element signature="e#985#986#0" expanded="true" />
-            <element signature="e#1019#1020#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/Kerdes.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -540,60 +567,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="278" column="22" lean-forward="true" selection-start-line="278" selection-start-column="22" selection-end-line="278" selection-end-column="22" />
+        <state relative-caret-position="4658">
+          <caret line="278" column="22" selection-start-line="278" selection-start-column="22" selection-end-line="278" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="39" column="13" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;method#letezikEfelhasznalo#0;class#Controller#0" />
-            <element signature="method#letezikEfelhasznalo#0;class#Controller#0" />
-            <element signature="docComment;method#diakRegisztracio#0;class#Controller#0" />
-            <element signature="method#diakRegisztracio#0;class#Controller#0" />
-            <element signature="docComment;method#regisztracio#0;class#Controller#0" />
-            <element signature="method#regisztracio#0;class#Controller#0" />
-            <element signature="e#7148#7283#0" />
-            <element signature="docComment;method#egyezoJelszo#0;class#Controller#0" />
-            <element signature="docComment;method#szabadFelhasznaloNev#0;class#Controller#0" />
-            <element signature="method#szabadFelhasznaloNev#0;class#Controller#0" />
-            <element signature="docComment;method#titkosit#1;class#Controller#0" />
-            <element signature="method#titkosit#1;class#Controller#0" />
-            <element signature="docComment;method#felhasznaloBetolt#0;class#Controller#0" />
-            <element signature="method#felhasznaloBetolt#0;class#Controller#0" />
-            <element signature="docComment;method#felhasznaloGetter#0;class#Controller#0" />
-            <element signature="method#felhasznalokLista#0;class#Controller#0" />
-            <element signature="method#kerdesLetrehoz#0;class#Controller#0" />
-            <element signature="docComment;method#letezoFoKategoriak#0;class#Controller#0" />
-            <element signature="method#letezoFoKategoriak#0;class#Controller#0" />
-            <element signature="docComment;method#letezoAlKategoriak#0;class#Controller#0" />
-            <element signature="method#letezoAlKategoriak#0;class#Controller#0" />
-            <element signature="e#12727#12946#0" />
-            <element signature="docComment;method#fokatLetrehoz#0;class#Controller#0" />
-            <element signature="method#fokatLetrehoz#0;class#Controller#0" />
-            <element signature="docComment;method#alkatLetrehoz#0;class#Controller#0" />
-            <element signature="method#alkatLetrehoz#0;class#Controller#0" />
-            <element signature="docComment;method#kerdesLetrehoz#1;class#Controller#0" />
-            <element signature="method#kerdesLetrehoz#1;class#Controller#0" />
           </folding>
         </state>
       </provider>
@@ -605,10 +584,85 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/Modell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="50" column="7" lean-forward="true" selection-start-line="50" selection-start-column="7" selection-end-line="50" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/javax/swing/JFileChooser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="479" column="16" selection-start-line="479" selection-start-column="16" selection-end-line="479" selection-end-column="16" />
+          <folding>
+            <element signature="e#15769#15770#0" expanded="true" />
+            <element signature="e#15804#15805#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Images/.cake.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/AdatbazisKapcsolat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="108" selection-start-line="8" selection-start-column="96" selection-end-line="8" selection-end-column="108" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="248" column="66" selection-start-line="248" selection-start-column="66" selection-end-line="248" selection-end-column="66" />
+          <folding>
+            <element signature="e#10645#10646#0" expanded="true" />
+            <element signature="e#10680#10681#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/DiakView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="379" column="24" lean-forward="true" selection-start-line="379" selection-start-column="24" selection-end-line="379" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/quiz/com/company/AdminView.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4896">
+          <folding>
+            <element signature="e#0#22173#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/AdminView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="317" column="38" selection-start-line="317" selection-start-column="38" selection-end-line="317" selection-end-column="38" />
+        <state relative-caret-position="510">
+          <caret line="225" column="18" lean-forward="true" selection-start-line="225" selection-start-column="18" selection-end-line="225" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/TanarView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="19" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/quiz/com/company/DiakView.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1530">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

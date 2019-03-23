@@ -14,9 +14,9 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     private JPanel jpFooldal;
     private String fokategoria = "";
     private String alkategoria = "";
-    ArrayList<Kerdes> klist;
+    private ArrayList<Kerdes> klist;
     //ArrayList<String> valaszok;
-    String[] valaszok;
+    private String[] valaszok;
 
 
     public DiakView(Controller controller) {
@@ -146,7 +146,11 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         }
         JButton jbKiertekel = new JButton("<html>"+"<u>Teszt kiértékelése</u>"+"</html>");
         jbKiertekel.addActionListener(e -> {
-            //cont.testkiertekel(klist,)
+            int biztosAblak = JOptionPane.YES_NO_OPTION;
+            int eredmeny = JOptionPane.showConfirmDialog(this, "Biztos benne?", "Figyelem", biztosAblak);
+            if (eredmeny==0){
+                cont.testEllenoriz(klist,valaszok);
+            }
         });
         JButton vissza = new JButton("Vissza");
         vissza.addActionListener(e -> {
@@ -159,6 +163,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbcLepeget.gridx = 0;
         gbcLepeget.gridy++;
         jpLepeget.add(vissza, gbcLepeget);
+        gbcLepeget.gridx++;
+        jpLepeget.add(jbKiertekel, gbcLepeget);
 
 
         jpMain.add(jpanKerdesek, gbcMain);
