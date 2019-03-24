@@ -41,7 +41,11 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         });
         jbDiakokEredmenyei = new JButton("Diákok eredményei");
         jbDiakokEredmenyei.addActionListener(e -> {
-            conntroller.ujablakmegynit(diakokEredmenyei());
+            try {
+                conntroller.ujablakmegynit(diakokEredmenyei());
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
         });
 
         jbFelhasznalok = new JButton("Felhasználók szerkesztése");
@@ -665,35 +669,58 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
         gbc.gridy=1;
         for (int i = 0; i < cont.letezoKerdesek().size(); i++) {
+            int kerdesId = cont.letezoKerdesek().get(i).getId();
             gbc.gridx=0;
-            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getFoKategoria()),gbc);
+            JLabel jlFokatSzerk = new JLabel(cont.letezoKerdesek().get(i).getFoKategoria());
+            jpKerdesSzerk.add(jlFokatSzerk,gbc);
             gbc.gridx++;
-            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getAlkategoria()),gbc);
+            JLabel jlAlkatSzerk = new JLabel(cont.letezoKerdesek().get(i).getAlkategoria());
+            jpKerdesSzerk.add(jlAlkatSzerk,gbc);
             gbc.gridx++;
-            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getTipusNev()),gbc);
+            JLabel jlTipusSzerk = new JLabel(cont.letezoKerdesek().get(i).getTipusNev());
+            jpKerdesSzerk.add(jlTipusSzerk,gbc);
             gbc.gridx++;
-            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getKerdesSzovege()),gbc);
+            JTextField jtfKerdes = new JTextField(cont.letezoKerdesek().get(i).getKerdesSzovege());
+            jpKerdesSzerk.add(jtfKerdes,gbc);
             gbc.gridx++;
-            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getHelyesValasz()),gbc);
+            JTextField jtfHelyesValasz = new JTextField(cont.letezoKerdesek().get(i).getHelyesValasz());
+            jpKerdesSzerk.add(jtfHelyesValasz,gbc);
             gbc.gridx++;
-            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getValaszlehetosegek()),gbc);
+            JTextField jtfvalaszLehet=new JTextField(cont.letezoKerdesek().get(i).getValaszlehetosegek());
+            jpKerdesSzerk.add(jtfvalaszLehet,gbc);
             gbc.gridx++;
-            jpKerdesSzerk.add(new JLabel(cont.letezoKerdesek().get(i).getPontszam()+""),gbc);
+            JComboBox jcbPontszam = new JComboBox();
+            jcbPontszam.addItem(1);
+            jcbPontszam.addItem(2);
+            jcbPontszam.addItem(3);
+            jcbPontszam.addItem(4);
+            jcbPontszam.addItem(5);
+            jcbPontszam.setSelectedItem(cont.letezoKerdesek().get(i).getPontszam());
+            jpKerdesSzerk.add(jcbPontszam,gbc);
+            gbc.gridx++;
+            JButton jbOk= new JButton("Elment");
+            jbOk.addActionListener(e -> {
+                try {
+                    cont.kerdesSzerk(jtfKerdes.getText(),jtfHelyesValasz.getText(),jtfvalaszLehet.getText(),(int)jcbPontszam.getSelectedItem(),kerdesId);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+                JOptionPane.showMessageDialog(jfKerdesSzerk,"Sikeres Változtatás");
+            });
+            jpKerdesSzerk.add(jbOk,gbc);
             gbc.gridy++;
         }
 
 
         JScrollPane jsPane = new JScrollPane(jpKerdesSzerk);
-        //jsPane.setPreferredSize(new Dimension(600,400));
         jsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        //jpKerdesSzerk.add(jsPane);
         jpMain.add(jsPane);
         jfKerdesSzerk.add(jpMain);
         return jfKerdesSzerk;
     }
 
 
-    private JFrame diakokEredmenyei() {
+    private JFrame diakokEredmenyei() throws SQLException {
         JFrame jfdiakEredmeny = new JFrame();
         jfdiakEredmeny.setTitle("Quiz 1.0");
         jfdiakEredmeny.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -704,28 +731,39 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel jlFnev = new JLabel("<html><u>Diák neve</u></html>");
-        JLabel jlJovalasDb = new JLabel("<html><u>Jó válaszok száma</u></html>");
-        JLabel jlRosszvalasDb = new JLabel("<html><u>Rossz válaszok száma</u></html>");
+        JLabel jlFokat = new JLabel("<html><u>Kérdés főkategóriája</u></html>");
+        JLabel jlAlkat = new JLabel("<html><u>Kérdés alkategóriája</u></html>");
+        JLabel jlKerdesSorrend = new JLabel("<html><u>Kérdések sorrendje</u></html>");
+        JLabel jlPontszamSorrend = new JLabel("<html><u>Pontszámok sorrendje</u></html>");
+        JLabel jlDiakValaszok = new JLabel("<html><u>Diák válaszai</u></html>");
+        JLabel jlLeadás = new JLabel("<html><u>Teszt leadásának időpontja</u></html>");
 
         gbc.insets = new Insets(5,10,5,10);
         gbc.gridx=0;
         gbc.gridy=0;
         jpDiakEredmeny.add(jlFnev,gbc);
         gbc.gridx++;
-        jpDiakEredmeny.add(jlJovalasDb,gbc);
+        jpDiakEredmeny.add(jlFokat,gbc);
         gbc.gridx++;
-        jpDiakEredmeny.add(jlRosszvalasDb,gbc);
+        jpDiakEredmeny.add(jlAlkat,gbc);
+        gbc.gridx++;
+        jpDiakEredmeny.add(jlKerdesSorrend,gbc);
+        gbc.gridx++;
+        jpDiakEredmeny.add(jlPontszamSorrend,gbc);
+        gbc.gridx++;
+        jpDiakEredmeny.add(jlDiakValaszok,gbc);
+        gbc.gridx++;
+        jpDiakEredmeny.add(jlLeadás,gbc);
         gbc.gridy=1;
-        for (int i = 0; i < cont.osszesDiak().size(); i++) {
+
+        for (int i = 0; i < cont.diakEredmenyLista().size(); i++) {
             gbc.gridx=0;
-            jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getTeljesNev()),gbc);
-            gbc.gridx++;
-            jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getJoValasz()+""),gbc);
-            gbc.gridx++;
-            jpDiakEredmeny.add(new JLabel(cont.osszesDiak().get(i).getRosszValasz()+""),gbc);
+            for (int j = 0; j < cont.diakEredmenyLista().get(i).size(); j++) {
+                jpDiakEredmeny.add(new JLabel(cont.diakEredmenyLista().get(i).get(j)),gbc);
+                gbc.gridx++;
+            }
             gbc.gridy++;
         }
-
 
         JScrollPane jscp = new JScrollPane(jpDiakEredmeny);
         jscp.setPreferredSize(new Dimension(600,400));

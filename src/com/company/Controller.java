@@ -102,7 +102,7 @@ public class Controller {
 
         switch (felhasznaloTipus){
             case 0:
-                view.getJt().addTab("Quiz",new DiakView(this));
+                view.getJt().addTab("Quiz",new DiakView(this,felhasznaloId));
                 view.getContentPane().setBackground(new Color(164, 197, 249));
                 view.setTitle("DiakQuiz");
                 break;
@@ -122,6 +122,7 @@ public class Controller {
         }
         view.getJt().addTab("Szótár",view.szotarFul());
         felhasznaloPanelBetolt(view.getJt());
+        naplozas(felhasznaloId);
     }
 
     public void felhasznaloPanelBetolt(JTabbedPane jt) {
@@ -441,7 +442,7 @@ public class Controller {
      */
     public ArrayList<Kerdes> letezoKerdesek(){
         ArrayList<Kerdes> list = new ArrayList<>();
-        String SQL_KERDESEK = "SELECT * FROM kerdes";
+        String SQL_KERDESEK = "SELECT * FROM kerdes ORDER BY alKategoria ASC";
 
         try{
             Statement st = modell.getCON().createStatement();
@@ -563,23 +564,83 @@ public class Controller {
         return al;
     }
 
-    public void testEllenoriz(ArrayList<Kerdes> kerdesek,String[] valaszok){
+    public void testEllenoriz(ArrayList<Kerdes> kerdesek,String[] valaszok,int diakId){
+        int elertpontszam=0;
+        int maxPontszam=0;
+
+        for (int i = 0; i < kerdesek.size(); i++) {
+            maxPontszam+=kerdesek.get(i).getPontszam();
+        }
+
+        String kerdesSorrend="";
+        for (int j = 0; j < kerdesek.size(); j++) {
+            kerdesSorrend+=kerdesek.get(j).getId()+";";
+        }
+        kerdesSorrend=kerdesSorrend.substring(0,kerdesSorrend.length()-1);
+
+        String pontSzamSorrend = "";
+        String[] pontSzamTomb = new String[kerdesek.size()];
+
+        String diakValaszai = "";
+        String[] diakValaszaiTomb = new String[kerdesek.size()];
+
+        for (int k = 0; k < pontSzamTomb.length; k++) {
+            pontSzamTomb[k] = "0";
+        }
+
+        for (int k = 0; k < diakValaszaiTomb.length; k++) {
+            diakValaszaiTomb[k] = "nem válaszolt";
+        }
+
         for (int i = 0; i < valaszok.length; i++) {
             String[] spl = kerdesek.get(i).getHelyesValasz().split("\\;");
-            if (spl.length!=0){
+            if (spl.length!=1){
                 for (int j = 0; j < spl.length; j++) {
                     if (spl[j].equals(valaszok[i])){
-                        //mekapja a pontszamot
+                        pontSzamTomb[i]=kerdesek.get(i).getPontszam()+"";
+                        elertpontszam+=kerdesek.get(i).getPontszam();
                     }
                 }
-            }else {
-                if (valaszok[i].equals(kerdesek.get(i).getHelyesValasz())){
-                    //megkapja a pontszamot
-                }
+          }
+            else if (valaszok[i]!=null && valaszok[i].equals(kerdesek.get(i).getHelyesValasz())) {
+                pontSzamTomb[i]=kerdesek.get(i).getPontszam() + "";
+                elertpontszam+=kerdesek.get(i).getPontszam();
+            }
+            if (valaszok[i]!=null){
+                diakValaszaiTomb[i]=valaszok[i];
             }
         }
+        for (int l = 0; l < pontSzamTomb.length; l++) {
+            pontSzamSorrend+=pontSzamTomb[l]+";";
+        }
+
+        for (int l = 0; l < diakValaszaiTomb.length; l++) {
+            diakValaszai+=diakValaszaiTomb[l]+";";
+        }
+
+        pontSzamSorrend=pontSzamSorrend.substring(0,pontSzamSorrend.length()-1);
+        diakValaszai=diakValaszai.substring(0,diakValaszai.length()-1);
+
+        diakEredFelvisz(diakId,kerdesek.get(0).getFoKategoria(),kerdesek.get(0).getAlkategoria(),kerdesSorrend,pontSzamSorrend,diakValaszai);
+
+        JOptionPane.showMessageDialog(null,"<html>A tesztnek vége, az ön eredménye:<br> Elérető maximális pontszám: "+maxPontszam+"" +
+                "<br>Elért pontszám: "+elertpontszam+ "</html>");
         System.out.println("Teszt vége");
     }
+
+    private void diakEredFelvisz(int diakid,String fokat,String alkat,String kerdesSorrend,String elertPontszamSorrend,String diakValaszai){
+//        String SQL_DIAKEREDINSERT = "INSERT into 'diakered' VALUES('"+diakid+"','"+fokat+"','"+alkat+"','"+kerdesSorrend+"','"+elertPontszamSorrend+"','"+diakValaszai+"',NULL')";
+        String SQL_DIAKEREDINSERT = "INSERT INTO `diakered` (`diakid`, `fokatid`, `alkatid`, `kerdesidsorrend`, `elertpontszamsorrend`, `diakvalaszai`, `beadasidopont`)" +
+                " VALUES ('"+diakid+"','"+fokat+"','"+alkat+"','"+kerdesSorrend+"','"+elertPontszamSorrend+"','"+diakValaszai+"', CURRENT_TIMESTAMP)";
+
+        try {
+            Statement st = modell.getCON().createStatement();
+            st.executeUpdate(SQL_DIAKEREDINSERT);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public ActionListener fileChooserMegynit(JFileChooser jfc){
         ActionListener al = new ActionListener() {
@@ -647,6 +708,53 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+    private void naplozas(int id) throws SQLException {
+        String SQL_NAPLO = "INSERT INTO `naplo` (`bejelentkezesdatum`, `felhasznid`) VALUES (CURRENT_TIMESTAMP, '"+id+"')";
+
+        Statement st = modell.getCON().createStatement();
+        st.executeUpdate(SQL_NAPLO);
+    }
+
+
+    public void kerdesSzerk(String kerdesSzov,String valasz,String valaszLehet,int pontszam,int id) throws SQLException {
+        String SQL_KERDESUPDATE = "UPDATE `kerdes` SET `kerdesSzovege` = '"+kerdesSzov+"', " +
+                "`valasz` = '"+valasz+"', `valaszlehetosegek` = '"+valaszLehet+"', `pontszam` = '"+pontszam+"' WHERE `kerdes`.`id` = "+id+";";
+        Statement st = modell.getCON().createStatement();
+        st.executeUpdate(SQL_KERDESUPDATE);
+    }
+
+    public ArrayList<ArrayList<String>> diakEredmenyLista() throws SQLException {
+        ArrayList<ArrayList<String>> list = new ArrayList<>();
+        String SQL_DIAKERED = "SELECT * FROM diakered";
+
+        Statement st = modell.getCON().createStatement();
+        ResultSet res = st.executeQuery(SQL_DIAKERED);
+
+        while (res.next()){
+            ArrayList<String> allist = new ArrayList<>();
+            allist.add(res.getString(1));
+            allist.add(res.getString(2));
+            allist.add(res.getString(3));
+            allist.add(res.getString(4));
+            allist.add(res.getString(5));
+            allist.add(res.getString(6));
+            allist.add(res.getString(7));
+            list.add(allist);
+        }
+
+        return list;
+    }
+
+    public void kerdesTorol(int kerdesId) throws SQLException {
+        String SQL_KERDESTOROL = "DELETE FROM kerdes WHERE id="+kerdesId+";";
+
+        Statement st = modell.getCON().createStatement();
+        st.executeUpdate(SQL_KERDESTOROL);
+
+    }
+
+    //kérdés törlése
 
 
 

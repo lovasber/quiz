@@ -17,14 +17,15 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     private ArrayList<Kerdes> klist;
     //ArrayList<String> valaszok;
     private String[] valaszok;
+    private int id;
 
 
-    public DiakView(Controller controller) {
+    public DiakView(Controller controller,int diakId) {
         this.setLayout(new FlowLayout());
         cont = controller;
         jpFooldal = fooldalFeltolt();
         this.add(jpFooldal);
-
+        this.id=diakId;
     }
 
     private JPanel fooldalFeltolt() {
@@ -139,7 +140,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
             jbLepeget.addActionListener(e -> {
                 JButton but = (JButton) e.getSource();
                 cl.show(jpanKerdesek, but.getText());
-
             });
             jpLepeget.add(jbLepeget, gbcLepeget);
             gbcLepeget.gridx++;
@@ -149,7 +149,11 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
             int biztosAblak = JOptionPane.YES_NO_OPTION;
             int eredmeny = JOptionPane.showConfirmDialog(this, "Biztos benne?", "Figyelem", biztosAblak);
             if (eredmeny==0){
-                cont.testEllenoriz(klist,valaszok);
+                cont.testEllenoriz(klist,valaszok,id);
+                this.removeAll();
+                this.add(alkatBetolt(fokategoria));
+                this.repaint();
+                this.revalidate();
             }
         });
         JButton vissza = new JButton("Vissza");
@@ -246,17 +250,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                 Image image = kep.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(image);
                 JRadioButton jrb = new JRadioButton(imageIcon);
-                /*jrb.addChangeListener(e -> {
-                    JRadioButton jrbut = (JRadioButton) e.getSource();
-                    if (jrbut.isSelected()) {
-                        //jrbut.setBackground(Color.ORANGE);
-                        jrbut.setBackground(new Color(8, 67, 109));
-                    } else {
-                        jrbut.setBackground(jpMain.getBackground());
-                    }
-                });*/
-                //jrb.addChangeListener(cont.kepnevTombhoz(jrb,valaszok,index));
-
                 jrb.addActionListener(cont.kepnevTombhoz(jrb,valaszok,index,valaszLehet[i]));
 
 
