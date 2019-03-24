@@ -713,6 +713,8 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
 
         JScrollPane jsPane = new JScrollPane(jpKerdesSzerk);
+        jsPane.setMinimumSize(new Dimension(600,600));
+
         jsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jpMain.add(jsPane);
         jfKerdesSzerk.add(jpMain);
@@ -766,6 +768,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         }
 
         JScrollPane jscp = new JScrollPane(jpDiakEredmeny);
+        jscp.setMinimumSize(new Dimension(600,600));
         jscp.setPreferredSize(new Dimension(600,400));
         jscp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jpMain.add(jscp);
@@ -845,6 +848,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
 
         JScrollPane jScrollPane = new JScrollPane(jpFelh);
+        jScrollPane.setMinimumSize(new Dimension(600,600));
         jScrollPane.setPreferredSize(new Dimension(800,400));
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -933,6 +937,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpUjFelhasznalo.add(jbLetrehoz,gbc2);
 
         JScrollPane jscUjfelh = new JScrollPane(jpUjFelhasznalo);
+        jscUjfelh.setMinimumSize(new Dimension(600,600));
 
         gbcMain.gridx=1;
         jpMain.add(jscUjfelh,gbcMain );

@@ -251,7 +251,12 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                 ImageIcon imageIcon = new ImageIcon(image);
                 JRadioButton jrb = new JRadioButton(imageIcon);
                 jrb.addActionListener(cont.kepnevTombhoz(jrb,valaszok,index,valaszLehet[i]));
-
+                jrb.addChangeListener(e -> {
+                    jrb.setBackground(jpKepek.getBackground());
+                    if (jrb.isSelected()){
+                        jrb.setBackground(Color.BLUE);
+                    }
+                });
 
                 bgroup.add(jrb);
                 jpKepek.add(jrb, gbcKepek);

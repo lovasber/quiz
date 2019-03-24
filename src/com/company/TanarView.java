@@ -719,6 +719,7 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
 
 
                 JScrollPane jsPane = new JScrollPane(jpKerdesSzerk);
+                jsPane.setMinimumSize(new Dimension(600,600));
                 jsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
                 jpMain.add(jsPane);
                 jfKerdesSzerk.add(jpMain);
@@ -764,7 +765,9 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
 
             for (int i = 0; i < cont.diakEredmenyLista().size(); i++) {
                 gbc.gridx=0;
-                for (int j = 0; j < cont.diakEredmenyLista().get(i).size(); j++) {
+                jpDiakEredmeny.add(new JLabel(cont.diakNev(Integer.parseInt(cont.diakEredmenyLista().get(i).get(0)))),gbc);
+                gbc.gridx++;
+                for (int j = 1; j < cont.diakEredmenyLista().get(i).size(); j++) {
                     jpDiakEredmeny.add(new JLabel(cont.diakEredmenyLista().get(i).get(j)),gbc);
                     gbc.gridx++;
                 }

@@ -476,7 +476,6 @@ public class Controller {
         return list;
     }
 
-
     public void ujPaneletolt(JPanel jpRegi,JPanel jpUj){
         jpRegi.removeAll();
         jpRegi.add(jpUj);
@@ -509,7 +508,6 @@ public class Controller {
             ResultSet res = st.executeQuery(SQL_ALKATKERDESEI);
             while (res.next()){
                 list.add(new Kerdes(res.getInt(1),res.getString(2),res.getString(3),res.getInt(4),res.getString(5),res.getString(6),res.getString(7),res.getInt(8)));
-                //modell.getKerdesekLista().add(new Kerdes(res.getInt(1),res.getString(2),res.getString(3),res.getInt(4),res.getString(5),res.getString(6),res.getString(7),res.getInt(8)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -536,29 +534,16 @@ public class Controller {
         @Override
         public void keyReleased(KeyEvent e) {
             list[index]=jtf.getText();
-            System.out.println("index: " + index);
-            for (int i = 0; i < list.length; i++) {
-                System.out.print(list[i]+" ");
             }
-
-        }
-
-
     };
     return klGepel;
     }
 
-    public ActionListener kepnevTombhoz(JRadioButton jrb, String[] tomb, int index,String filenev){
+    public ActionListener kepnevTombhoz(JRadioButton jrb, String[] tomb, int index, String filenev){
         ActionListener al = new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("kep: "+filenev+"");
                 tomb[index]=filenev;
-                for (int i = 0; i < tomb.length; i++) {
-                    System.out.print(tomb[i]+" ");
-                }
-
             }
         };
         return al;
@@ -625,7 +610,6 @@ public class Controller {
 
         JOptionPane.showMessageDialog(null,"<html>A tesztnek vége, az ön eredménye:<br> Elérető maximális pontszám: "+maxPontszam+"" +
                 "<br>Elért pontszám: "+elertpontszam+ "</html>");
-        System.out.println("Teszt vége");
     }
 
     private void diakEredFelvisz(int diakid,String fokat,String alkat,String kerdesSorrend,String elertPontszamSorrend,String diakValaszai){
@@ -658,7 +642,6 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                     jtf.setText(jfc.getSelectedFile().getName());
-                //System.out.println(jfc.getSelectedFile().getPath());
             }
         };
         return al;
@@ -754,7 +737,17 @@ public class Controller {
 
     }
 
-    //kérdés törlése
+    public String diakNev(int diakId) throws SQLException {
+        String diaknev = "";
+        String SQL_DIAKIDTODIAKNEV = "SELECT teljesnev FROM felhasznalok WHERE id='"+diakId+"'";
+        Statement st = modell.getCON().createStatement();
+
+        ResultSet res = st.executeQuery(SQL_DIAKIDTODIAKNEV);
+        while(res.next()){
+            diaknev=res.getString(1);
+        }
+        return diaknev;
+    }
 
 
 
