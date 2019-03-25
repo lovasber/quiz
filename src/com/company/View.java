@@ -51,7 +51,10 @@ public class View extends JFrame{
 
         jtfNev = new JTextField();
         jtfNev.setColumns(1);
-        jpfJelszo = new JPasswordField();
+        jpfJelszo = new JPasswordField(){
+            @Override
+            public void paste() {}
+        };
         jlJelszo.setSize(new Dimension(50,20));
 
         jbBejel = new JButton("Bejelentkezés");
@@ -145,8 +148,14 @@ public class View extends JFrame{
         JLabel jlJelszomeg = new JLabel("Jelszó megerősítése");
         JTextField jtfFnev = new JTextField();
         JTextField jtfTnev = new JTextField();
-        JPasswordField jpfJelszo = new JPasswordField();
-        JPasswordField jpfMegerosit = new JPasswordField();
+        JPasswordField jpfJelszo = new JPasswordField(){
+            @Override
+            public void paste() {}
+        };
+        JPasswordField jpfMegerosit = new JPasswordField(){
+            @Override
+            public void paste() {}
+        };
         JButton jbRegisztracio = new JButton("Regisztráció");
         jbRegisztracio.addActionListener(e -> {
             if(!(jtfFnev.getText().isEmpty()||jtfTnev.getText().isEmpty()||jpfJelszo.getPassword().length==0||jpfMegerosit.getPassword().length==0)) {

@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.xml.bind.annotation.XmlType;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -69,10 +71,16 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                 JButton button = (JButton) e.getSource();
                 alkategoria = button.getText();
 
-                this.removeAll();
-                this.add(kerdesek(alkategoria));
-                this.repaint();
-                this.revalidate();
+                try {
+                    jpanUj.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    this.removeAll();
+                    this.add(kerdesek(alkategoria));
+                    this.repaint();
+                    this.revalidate();
+                } finally {
+                    jpanUj.setCursor(Cursor.getDefaultCursor());
+                }
+
             });
             jpanUj.add(b);
         }
@@ -186,7 +194,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbc.gridx = 0;
         gbc.gridy = 0;
 
-        JLabel jlCim = new JLabel("Egészítse ki az alábbi mondatot");
+        JLabel jlCim = new JLabel((index+1)+". "+"Egészítse ki az alábbi mondatot");
 
         String[] kerdesT = kerdes.getKerdesSzovege().split("\\;");
 
@@ -197,6 +205,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         JLabel jlKerd1 = new JLabel(kerdesResz1);
         JTextField jtfValasz = new JTextField(valasz.length());
         jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));
+        jtfValasz.isFocusOwner();
         JLabel jlKerd2 = new JLabel(kerdesResz2);
 
 
@@ -231,9 +240,9 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbcvalasz.gridx = 0;
         gbcvalasz.gridy = 0;
 
-        JLabel jlCim = new JLabel("Jelölje ki a megfelelő képet!");
+        //JLabel jlCim = new JLabel("Jelölje ki a megfelelő képet!");
 
-        String kerdesSzov = "<html>" + kerdes.getKerdesSzovege() + "</html>";
+        String kerdesSzov = "<html>"+ (index+1)+". "+ kerdes.getKerdesSzovege() + "</html>";
         String[] valaszLehet = kerdes.getValaszlehetosegek().split("\\;");
 
 
@@ -302,7 +311,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbcValasz.gridy = 0;
 
         String[] szovEsKep = kerdes.getKerdesSzovege().split("\\;");
-        String kerdesSzov = "<html>"+szovEsKep[0]+"</html>";
+        String kerdesSzov = "<html>"+(index+1)+". "+szovEsKep[0]+"</html>";
         String kepPath = szovEsKep[1];
 
         BufferedImage kep = null;
@@ -344,7 +353,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbcKerdes.gridx = 0;
         gbcKerdes.gridy = 0;
 
-        JLabel jlCim = new JLabel("Fordítsa le az alábbi szöveget!");
+        JLabel jlCim = new JLabel((index+1)+". "+"Fordítsa le az alábbi szöveget!");
         JLabel jlKerdes = new JLabel("<html>"+kerdes.getKerdesSzovege()+"</html>");
         JTextField jtfValasz = new JTextField(20);
         jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));
@@ -367,7 +376,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbcMain.gridx = 0;
         gbcMain.gridy = 0;
 
-        JLabel jlCim = new JLabel("Válaszoljon a kérdésre");
+        JLabel jlCim = new JLabel((index+1)+". "+"Válaszoljon a kérdésre");
         JLabel jlKerdes = new JLabel("<html>"+kerdes.getKerdesSzovege()+"</html>");
         JTextField jtfValasz = new JTextField(20);
         jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));

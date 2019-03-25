@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -488,21 +489,20 @@ public class Controller {
      * @param tipus
      * @param id
      */
-    public void felhasznaloFrissit(int aktiv,int tipus,int id){
-        String SQL_FELHASZNFRISSIT = "UPDATE felhasznalok SET aktiv='"+aktiv+"', tipus='"+tipus+"' WHERE id='"+id+"'";
-        try {
-            Statement st = modell.getCON().createStatement();
-            st.executeUpdate(SQL_FELHASZNFRISSIT);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void felhasznaloFrissit(int aktiv,int tipus,int id) throws SQLException {
 
+            String SQL_FELHASZNFRISSIT = "UPDATE felhasznalok SET aktiv='" + aktiv + "', tipus='" + tipus + "' WHERE id='" + id + "'";
+            try {
+                Statement st = modell.getCON().createStatement();
+                st.executeUpdate(SQL_FELHASZNFRISSIT);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
     }
 
     public ArrayList<Kerdes> alkatKerdesei(String alkat){
         ArrayList<Kerdes> list = new ArrayList<>();
         String SQL_ALKATKERDESEI = "SELECT * FROM kerdes WHERE alKategoria='"+alkat+"'";
-
         try {
             Statement st = modell.getCON().createStatement();
             ResultSet res = st.executeQuery(SQL_ALKATKERDESEI);
@@ -701,10 +701,18 @@ public class Controller {
 
 
     public void kerdesSzerk(String kerdesSzov,String valasz,String valaszLehet,int pontszam,int id) throws SQLException {
-        String SQL_KERDESUPDATE = "UPDATE `kerdes` SET `kerdesSzovege` = '"+kerdesSzov+"', " +
-                "`valasz` = '"+valasz+"', `valaszlehetosegek` = '"+valaszLehet+"', `pontszam` = '"+pontszam+"' WHERE `kerdes`.`id` = "+id+";";
-        Statement st = modell.getCON().createStatement();
-        st.executeUpdate(SQL_KERDESUPDATE);
+        String SQL_KERDESUPDATE = "UPDATE `kerdes` SET kerdesSzovege = ? , valasz= ? , valaszlehetosegek=? , pontszam = ? WHERE `kerdes`.`id`  = ?;";
+        PreparedStatement ps = modell.getCON().prepareStatement(SQL_KERDESUPDATE);
+        ps.setString(1, kerdesSzov);
+        ps.setString(2, valasz);
+        ps.setString(3, valaszLehet);
+        ps.setInt(4, pontszam);
+        ps.setInt(5, id);
+        ps .executeUpdate();
+    }
+
+    public Modell getModell() {
+        return modell;
     }
 
     public ArrayList<ArrayList<String>> diakEredmenyLista() throws SQLException {
@@ -734,7 +742,6 @@ public class Controller {
 
         Statement st = modell.getCON().createStatement();
         st.executeUpdate(SQL_KERDESTOROL);
-
     }
 
     public String diakNev(int diakId) throws SQLException {

@@ -1,8 +1,6 @@
 package com.company;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Modell implements AdatbazisKapcsolat {
@@ -44,6 +42,23 @@ public class Modell implements AdatbazisKapcsolat {
 
     public Felhasznalo getFelhasznalo() {
         return felhasznalo;
+    }
+
+    public boolean torolhetoEAdmin() throws SQLException {
+        boolean torolheto=false;
+        int adminDb=0;
+        String SQL_COUNTADMIN = "SELECT COUNT('id') FROM felhasznalok WHERE 'tipus'=2";
+
+        PreparedStatement ps = CON.prepareStatement(SQL_COUNTADMIN);
+        ResultSet res = ps.executeQuery();
+        while (res.next()){
+            adminDb++;
+        }
+        if (adminDb>1){
+            torolheto=true;
+        }
+        System.out.println(adminDb);
+        return torolheto;
     }
 
 //    public ArrayList<Kerdes> getKerdesekLista() {

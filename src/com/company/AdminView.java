@@ -837,7 +837,12 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             gbc.gridx=5;
             JButton jbMent = new JButton("Elment");
             jbMent.addActionListener(e -> {
-                cont.felhasznaloFrissit(jcbAktiv.getSelectedIndex(),jcbTipus.getSelectedIndex(),Integer.parseInt(jlId.getText()));
+                try {
+                    cont.felhasznaloFrissit(jcbAktiv.getSelectedIndex(),jcbTipus.getSelectedIndex(),Integer.parseInt(jlId.getText()));
+
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             });
             jpFelh.add(jbMent,gbc);
 
@@ -867,8 +872,14 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
         JTextField jtfFelhasznalonev = new JTextField(20);
         JTextField jtfTeljesnev = new JTextField(20);
-        JPasswordField jpfJelszo = new JPasswordField(20);
-        JPasswordField jpfJelszoMeg = new JPasswordField(20);
+        JPasswordField jpfJelszo = new JPasswordField(20){
+            @Override
+            public void paste() {}
+        };
+        JPasswordField jpfJelszoMeg = new JPasswordField(20){
+            @Override
+            public void paste() {}
+        };
         JComboBox jcbTipus = new JComboBox();
         jcbTipus.setPrototypeDisplayValue("szint");
         for (int i = 0; i < FELHASZNLAOKTIPUS.length; i++) {
@@ -896,7 +907,6 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
                     JOptionPane.showMessageDialog(jfFelh, "Nem egyezik a két jelszó!\nA felhasználó nem jött létre");
                 }
             }
-
         });
 
         jpUjFelhasznalo.add(jlFnev,gbc2);
