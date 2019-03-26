@@ -60,7 +60,7 @@ public class View extends JFrame{
         jbBejel = new JButton("Bejelentkezés");
         jbBejel.addActionListener(e -> {
             if (jpfJelszo.getPassword().length != 0) {
-            if (controller.letezikEfelhasznalo(jtfNev.getText())) {
+            if (controller.getModell().letezikEfelhasznalo(jtfNev.getText())) {
                 String jelszoS = new String(jpfJelszo.getPassword());
                 if(controller.helyesJelszoE(jtfNev.getText(), jelszoS)){
                     //JOptionPane.showMessageDialog(bejelFrame, "Sikeres Bejelentkezés");

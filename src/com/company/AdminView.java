@@ -897,7 +897,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
                 JOptionPane.showMessageDialog(jfFelh, "Töltse ki az összes mezőt");
             }else {
                 if (jelszo.equals(jelszoMeg)) {
-                    if (!cont.letezikEfelhasznalo(jtfFelhasznalonev.getText())) {
+                    if (!cont.getModell().letezikEfelhasznalo(jtfFelhasznalonev.getText())) {
                         cont.regisztracio(jtfFelhasznalonev.getText(), jtfTeljesnev.getText(), cont.titkosit(new String(jpfJelszo.getPassword())), jcbTipus.getSelectedIndex(), (int) jcbAktiv.getSelectedIndex());
                         JOptionPane.showMessageDialog(jfFelh, "Sikeresen létrehozta a felhasználót");
                     } else {

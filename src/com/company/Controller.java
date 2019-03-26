@@ -43,6 +43,77 @@ public class Controller {
         felhtipus.put("Admin",2);
     }
 
+
+    /**
+     * Ellenőrzia a tesztet
+     * @param kerdesek
+     * @param valaszok
+     * @param diakId
+     */
+    public void testEllenoriz(ArrayList<Kerdes> kerdesek,String[] valaszok,int diakId){
+        int elertpontszam=0;
+        int maxPontszam=0;
+
+        for (int i = 0; i < kerdesek.size(); i++) {
+            maxPontszam+=kerdesek.get(i).getPontszam();
+        }
+
+        String kerdesSorrend="";
+        for (int j = 0; j < kerdesek.size(); j++) {
+            kerdesSorrend+=kerdesek.get(j).getId()+";";
+        }
+        kerdesSorrend=kerdesSorrend.substring(0,kerdesSorrend.length()-1);
+
+        String pontSzamSorrend = "";
+        String[] pontSzamTomb = new String[kerdesek.size()];
+
+        String diakValaszai = "";
+        String[] diakValaszaiTomb = new String[kerdesek.size()];
+
+        for (int k = 0; k < pontSzamTomb.length; k++) {
+            pontSzamTomb[k] = "0";
+        }
+
+        for (int k = 0; k < diakValaszaiTomb.length; k++) {
+            diakValaszaiTomb[k] = "nem válaszolt";
+        }
+
+        for (int i = 0; i < valaszok.length; i++) {
+            String[] spl = kerdesek.get(i).getHelyesValasz().split("\\;");
+            if (spl.length!=1){
+                for (int j = 0; j < spl.length; j++) {
+                    if (spl[j].equals(valaszok[i])){
+                        pontSzamTomb[i]=kerdesek.get(i).getPontszam()+"";
+                        elertpontszam+=kerdesek.get(i).getPontszam();
+                    }
+                }
+            }
+            else if (valaszok[i]!=null && valaszok[i].equals(kerdesek.get(i).getHelyesValasz())) {
+                pontSzamTomb[i]=kerdesek.get(i).getPontszam() + "";
+                elertpontszam+=kerdesek.get(i).getPontszam();
+            }
+            if (valaszok[i]!=null){
+                diakValaszaiTomb[i]=valaszok[i];
+            }
+        }
+        for (int l = 0; l < pontSzamTomb.length; l++) {
+            pontSzamSorrend+=pontSzamTomb[l]+";";
+        }
+
+        for (int l = 0; l < diakValaszaiTomb.length; l++) {
+            diakValaszai+=diakValaszaiTomb[l]+";";
+        }
+
+        pontSzamSorrend=pontSzamSorrend.substring(0,pontSzamSorrend.length()-1);
+        diakValaszai=diakValaszai.substring(0,diakValaszai.length()-1);
+
+        diakEredFelvisz(diakId,kerdesek.get(0).getFoKategoria(),kerdesek.get(0).getAlkategoria(),kerdesSorrend,pontSzamSorrend,diakValaszai);
+
+        JOptionPane.showMessageDialog(null,"<html>A tesztnek vége, az ön eredménye:<br> Elérető maximális pontszám: "+maxPontszam+"" +
+                "<br>Elért pontszám: "+elertpontszam+ "</html>");
+    }
+
+
     /**
      * A függvény ellenőrzi, hogy a felhasználó helyes jelszót adott e meg. Ezt úgy teszi, hogy
      * ugyanazzal a titkosítási módszerrel titkosítja a user által begépelt jelszót és összeveti az adatbázisban tárolttal.
@@ -153,25 +224,7 @@ public class Controller {
         jt.addTab("Felhasználó",felh);
     }
 
-    /**
-     * Ellenőrzi, hogy az adatbázisban található-e a felhasználó által begépelt felhasználó név.
-     * @param fnev
-     * @return
-     */
-    public boolean letezikEfelhasznalo(String fnev){
-        String SQL_FELHASZNALOK = "SELECT COUNT(felhasznaloNev) FROM felhasznalok WHERE felhasznaloNev='"+fnev+"';";
-        boolean letezik = false;
-        try {
-            Statement stFelhasznalok = modell.getCON().createStatement();
-            ResultSet rs = stFelhasznalok.executeQuery(SQL_FELHASZNALOK);
-            if (rs.next() && rs.getInt(1)!=0){
-                letezik = true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return letezik;
-    }
+
 
 
 
@@ -549,68 +602,7 @@ public class Controller {
         return al;
     }
 
-    public void testEllenoriz(ArrayList<Kerdes> kerdesek,String[] valaszok,int diakId){
-        int elertpontszam=0;
-        int maxPontszam=0;
 
-        for (int i = 0; i < kerdesek.size(); i++) {
-            maxPontszam+=kerdesek.get(i).getPontszam();
-        }
-
-        String kerdesSorrend="";
-        for (int j = 0; j < kerdesek.size(); j++) {
-            kerdesSorrend+=kerdesek.get(j).getId()+";";
-        }
-        kerdesSorrend=kerdesSorrend.substring(0,kerdesSorrend.length()-1);
-
-        String pontSzamSorrend = "";
-        String[] pontSzamTomb = new String[kerdesek.size()];
-
-        String diakValaszai = "";
-        String[] diakValaszaiTomb = new String[kerdesek.size()];
-
-        for (int k = 0; k < pontSzamTomb.length; k++) {
-            pontSzamTomb[k] = "0";
-        }
-
-        for (int k = 0; k < diakValaszaiTomb.length; k++) {
-            diakValaszaiTomb[k] = "nem válaszolt";
-        }
-
-        for (int i = 0; i < valaszok.length; i++) {
-            String[] spl = kerdesek.get(i).getHelyesValasz().split("\\;");
-            if (spl.length!=1){
-                for (int j = 0; j < spl.length; j++) {
-                    if (spl[j].equals(valaszok[i])){
-                        pontSzamTomb[i]=kerdesek.get(i).getPontszam()+"";
-                        elertpontszam+=kerdesek.get(i).getPontszam();
-                    }
-                }
-          }
-            else if (valaszok[i]!=null && valaszok[i].equals(kerdesek.get(i).getHelyesValasz())) {
-                pontSzamTomb[i]=kerdesek.get(i).getPontszam() + "";
-                elertpontszam+=kerdesek.get(i).getPontszam();
-            }
-            if (valaszok[i]!=null){
-                diakValaszaiTomb[i]=valaszok[i];
-            }
-        }
-        for (int l = 0; l < pontSzamTomb.length; l++) {
-            pontSzamSorrend+=pontSzamTomb[l]+";";
-        }
-
-        for (int l = 0; l < diakValaszaiTomb.length; l++) {
-            diakValaszai+=diakValaszaiTomb[l]+";";
-        }
-
-        pontSzamSorrend=pontSzamSorrend.substring(0,pontSzamSorrend.length()-1);
-        diakValaszai=diakValaszai.substring(0,diakValaszai.length()-1);
-
-        diakEredFelvisz(diakId,kerdesek.get(0).getFoKategoria(),kerdesek.get(0).getAlkategoria(),kerdesSorrend,pontSzamSorrend,diakValaszai);
-
-        JOptionPane.showMessageDialog(null,"<html>A tesztnek vége, az ön eredménye:<br> Elérető maximális pontszám: "+maxPontszam+"" +
-                "<br>Elért pontszám: "+elertpontszam+ "</html>");
-    }
 
     private void diakEredFelvisz(int diakid,String fokat,String alkat,String kerdesSorrend,String elertPontszamSorrend,String diakValaszai){
 //        String SQL_DIAKEREDINSERT = "INSERT into 'diakered' VALUES('"+diakid+"','"+fokat+"','"+alkat+"','"+kerdesSorrend+"','"+elertPontszamSorrend+"','"+diakValaszai+"',NULL')";

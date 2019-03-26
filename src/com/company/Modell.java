@@ -61,7 +61,28 @@ public class Modell implements AdatbazisKapcsolat {
         return torolheto;
     }
 
-//    public ArrayList<Kerdes> getKerdesekLista() {
-//        return kerdesekLista;
-//    }
+
+    /**
+     * Ellenőrzi, hogy az adatbázisban található-e a felhasználó által begépelt felhasználó név.
+     * @param fnev
+     * @return
+     */
+    public boolean letezikEfelhasznalo(String fnev){
+        String SQL_FELHASZNALOK = "SELECT COUNT(felhasznaloNev) FROM felhasznalok WHERE felhasznaloNev='"+fnev+"';";
+        boolean letezik = false;
+        try {
+            Statement stFelhasznalok = CON.createStatement();
+            ResultSet rs = stFelhasznalok.executeQuery(SQL_FELHASZNALOK);
+            if (rs.next() && rs.getInt(1)!=0){
+                letezik = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return letezik;
+    }
+
+
+
+
 }
