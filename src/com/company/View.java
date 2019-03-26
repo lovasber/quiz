@@ -62,9 +62,9 @@ public class View extends JFrame{
             if (jpfJelszo.getPassword().length != 0) {
             if (controller.getModell().letezikEfelhasznalo(jtfNev.getText())) {
                 String jelszoS = new String(jpfJelszo.getPassword());
-                if(controller.helyesJelszoE(jtfNev.getText(), jelszoS)){
+                if(controller.getModell().helyesJelszoE(jtfNev.getText(), jelszoS)){
                     //JOptionPane.showMessageDialog(bejelFrame, "Sikeres Bejelentkezés");
-                    if (controller.aktiveE(jtfNev.getText())) {
+                    if (controller.getModell().aktiveE(jtfNev.getText())) {
                         try {
                             controller.bejelentkezesFolyamat(jtfNev.getText());
                         } catch (SQLException e1) {
@@ -163,8 +163,8 @@ public class View extends JFrame{
                 String jelszoSzoveg = new String(jpfJelszo.getPassword());
                 String jelszoMeg = new String(jpfMegerosit.getPassword());
                 if (controller.egyezoJelszo(jelszoSzoveg, jelszoMeg)) {
-                    if (controller.szabadFelhasznaloNev(jtfFnev.getText())) {
-                        controller.diakRegisztracio(jtfFnev.getText(), jtfTnev.getText(), controller.titkosit(jelszoSzoveg));
+                    if (controller.getModell().szabadFelhasznaloNev(jtfFnev.getText())) {
+                        controller.getModell().diakRegisztracio(jtfFnev.getText(), jtfTnev.getText(), controller.getModell().titkosit(jelszoSzoveg));
                         JOptionPane.showMessageDialog(regisztracioFrame, "Sikeres regisztráció!");
                     } else {
                         JOptionPane.showMessageDialog(regisztracioFrame, "Foglalt felhasználónév!");
@@ -291,28 +291,7 @@ public class View extends JFrame{
         return szotarPanel;
     }
 
-    /**
-     *
-     * A Quiz fül megjelenését biztosítja.
-     */
-    private JPanel quizFul() {
-        JPanel mainP = new JPanel();
-        mainP.setLayout(new FlowLayout());
 
-        JButton kategoria1 = new JButton("Kategória 1");
-        JButton kategoria2 = new JButton("Kategória 2");
-        JButton kategoria3 = new JButton("Kategória 3");
-        kategoria3.setEnabled(false);
-        JButton kategoria4 = new JButton("Kategória 4");
-        kategoria4.setEnabled(false);
-
-        mainP.add(kategoria1);
-        mainP.add(kategoria2);
-        mainP.add(kategoria3);
-        mainP.add(kategoria4);
-
-        return mainP;
-    }
 
 
 

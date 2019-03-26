@@ -34,8 +34,8 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         JPanel jpFooldal = new JPanel();
         ArrayList<JButton> gombokList = new ArrayList<>();
 
-        for (int i = 0; i < cont.letezoFoKategoriak().size(); i++) {
-            gombokList.add(new JButton(cont.letezoFoKategoriak().get(i)));
+        for (int i = 0; i < cont.getModell().letezoFoKategoriak().size(); i++) {
+            gombokList.add(new JButton(cont.getModell().letezoFoKategoriak().get(i)));
         }
 
         for (int i = 0; i < gombokList.size(); i++) {
@@ -59,17 +59,22 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     private JPanel alkatBetolt(String fokat) {
 
         fokategoria = fokat;
-        ArrayList<String> alkatokL = cont.fokatAlkategoriai(fokat);
+        ArrayList<String> alkatokL = cont.getModell().fokatAlkategoriai(fokat);
         JPanel jpanUj = new JPanel();
         JPanel jpVissza = new JPanel();
         jpVissza.setLayout(new GridBagLayout());
         jpanUj.setLayout(new FlowLayout());
 
+        //JPanel jpTolt = new JPanel();
+
+
         for (int i = 0; i < alkatokL.size(); i++) {
             JButton b = new JButton(alkatokL.get(i));
+
             b.addActionListener(e -> {
                 JButton button = (JButton) e.getSource();
                 alkategoria = button.getText();
+                int h = 0;
 
                 try {
                     jpanUj.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -79,6 +84,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                     this.revalidate();
                 } finally {
                     jpanUj.setCursor(Cursor.getDefaultCursor());
+
                 }
 
             });
@@ -114,15 +120,18 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
 
 
         JPanel jpLepeget = new JPanel();
-        jpLepeget.setLayout(new GridBagLayout());
+        jpLepeget.setLayout(new FlowLayout());
         GridBagConstraints gbcLepeget = new GridBagConstraints();
         gbcLepeget.gridx = 0;
         gbcLepeget.gridy = 0;
         gbcLepeget.insets = new Insets(10, 5, 0, 5);
 
-        klist = cont.alkatKerdesei(alkat);
+        klist = cont.getModell().alkatKerdesei(alkat);
         valaszok = new String[klist.size()];
+        ProgressMonitor pgm = new ProgressMonitor(this,"A teszt töltődik","Tölt",0,klist.size());
+        pgm.setProgress(0);
         for (int i = 0; i < klist.size(); i++) {
+            pgm.setProgress(i);
             switch (klist.get(i).getTipus()) {
                 case 0:
                     jpanKerdesek.add(jpHianyos(klist.get(i),i), (i + 1) + "");
@@ -141,18 +150,28 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                     break;
             }
         }
+        pgm.close();
 
         //Lépegetés a kérdések között
+        ArrayList<JButton> lepegetGombok = new ArrayList<>();
         for (int i = 0; i < klist.size(); i++) {
             JButton jbLepeget = new JButton((i + 1) + "");
             jbLepeget.addActionListener(e -> {
                 JButton but = (JButton) e.getSource();
                 cl.show(jpanKerdesek, but.getText());
+                for (int j = 0; j < lepegetGombok.size(); j++) {
+                    lepegetGombok.get(j).setBackground(null);
+                }
+                but.setBackground(new Color(100, 139, 193));
             });
+            if (i==0){
+                jbLepeget.setBackground(new Color(100, 139, 193));
+            }
+            lepegetGombok.add(jbLepeget);
             jpLepeget.add(jbLepeget, gbcLepeget);
             gbcLepeget.gridx++;
         }
-        JButton jbKiertekel = new JButton("<html>"+"<u>Teszt kiértékelése</u>"+"</html>");
+        JButton jbKiertekel = new JButton("Teszt kiértékelése");
         jbKiertekel.addActionListener(e -> {
             int biztosAblak = JOptionPane.YES_NO_OPTION;
             int eredmeny = JOptionPane.showConfirmDialog(this, "Biztos benne?", "Figyelem", biztosAblak);
@@ -164,19 +183,22 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                 this.revalidate();
             }
         });
-        JButton vissza = new JButton("Vissza");
+        JButton vissza = new JButton("Kilépés a tesztből");
         vissza.addActionListener(e -> {
-
-            this.removeAll();
-            this.add(alkatBetolt(fokategoria));
-            this.repaint();
-            this.revalidate();
+            int biztosAblak = JOptionPane.YES_NO_OPTION;
+            int eredmeny = JOptionPane.showConfirmDialog(this, "<html>Biztos benne?<br><b>A válaszok nem lesznek elmentve!</b></html>", "Figyelem", biztosAblak);
+            if (eredmeny==0) {
+                this.removeAll();
+                this.add(alkatBetolt(fokategoria));
+                this.repaint();
+                this.revalidate();
+            }
         });
         gbcLepeget.gridx = 0;
         gbcLepeget.gridy++;
-        jpLepeget.add(vissza, gbcLepeget);
+        jpLepeget.add(jbKiertekel);
         gbcLepeget.gridx++;
-        jpLepeget.add(jbKiertekel, gbcLepeget);
+        jpLepeget.add(vissza);
 
 
         jpMain.add(jpanKerdesek, gbcMain);
@@ -194,7 +216,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbc.gridx = 0;
         gbc.gridy = 0;
 
-        JLabel jlCim = new JLabel((index+1)+". "+"Egészítse ki az alábbi mondatot");
+        JLabel jlCim = new JLabel((index+1)+". "+"Egészítse ki az alábbi mondatot!");
 
         String[] kerdesT = kerdes.getKerdesSzovege().split("\\;");
 
@@ -250,7 +272,12 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbcKepek.insets = new Insets(5, 5, 5, 5);
 
 
+        JProgressBar jpbToltoCsik = new JProgressBar(0,valaszLehet.length);
+        jpbToltoCsik.setValue(0);
+        jpbToltoCsik.setStringPainted(true);
+
         for (int i = 0; i < valaszLehet.length; i++) {
+
             System.out.println(valaszLehet[i] + " - tölt...");
             BufferedImage kep = null;
             try {
@@ -263,7 +290,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                 jrb.addChangeListener(e -> {
                     jrb.setBackground(jpKepek.getBackground());
                     if (jrb.isSelected()){
-                        jrb.setBackground(Color.BLUE);
+                        jrb.setBackground(new Color(255, 79, 17, 228));
                     }
                 });
 
@@ -277,8 +304,10 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //jpbToltoCsik.setValue(i);
 
         }
+        //jpbToltoCsik.setVisible(false);
 
         JLabel jlKerdes = new JLabel(kerdesSzov);
 
@@ -376,7 +405,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         gbcMain.gridx = 0;
         gbcMain.gridy = 0;
 
-        JLabel jlCim = new JLabel((index+1)+". "+"Válaszoljon a kérdésre");
+        JLabel jlCim = new JLabel((index+1)+". "+"Válaszoljon a kérdésre!");
         JLabel jlKerdes = new JLabel("<html>"+kerdes.getKerdesSzovege()+"</html>");
         JTextField jtfValasz = new JTextField(20);
         jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));

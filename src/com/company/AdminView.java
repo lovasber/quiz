@@ -82,10 +82,10 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JButton jbFokatOk = new JButton("OK");
         jbFokatOk.addActionListener(e -> {
             if (jtfFokat.getText().length()!=0 && jtfFokatLeir.getText().length()!=0){
-                if (cont.letezoFoKategoriak().contains(jtfFokat.getText())){
+                if (cont.getModell().letezoFoKategoriak().contains(jtfFokat.getText())){
                     JOptionPane.showMessageDialog(jfUjkat,"Ilyen főkategóra már létezik!");
                 }else{
-                    cont.fokatLetrehoz(jtfFokat.getText(),jtfFokatLeir.getText());
+                    cont.getModell().fokatLetrehoz(jtfFokat.getText(),jtfFokatLeir.getText());
                     JOptionPane.showMessageDialog(jfUjkat,"Sikeresen létrehozott egy főkategóriaát");
                 }
             }else{
@@ -96,8 +96,8 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JLabel jlFokatValaszt = new JLabel("Fő kategória kiválasztása");
         JComboBox jcKategoriak = new JComboBox();
         jcKategoriak.setPrototypeDisplayValue("Kategóriák");
-        for (int i = 0; i < cont.letezoFoKategoriak().size(); i++) {
-            jcKategoriak.addItem(cont.letezoFoKategoriak().get(i));
+        for (int i = 0; i < cont.getModell().letezoFoKategoriak().size(); i++) {
+            jcKategoriak.addItem(cont.getModell().letezoFoKategoriak().get(i));
         }
         JLabel jlAlkat = new JLabel("Alkategória létreozása");
         JLabel jlAlkatLeir = new JLabel("Alkategória leírása");
@@ -107,10 +107,10 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JButton jbAlkatOk = new JButton("OK");
         jbAlkatOk.addActionListener( e->{
             if(jtfAlkat.getText().length()!=0 && jtfAlkatLeir.getText().length()!=0){
-                if (cont.letezoAlKategoriak().contains(jbAlkatOk.getText())){
+                if (cont.getModell().letezoAlKategoriak().contains(jbAlkatOk.getText())){
                     JOptionPane.showMessageDialog(jfUjkat,"Ilyen alkategória már létezik");
                 }else{
-                    cont.alkatLetrehoz(jtfAlkat.getText(),jcKategoriak.getSelectedItem().toString(),jtfAlkatLeir.getText());
+                    cont.getModell().alkatLetrehoz(jtfAlkat.getText(),jcKategoriak.getSelectedItem().toString(),jtfAlkatLeir.getText());
                     JOptionPane.showMessageDialog(jfUjkat,"Sikeresen létrehozott egy alkategóriát");
                 }
             }else{
@@ -189,14 +189,14 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
         jcbFokat = new JComboBox();
         jcbAlkat = new JComboBox();
-        for (int i = 0; i < cont.letezoFoKategoriak().size(); i++) {
-            jcbFokat.addItem(cont.letezoFoKategoriak().get(i));
+        for (int i = 0; i < cont.getModell().letezoFoKategoriak().size(); i++) {
+            jcbFokat.addItem(cont.getModell().letezoFoKategoriak().get(i));
         }
         jcbFokat.setSelectedIndex(0);
         jcbFokat.addActionListener(e -> {
             jcbAlkat.removeAllItems();
-            for (int i = 0; i < cont.fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).size(); i++) {
-                jcbAlkat.addItem(cont.fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).get(i));
+            for (int i = 0; i < cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).size(); i++) {
+                jcbAlkat.addItem(cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).get(i));
             }
         });
 
@@ -224,7 +224,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JButton jbOk = new JButton("Ok");
         jbOk.addActionListener(e -> {
             if (jtfSzoveg.getText().length()!=0 && jtfValasz.getText().length()!=0 && jcbAlkat.getSelectedItem()!=null){
-                cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfSzoveg.getText(),jtfValasz.getText()
+                cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfSzoveg.getText(),jtfValasz.getText()
                         ,jtfValaszLehetosegek.getText(),(int)jcbPontszam.getSelectedItem());
                 JOptionPane.showMessageDialog(jfUjkerdes,"Sikeresen létrehozott egy kérdést!");
             }else{
@@ -302,7 +302,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
         jbOk.addActionListener(e -> {
             String kerdes = jtfK1.getText()+";"+jtfHiany.getText()+";"+jtfK2.getText();
-            cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),kerdes,jtfHiany.getText(),"",(int)jcbPontszam.getSelectedItem());
+            cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),kerdes,jtfHiany.getText(),"",(int)jcbPontszam.getSelectedItem());
             JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
 
         });
@@ -419,7 +419,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
                     valaszLehetS +=jtfFile4.getText()+ ";";
                 }
                 valaszLehetS = valaszLehetS.substring(0, valaszLehetS.length() - 1);
-                cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfKerdes.getText(),jcbValasz.getSelectedItem().toString(),valaszLehetS,(int)jcbPontszam.getSelectedItem());
+                cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfKerdes.getText(),jcbValasz.getSelectedItem().toString(),valaszLehetS,(int)jcbPontszam.getSelectedItem());
                 JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
             }else{
                 JOptionPane.showMessageDialog(null,"Jelöljön ki helyes választ!");
@@ -508,7 +508,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             kerdesEsKep+=jfcKep.getSelectedFile().getName();
 
             cont.fileMasol(jfcKep.getSelectedFile());
-            cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),kerdesEsKep
+            cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),kerdesEsKep
                     ,jtfValasz.getText(),"",(int)jcbPontszam.getSelectedItem());
             JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
 
@@ -559,7 +559,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JButton jbOk = new JButton("Kérdés létrehozása");
 
         jbOk.addActionListener(e -> {
-            cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfKerd.getText()
+            cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfKerd.getText()
                     ,jtfValsz.getText(),"",(int)jcbPontszam.getSelectedItem());
             JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
         });
@@ -600,7 +600,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
         JButton jbOk = new JButton("Kérdés létrehozása");
         jbOk.addActionListener(e -> {
-            cont.kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfKerd.getText()
+            cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfKerd.getText()
                     ,jtfValsz.getText(),"",(int)jcbPontszam.getSelectedItem());
             JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
         });
@@ -668,25 +668,25 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpKerdesSzerk.add(jlPontszam,gbc);
 
         gbc.gridy=1;
-        for (int i = 0; i < cont.letezoKerdesek().size(); i++) {
-            int kerdesId = cont.letezoKerdesek().get(i).getId();
+        for (int i = 0; i < cont.getModell().letezoKerdesek().size(); i++) {
+            int kerdesId = cont.getModell().letezoKerdesek().get(i).getId();
             gbc.gridx=0;
-            JLabel jlFokatSzerk = new JLabel(cont.letezoKerdesek().get(i).getFoKategoria());
+            JLabel jlFokatSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getFoKategoria());
             jpKerdesSzerk.add(jlFokatSzerk,gbc);
             gbc.gridx++;
-            JLabel jlAlkatSzerk = new JLabel(cont.letezoKerdesek().get(i).getAlkategoria());
+            JLabel jlAlkatSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getAlkategoria());
             jpKerdesSzerk.add(jlAlkatSzerk,gbc);
             gbc.gridx++;
-            JLabel jlTipusSzerk = new JLabel(cont.letezoKerdesek().get(i).getTipusNev());
+            JLabel jlTipusSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getTipusNev());
             jpKerdesSzerk.add(jlTipusSzerk,gbc);
             gbc.gridx++;
-            JTextField jtfKerdes = new JTextField(cont.letezoKerdesek().get(i).getKerdesSzovege());
+            JTextField jtfKerdes = new JTextField(cont.getModell().letezoKerdesek().get(i).getKerdesSzovege());
             jpKerdesSzerk.add(jtfKerdes,gbc);
             gbc.gridx++;
-            JTextField jtfHelyesValasz = new JTextField(cont.letezoKerdesek().get(i).getHelyesValasz());
+            JTextField jtfHelyesValasz = new JTextField(cont.getModell().letezoKerdesek().get(i).getHelyesValasz());
             jpKerdesSzerk.add(jtfHelyesValasz,gbc);
             gbc.gridx++;
-            JTextField jtfvalaszLehet=new JTextField(cont.letezoKerdesek().get(i).getValaszlehetosegek());
+            JTextField jtfvalaszLehet=new JTextField(cont.getModell().letezoKerdesek().get(i).getValaszlehetosegek());
             jpKerdesSzerk.add(jtfvalaszLehet,gbc);
             gbc.gridx++;
             JComboBox jcbPontszam = new JComboBox();
@@ -695,13 +695,13 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             jcbPontszam.addItem(3);
             jcbPontszam.addItem(4);
             jcbPontszam.addItem(5);
-            jcbPontszam.setSelectedItem(cont.letezoKerdesek().get(i).getPontszam());
+            jcbPontszam.setSelectedItem(cont.getModell().letezoKerdesek().get(i).getPontszam());
             jpKerdesSzerk.add(jcbPontszam,gbc);
             gbc.gridx++;
             JButton jbOk= new JButton("Elment");
             jbOk.addActionListener(e -> {
                 try {
-                    cont.kerdesSzerk(jtfKerdes.getText(),jtfHelyesValasz.getText(),jtfvalaszLehet.getText(),(int)jcbPontszam.getSelectedItem(),kerdesId);
+                    cont.getModell().kerdesSzerk(jtfKerdes.getText(),jtfHelyesValasz.getText(),jtfvalaszLehet.getText(),(int)jcbPontszam.getSelectedItem(),kerdesId);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -758,10 +758,10 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpDiakEredmeny.add(jlLeadás,gbc);
         gbc.gridy=1;
 
-        for (int i = 0; i < cont.diakEredmenyLista().size(); i++) {
+        for (int i = 0; i < cont.getModell().diakEredmenyLista().size(); i++) {
             gbc.gridx=0;
-            for (int j = 0; j < cont.diakEredmenyLista().get(i).size(); j++) {
-                jpDiakEredmeny.add(new JLabel(cont.diakEredmenyLista().get(i).get(j)),gbc);
+            for (int j = 0; j < cont.getModell().diakEredmenyLista().get(i).size(); j++) {
+                jpDiakEredmeny.add(new JLabel(cont.getModell().diakEredmenyLista().get(i).get(j)),gbc);
                 gbc.gridx++;
             }
             gbc.gridy++;
@@ -805,7 +805,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpFelh.add(new JLabel("Felhasználó ID-ja"));
 
         gbc.gridy = 1;
-        ArrayList<Felhasznalo> flist = cont.felhasznalokLista();
+        ArrayList<Felhasznalo> flist = cont.getModell().felhasznalokLista();
 
         for (int i = 0; i <flist.size() ; i++) {
             gbc.gridx = 0;
@@ -838,7 +838,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             JButton jbMent = new JButton("Elment");
             jbMent.addActionListener(e -> {
                 try {
-                    cont.felhasznaloFrissit(jcbAktiv.getSelectedIndex(),jcbTipus.getSelectedIndex(),Integer.parseInt(jlId.getText()));
+                    cont.getModell().felhasznaloFrissit(jcbAktiv.getSelectedIndex(),jcbTipus.getSelectedIndex(),Integer.parseInt(jlId.getText()));
 
                 } catch (SQLException e1) {
                     e1.printStackTrace();
@@ -898,7 +898,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             }else {
                 if (jelszo.equals(jelszoMeg)) {
                     if (!cont.getModell().letezikEfelhasznalo(jtfFelhasznalonev.getText())) {
-                        cont.regisztracio(jtfFelhasznalonev.getText(), jtfTeljesnev.getText(), cont.titkosit(new String(jpfJelszo.getPassword())), jcbTipus.getSelectedIndex(), (int) jcbAktiv.getSelectedIndex());
+                        cont.getModell().regisztracio(jtfFelhasznalonev.getText(), jtfTeljesnev.getText(), cont.getModell().titkosit(new String(jpfJelszo.getPassword())), jcbTipus.getSelectedIndex(), (int) jcbAktiv.getSelectedIndex());
                         JOptionPane.showMessageDialog(jfFelh, "Sikeresen létrehozta a felhasználót");
                     } else {
                         JOptionPane.showMessageDialog(jfFelh, "Ilyen nevű felhasználó már létezik!");
