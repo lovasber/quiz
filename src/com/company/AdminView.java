@@ -5,6 +5,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,11 +27,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         this.setLayout(new FlowLayout());
         jbUjKat = new JButton("Új kategória létrehozása");
         jbUjKat.addActionListener(e -> {
-            try {
-                conntroller.ujablakmegynit(ujKategoria());
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
+            conntroller.ujablakmegynit(ujKategoria());
         });
         jbUjKerdes = new JButton("Új kérdés létrehozása");
         jbUjKerdes.addActionListener(e -> {
@@ -63,7 +61,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
 
 
-    private JFrame ujKategoria() throws SQLException {
+    private JFrame ujKategoria() {
         JFrame jfUjkat = new JFrame();
         jfUjkat.setTitle("Quiz 1.0");
         jfUjkat.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -73,11 +71,18 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpUjkat.setLayout(gbl);
 
         GridBagConstraints gbc =  new GridBagConstraints();
-        JLabel jlCim = new JLabel("Új kategória létrehozása");
+        JLabel jlCim = new JLabel("Létező főkategóriák");
         JLabel jlFokat = new JLabel("Fő kategória");
         JLabel jlFokatLeir = new JLabel("Fő kategória leírása");
         JTextField jtfFokat = new JTextField(20);
         JTextField jtfFokatLeir = new JTextField(20);
+
+        JComboBox jcbLetezoFokategoriak = new JComboBox();
+        JComboBox jcKategoriak = new JComboBox();
+
+        for (int i = 0; i < cont.getModell().letezoFoKategoriak().size(); i++) {
+            jcbLetezoFokategoriak.addItem(cont.getModell().letezoFoKategoriak().get(i));
+        }
 
         JButton jbFokatOk = new JButton("OK");
         jbFokatOk.addActionListener(e -> {
@@ -87,6 +92,11 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
                 }else{
                     cont.getModell().fokatLetrehoz(jtfFokat.getText(),jtfFokatLeir.getText());
                     JOptionPane.showMessageDialog(jfUjkat,"Sikeresen létrehozott egy főkategóriaát");
+                    jcKategoriak.removeAllItems();
+                    for (int i = 0; i < cont.getModell().letezoFoKategoriak().size(); i++) {
+                        jcKategoriak.addItem(cont.getModell().letezoFoKategoriak().get(i));
+                    }
+
                 }
             }else{
                 JOptionPane.showMessageDialog(jfUjkat,"Kérem töltse ki az összes mezőt!");
@@ -94,7 +104,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
         });
         JLabel jlFokatValaszt = new JLabel("Fő kategória kiválasztása");
-        JComboBox jcKategoriak = new JComboBox();
+
         jcKategoriak.setPrototypeDisplayValue("Kategóriák");
         for (int i = 0; i < cont.getModell().letezoFoKategoriak().size(); i++) {
             jcKategoriak.addItem(cont.getModell().letezoFoKategoriak().get(i));
@@ -122,6 +132,9 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         gbc.gridx = 0;
         gbc.gridy = 0;
         jpUjkat.add(jlCim,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        jpUjkat.add(jcbLetezoFokategoriak,gbc);
         gbc.gridx = 0;
         gbc.gridy=1;
         jpUjkat.add(jlFokat,gbc);
@@ -193,6 +206,11 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             jcbFokat.addItem(cont.getModell().letezoFoKategoriak().get(i));
         }
         jcbFokat.setSelectedIndex(0);
+        for (int i = 0; i < cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).size(); i++) {
+            jcbAlkat.addItem(cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).get(i));
+        }
+        jcbAlkat.setSelectedIndex(0);
+
         jcbFokat.addActionListener(e -> {
             jcbAlkat.removeAllItems();
             for (int i = 0; i < cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).size(); i++) {
@@ -200,12 +218,16 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             }
         });
 
+
         JLabel jlTipus = new JLabel("Kérdés típusa");
         jcbTipus = new JComboBox();
         for (int i = 0; i < KERDESTIPUS.length; i++) {
             jcbTipus.addItem(KERDESTIPUS[i]);
+
         }
         jcbTipus.setSelectedIndex(0);
+
+
 
         JTextField jtfSzoveg  = new JTextField();
         jtfSzoveg.setColumns(50);
@@ -339,6 +361,8 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new GridBagLayout());
         GridBagConstraints gbcMain = new GridBagConstraints();
+        ArrayList<JFileChooser> jfcKepekLista = new ArrayList<>();
+
         JFileChooser jfcKep = new JFileChooser();
         JFileChooser jfcKep2 = new JFileChooser();
         JFileChooser jfcKep3 = new JFileChooser();
@@ -389,42 +413,61 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         JComboBox jcbValasz = new JComboBox();
         jcbValasz.setPrototypeDisplayValue("AAAAAAAAA12345.jpg");
 
+        jfcKepekLista.add(jfcKep);
+        jfcKepekLista.add(jfcKep2);
+        jfcKepekLista.add(jfcKep3);
+        jfcKepekLista.add(jfcKep4);
         JButton jbOk = new JButton("Kérdés létrehozása");
         jbOk.addActionListener(e -> {
-            if (jfcKep.getSelectedFile().getName().length()!=0){
-                cont.fileMasol(jfcKep.getSelectedFile());
-            }
-            if (jfcKep2.getSelectedFile().getName().length()!=0){
-                cont.fileMasol(jfcKep2.getSelectedFile());
-            }
-            if (jfcKep3.getSelectedFile().getName().length()!=0){
-                cont.fileMasol(jfcKep3.getSelectedFile());
-            }
-            if (jfcKep4.getSelectedFile().getName().length()!=0){
-                cont.fileMasol(jfcKep4.getSelectedFile());
-            }
-            if (jcbValasz.getItemCount()!=0) {
-                String valaszLehetS = "";
+            try {
+                if (kulonbozoekAkepek(jfcKepekLista)) {
 
-                if (jtfFile1.getText().length()!=0){
-                    valaszLehetS +=jtfFile1.getText()+ ";";
-                }
-                if (jtfFile2.getText().length()!=0){
-                    valaszLehetS +=jtfFile2.getText()+ ";";
-                }
-                if (jtfFile3.getText().length()!=0){
-                    valaszLehetS +=jtfFile3.getText()+ ";";
-                }
-                if (jtfFile4.getText().length()!=0){
-                    valaszLehetS +=jtfFile4.getText()+ ";";
-                }
-                valaszLehetS = valaszLehetS.substring(0, valaszLehetS.length() - 1);
-                cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfKerdes.getText(),jcbValasz.getSelectedItem().toString(),valaszLehetS,(int)jcbPontszam.getSelectedItem());
-                JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
-            }else{
-                JOptionPane.showMessageDialog(null,"Jelöljön ki helyes választ!");
-            }
+                    if (jfcKep.getSelectedFile() != null) {
 
+                        cont.fileMasol(jfcKep.getSelectedFile());
+
+                    }
+                    if (jfcKep2.getSelectedFile() != null) {
+                        cont.fileMasol(jfcKep2.getSelectedFile());
+                    }
+                    if (jfcKep3.getSelectedFile() != null) {
+                        cont.fileMasol(jfcKep3.getSelectedFile());
+                    }
+                    if (jfcKep4.getSelectedFile() != null) {
+                        cont.fileMasol(jfcKep4.getSelectedFile());
+                    }
+                    if (jcbValasz.getItemCount() != 0) {
+                        String valaszLehetS = "";
+
+                        if (jtfFile1.getText().length() != 0) {
+                            valaszLehetS += jtfFile1.getText() + ";";
+                        }
+                        if (jtfFile2.getText().length() != 0) {
+                            valaszLehetS += jtfFile2.getText() + ";";
+                        }
+                        if (jtfFile3.getText().length() != 0) {
+                            valaszLehetS += jtfFile3.getText() + ";";
+                        }
+                        if (jtfFile4.getText().length() != 0) {
+                            valaszLehetS += jtfFile4.getText() + ";";
+                        }
+                        valaszLehetS = valaszLehetS.substring(0, valaszLehetS.length() - 1);
+                        //System.out.println(valaszLehetS);
+                        cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(), jcbAlkat.getSelectedItem().toString(), jcbTipus.getSelectedIndex(), jtfKerdes.getText(), jcbValasz.getSelectedItem().toString(), valaszLehetS, (int) jcbPontszam.getSelectedItem());
+                        JOptionPane.showMessageDialog(null, "Sikeresen létrehozta a kérdést!");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Jelöljön ki helyes választ!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nem töltheti fel ugyanazt a képet kétszer!");
+                }
+            }catch (FileAlreadyExistsException f){
+                f.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Egy ilyen nevű fájl már létezik. A kérdés nem jött létre");
+            }catch (IOException b){
+                b.printStackTrace();
+            }
         });
         jcbValasz.addPopupMenuListener(cont.fajlNevek(jtfFile1,jtfFile2,jtfFile3,jtfFile4,jcbValasz));
 
@@ -481,6 +524,30 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         return jpMain;
     }
 
+    private boolean kulonbozoekAkepek(ArrayList<JFileChooser> jfcKepekLista) {
+        boolean kulonbozoek = true;
+        int j=0;
+        do {
+
+            if (jfcKepekLista.get(j)!=null){
+                JFileChooser jf = jfcKepekLista.get(j);
+                for (int i = 0; i < jfcKepekLista.size() ; i++) {
+
+                    if (i!=j && kulonbozoek&& jfcKepekLista.get(i).getSelectedFile()!=null && jf.getSelectedFile()!=null){
+                        System.out.println("j: "+j);
+                        System.out.println("i: "+i);
+                        System.out.println("j path : "+jf.getSelectedFile().getPath());
+                        System.out.println("i path : "+jfcKepekLista.get(i).getSelectedFile().getPath());
+                        kulonbozoek=!(jf.getSelectedFile().getPath().equals(jfcKepekLista.get(i).getSelectedFile().getPath()));
+                    }
+                }
+            }
+            j++;
+        }while(j<jfcKepekLista.size() && kulonbozoek);
+
+        return kulonbozoek;
+    }
+
     private JPanel jpEgykep(){
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new GridBagLayout());
@@ -505,13 +572,22 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jbOK.addActionListener(e -> {
             String kerdesEsKep = "";
             kerdesEsKep+=jtfKerdes.getText()+";";
-            kerdesEsKep+=jfcKep.getSelectedFile().getName();
-
-            cont.fileMasol(jfcKep.getSelectedFile());
-            cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),kerdesEsKep
-                    ,jtfValasz.getText(),"",(int)jcbPontszam.getSelectedItem());
-            JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
-
+            if (jfcKep.getSelectedFile()!=null) {
+                kerdesEsKep+=jfcKep.getSelectedFile().getName();
+            }else{
+                JOptionPane.showMessageDialog(null,"Kép hozzáadása kötelező!");
+            }
+            try {
+                cont.fileMasol(jfcKep.getSelectedFile());
+            } catch (FileAlreadyExistsException e1) {
+                JOptionPane.showMessageDialog(null,"Ilyen nevű kép már létezik. A kérdés nem jött létre");
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(), jcbAlkat.getSelectedItem().toString(), jcbTipus.getSelectedIndex(), kerdesEsKep
+                    , jtfValasz.getText(), "", (int) jcbPontszam.getSelectedItem());
+            JOptionPane.showMessageDialog(null, "Sikeresen létrehozta a kérdést!");
         });
 
         gbcMain.insets= new Insets(5,5,5,5);
@@ -708,13 +784,27 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
                 JOptionPane.showMessageDialog(jfKerdesSzerk,"Sikeres Változtatás");
             });
             jpKerdesSzerk.add(jbOk,gbc);
+            gbc.gridx++;
+            JButton jbTorol= new JButton("Kérdés törlése");
+            jbTorol.addActionListener(e ->{
+                int biztosAblak = JOptionPane.YES_NO_OPTION;
+                int eredmeny = JOptionPane.showConfirmDialog(jfKerdesSzerk, "Biztos benne? A kérdés ezután nem lesz elérhető.", "Figyelem",biztosAblak);
+                if (eredmeny==0){
+                    try {
+                        cont.getModell().kerdesTorol(kerdesId);
+                        jpKerdesSzerk.revalidate();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            });
+            jpKerdesSzerk.add(jbTorol,gbc);
             gbc.gridy++;
         }
 
 
         JScrollPane jsPane = new JScrollPane(jpKerdesSzerk);
         jsPane.setMinimumSize(new Dimension(600,600));
-
         jsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jpMain.add(jsPane);
         jfKerdesSzerk.add(jpMain);
@@ -760,7 +850,9 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
 
         for (int i = 0; i < cont.getModell().diakEredmenyLista().size(); i++) {
             gbc.gridx=0;
-            for (int j = 0; j < cont.getModell().diakEredmenyLista().get(i).size(); j++) {
+            jpDiakEredmeny.add(new JLabel(cont.getModell().diakNev(Integer.parseInt(cont.getModell().diakEredmenyLista().get(i).get(0)))),gbc);
+            gbc.gridx++;
+            for (int j = 1; j < cont.getModell().diakEredmenyLista().get(i).size(); j++) {
                 jpDiakEredmeny.add(new JLabel(cont.getModell().diakEredmenyLista().get(i).get(j)),gbc);
                 gbc.gridx++;
             }
@@ -768,7 +860,6 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         }
 
         JScrollPane jscp = new JScrollPane(jpDiakEredmeny);
-        jscp.setMinimumSize(new Dimension(600,600));
         jscp.setPreferredSize(new Dimension(600,400));
         jscp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jpMain.add(jscp);
@@ -838,7 +929,21 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
             JButton jbMent = new JButton("Elment");
             jbMent.addActionListener(e -> {
                 try {
-                    cont.getModell().felhasznaloFrissit(jcbAktiv.getSelectedIndex(),jcbTipus.getSelectedIndex(),Integer.parseInt(jlId.getText()));
+                    if (cont.getModell().felhasznaloTipusa(Integer.parseInt(jlId.getText()))==2) {
+                        if (jcbTipus.getSelectedIndex()!=2){
+                            if (cont.getModell().torolhetoEAdmin()){
+                                cont.getModell().felhasznaloFrissit(jcbAktiv.getSelectedIndex(), jcbTipus.getSelectedIndex(), Integer.parseInt(jlId.getText()));
+                            }else{
+                                JOptionPane.showMessageDialog(jfFelh,"Az utolsó admin nem változtatható");
+                            }
+                           // cont.getModell().felhasznaloFrissit(jcbAktiv.getSelectedIndex(), jcbTipus.getSelectedIndex(), Integer.parseInt(jlId.getText()));
+                        }else{
+                            //JOptionPane.showMessageDialog(jfFelh,"Az utolsó admin nem változtatható");
+                            cont.getModell().felhasznaloFrissit(jcbAktiv.getSelectedIndex(), jcbTipus.getSelectedIndex(), Integer.parseInt(jlId.getText()));
+                        }
+                    }else {
+                        cont.getModell().felhasznaloFrissit(jcbAktiv.getSelectedIndex(), jcbTipus.getSelectedIndex(), Integer.parseInt(jlId.getText()));
+                    }
 
                 } catch (SQLException e1) {
                     e1.printStackTrace();

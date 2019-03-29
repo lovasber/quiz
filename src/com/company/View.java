@@ -254,14 +254,6 @@ public class View extends JFrame{
         setVisible(true);
     }
 
-    /**
-     *
-     * A felhasználói tab megjelenését biztosítja.
-     */
-    private JPanel felhasznaloiFul() {
-        JPanel felh = new JPanel();
-        return felh;
-    }
 
     /**
      *
@@ -291,7 +283,96 @@ public class View extends JFrame{
         return szotarPanel;
     }
 
+    public void felhasznaloPanelBetolt(JTabbedPane jt) {
+        JPanel felh = new JPanel();
+        felh.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
+        Felhasznalo felhasznalo = controller.felhasznaloGetter();
+
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        String fnevS = "Felhasnzáló név: "+felhasznalo.getFelhasznalonev();
+        JLabel jlNev = new JLabel(fnevS);
+        String fszintS = "Felhasználó Teljes neve: "+felhasznalo.getTeljesNev();
+        JLabel fszintL = new JLabel(fszintS);
+        JButton jbJelszoValtoztat = new JButton("Jelszó megváltoztatása");
+        jbJelszoValtoztat.addActionListener(e -> {
+            controller.ujablakmegynit(jfJelszoValtoztat());
+        });
+        JButton kijelentezB = new JButton("Kilépés");
+        kijelentezB.addActionListener(e -> {
+            int biztosAblak = JOptionPane.YES_NO_OPTION;
+            int eredmeny = JOptionPane.showConfirmDialog(null, "Biztos be akarja zárni a programot?", "Figyelem", biztosAblak);
+            if(eredmeny==0) {
+                System.exit(0);
+            }
+        });
+        gbc.weighty = 1;
+        felh.add(fszintL,gbc);
+        felh.add(jlNev,gbc);
+        felh.add(jbJelszoValtoztat,gbc);
+        felh.add(kijelentezB,gbc);
+        jt.addTab("Felhasználó",felh);
+    }
+
+    public JFrame jfJelszoValtoztat(){
+        JFrame jfMain = new JFrame();
+        jfMain.setTitle("Jelszó megváltoztatása");
+        jfMain.setSize(300,200);
+        jfMain.setLocationRelativeTo(null);
+        jfMain.setResizable(false);
+        JPanel jpMain = new JPanel();
+        jpMain.setLayout(new GridLayout(4,2,10,10));
+        Felhasznalo bejelentkezve = controller.felhasznaloGetter();
+
+        JLabel jlRegiJelszo = new JLabel("Régi jelszó");
+        JLabel jlUjJelszo1 = new JLabel("Új jelszó");
+        JLabel jlUjJelszo2 = new JLabel("Új jelszó mégegyszer");
+
+        JPasswordField jpfRegi = new JPasswordField();
+        JPasswordField jpfUj1 = new JPasswordField();
+        JPasswordField jpfUj2 = new JPasswordField();
+
+        JButton jbOk = new JButton("Jelszó cseréje");
+        jbOk.addActionListener(e -> {
+            String jelszoS = new String(jpfRegi.getPassword());
+            if(controller.getModell().helyesJelszoE(bejelentkezve.getFelhasznalonev(), jelszoS)){
+                if (jpfUj1.getPassword().length!=0 && jpfUj2.getPassword().length!=0){
+                    String jelszo1 = new String(jpfUj1.getPassword());
+                    String jelszo2 = new String(jpfUj2.getPassword());
+                    if (jelszo1.equals(jelszo2)){
+                        try {
+                            controller.getModell().jelszoValtoztat(bejelentkezve.getId(),new String(jpfUj1.getPassword()));
+                            JOptionPane.showMessageDialog(jfMain,"Sikeresen megváltoztatta jelszavát!");
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(jfMain,"Nem egyezik a két jelszó!");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(jfMain,"Üresen nem hagyhatja a jelszó mezőket!");
+                }
+            }else{
+                JOptionPane.showMessageDialog(jfMain,"Hibás régi jelszó! A változtatások nem lettek elmentve.");
+            }
+        });
+
+        jpMain.add(jlRegiJelszo);
+        jpMain.add(jpfRegi);
+        jpMain.add(jlUjJelszo1);
+        jpMain.add(jpfUj1);
+        jpMain.add(jlUjJelszo2);
+        jpMain.add(jpfUj2);
+        jpMain.add(jbOk);
+
+        jfMain.add(jpMain);
+        return jfMain;
+    }
 
 
 

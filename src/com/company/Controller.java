@@ -40,11 +40,6 @@ public class Controller {
     public Controller() {
         modell = new Modell();
         view = new View(this);
-
-        felhtipus = new HashMap<>();
-        felhtipus.put("Diák",0);
-        felhtipus.put("Tanár",1);
-        felhtipus.put("Admin",2);
     }
 
 
@@ -161,45 +156,10 @@ public class Controller {
                     break;
         }
         //view.getJt().addTab("Szótár",view.szotarFul());
-        felhasznaloPanelBetolt(view.getJt());
+        //felhasznaloPanelBetolt(view.getJt());
+        view.felhasznaloPanelBetolt(view.getJt());
         modell.naplozas(felhasznaloId);
     }
-
-    public void felhasznaloPanelBetolt(JTabbedPane jt) {
-
-        JPanel felh = new JPanel();
-        felh.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        Felhasznalo felhasznalo = felhasznaloGetter();
-
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.anchor = GridBagConstraints.NORTH;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        String fnevS = "Felhasnzáló név: "+felhasznalo.getFelhasznalonev();
-        JLabel jlNev = new JLabel(fnevS);
-        String fszintS = "Felhasználó Teljes neve: "+felhasznalo.getTeljesNev();
-        JLabel fszintL = new JLabel(fszintS);
-       JButton kijelentezB = new JButton("Kilépés");
-       kijelentezB.addActionListener(e -> {
-           int biztosAblak = JOptionPane.YES_NO_OPTION;
-           int eredmeny = JOptionPane.showConfirmDialog(null, "Biztos be akarja zárni a programot?", "Figyelem", biztosAblak);
-           if(eredmeny==0) {
-               System.exit(0);
-           }
-       });
-        //JButton statisztikaB = new JButton("Statisztika");
-        gbc.weighty = 1;
-        felh.add(fszintL,gbc);
-        felh.add(jlNev,gbc);
-        felh.add(kijelentezB,gbc);
-        //felh.add(statisztikaB,gbc);
-        jt.addTab("Felhasználó",felh);
-    }
-
-
 
     /**
      * Két String típusu változót vet össze a függvény, megnézi, hogy egyeznek-e.
@@ -210,11 +170,6 @@ public class Controller {
     public boolean egyezoJelszo(String jelszo, String jelszomeg){
         return jelszo.equals(jelszomeg)?true:false;
     }
-
-
-
-
-
 
 
     /**
@@ -229,16 +184,31 @@ public class Controller {
         fr.setVisible(true);
     }
 
-
-
-
-
     public void ujPaneletolt(JPanel jpRegi,JPanel jpUj){
         jpRegi.removeAll();
         jpRegi.add(jpUj);
         jpRegi.revalidate();
     }
 
+    public KeyListener pontosVesszoTilt(){
+        KeyListener klTilt= new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char kar = e.getKeyChar();
+                if ( kar==';') {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+
+        };
+        return klTilt;
+    }
 
 
     public KeyListener gepelFiegyel(JTextField jtf, int index, String[] list){
@@ -247,13 +217,14 @@ public class Controller {
     KeyListener klGepel = new KeyListener() {
         @Override
         public void keyTyped(KeyEvent e) {
-
+            char kar = e.getKeyChar();
+            if ( kar==';') {
+                e.consume();
+            }
         }
 
         @Override
-        public void keyPressed(KeyEvent e) {
-
-        }
+        public void keyPressed(KeyEvent e) {}
 
         @Override
         public void keyReleased(KeyEvent e) {
@@ -319,30 +290,28 @@ public class Controller {
             }
 
             @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-
-            }
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
 
             @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {
-
-            }
+            public void popupMenuCanceled(PopupMenuEvent e) {}
         };
         return ppls;
     }
 
-
-    public void fileMasol(File forras) {
+    /**
+     * A program mappájába másolja a kiválasztott fájlt.
+     * @param forras
+     * @throws IOException
+     */
+    public void fileMasol(File forras) throws IOException {
 
         File cel = new File("./Images/"+forras.getName());
         System.out.println("cél: "+Paths.get("/Images"));
         System.out.println("forrás: "+forras.getAbsolutePath());
-      try {
          Files.copy(forras.toPath(),cel.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
+
+
 
 
 

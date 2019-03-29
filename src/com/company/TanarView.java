@@ -4,7 +4,11 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class TanarView extends JPanel implements AdatbazisKapcsolat{
         private JButton jbUjKat;
@@ -64,8 +68,9 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
                 JLabel jlFokat = new JLabel("Fő kategória");
                 JLabel jlFokatLeir = new JLabel("Fő kategória leírása");
                 JTextField jtfFokat = new JTextField(20);
+                jtfFokat.addKeyListener(cont.pontosVesszoTilt());
                 JTextField jtfFokatLeir = new JTextField(20);
-
+                jtfFokatLeir.addKeyListener(cont.pontosVesszoTilt());
                 JComboBox jcbLetezoFokategoriak = new JComboBox();
                 JComboBox jcKategoriak = new JComboBox();
 
@@ -99,10 +104,12 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
                         jcKategoriak.addItem(cont.getModell().letezoFoKategoriak().get(i));
                 }
                 JLabel jlAlkat = new JLabel("Alkategória létreozása");
+
                 JLabel jlAlkatLeir = new JLabel("Alkategória leírása");
                 JTextField jtfAlkat = new JTextField(20);
+                jtfAlkat.addKeyListener(cont.pontosVesszoTilt());
                 JTextField jtfAlkatLeir = new JTextField(20);
-
+                jtfAlkatLeir.addKeyListener(cont.pontosVesszoTilt());
                 JButton jbAlkatOk = new JButton("OK");
                 jbAlkatOk.addActionListener( e->{
                         if(jtfAlkat.getText().length()!=0 && jtfAlkatLeir.getText().length()!=0){
@@ -192,15 +199,21 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
                 jcbFokat = new JComboBox();
                 jcbAlkat = new JComboBox();
                 for (int i = 0; i < cont.getModell().letezoFoKategoriak().size(); i++) {
-                        jcbFokat.addItem(cont.getModell().letezoFoKategoriak().get(i));
+                    jcbFokat.addItem(cont.getModell().letezoFoKategoriak().get(i));
                 }
                 jcbFokat.setSelectedIndex(0);
+                for (int i = 0; i < cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).size(); i++) {
+                    jcbAlkat.addItem(cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).get(i));
+                }
+                jcbAlkat.setSelectedIndex(0);
+
                 jcbFokat.addActionListener(e -> {
                         jcbAlkat.removeAllItems();
                         for (int i = 0; i < cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).size(); i++) {
                                 jcbAlkat.addItem(cont.getModell().fokatAlkategoriai(jcbFokat.getSelectedItem().toString()).get(i));
                         }
                 });
+
 
                 JLabel jlTipus = new JLabel("Kérdés típusa");
                 jcbTipus = new JComboBox();
@@ -213,9 +226,11 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
 
 
                 JTextField jtfSzoveg  = new JTextField();
+                jtfSzoveg.addKeyListener(cont.pontosVesszoTilt());
                 jtfSzoveg.setColumns(50);
                 jtfSzoveg.setToolTipText("Ide jön a kérdés szövege");
                 JTextField jtfValasz  = new JTextField();
+                jtfValasz.addKeyListener(cont.pontosVesszoTilt());
                 JTextField jtfValaszLehetosegek  = new JTextField(50);
                 jtfValasz.setColumns(50);
                 jcbPontszam = new JComboBox();
@@ -300,9 +315,11 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
         JLabel jlKerdes2 = new JLabel("Mondat második része");
 
         JTextField jtfK1 = new JTextField(20);
+        jtfK1.addKeyListener(cont.pontosVesszoTilt());
         JTextField jtfHiany = new JTextField(10);
         jtfHiany.setToolTipText("Ide írhatja a hiányzó szót vagy szavakat. Amennyiben több megoldás is van ';'- vel elválasztva soroloja fel őket.");
         JTextField jtfK2 = new JTextField(20);
+        jtfK2.addKeyListener(cont.pontosVesszoTilt());
         JButton jbOk = new JButton("Kérdés létrehozása");
 
         jbOk.addActionListener(e -> {
@@ -344,6 +361,8 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new GridBagLayout());
         GridBagConstraints gbcMain = new GridBagConstraints();
+        ArrayList<JFileChooser> jfcKepekLista = new ArrayList<>();
+
         JFileChooser jfcKep = new JFileChooser();
         JFileChooser jfcKep2 = new JFileChooser();
         JFileChooser jfcKep3 = new JFileChooser();
@@ -360,6 +379,7 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
 
         JLabel jlKerdes = new JLabel("Kérdés szövege");
         JTextField jtfKerdes = new JTextField(20);
+        jtfKerdes.addKeyListener(cont.pontosVesszoTilt());
 
         JTextField jtfFile1 = new JTextField(10);
         jfcKep.addActionListener(cont.fileNevBeir(jfcKep,jtfFile1));
@@ -394,43 +414,61 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
         JComboBox jcbValasz = new JComboBox();
         jcbValasz.setPrototypeDisplayValue("AAAAAAAAA12345.jpg");
 
+        jfcKepekLista.add(jfcKep);
+        jfcKepekLista.add(jfcKep2);
+        jfcKepekLista.add(jfcKep3);
+        jfcKepekLista.add(jfcKep4);
         JButton jbOk = new JButton("Kérdés létrehozása");
         jbOk.addActionListener(e -> {
-           if (jfcKep.getSelectedFile().getName().length()!=0){
-                cont.fileMasol(jfcKep.getSelectedFile());
-            }
-            if (jfcKep2.getSelectedFile().getName().length()!=0){
-                cont.fileMasol(jfcKep2.getSelectedFile());
-            }
-            if (jfcKep3.getSelectedFile().getName().length()!=0){
-                cont.fileMasol(jfcKep3.getSelectedFile());
-            }
-            if (jfcKep4.getSelectedFile().getName().length()!=0){
-                cont.fileMasol(jfcKep4.getSelectedFile());
-            }
-           if (jcbValasz.getItemCount()!=0) {
-               String valaszLehetS = "";
+            try {
+                if (kulonbozoekAkepek(jfcKepekLista)) {
 
-               if (jtfFile1.getText().length()!=0){
-                   valaszLehetS +=jtfFile1.getText()+ ";";
-               }
-               if (jtfFile2.getText().length()!=0){
-                   valaszLehetS +=jtfFile2.getText()+ ";";
-               }
-               if (jtfFile3.getText().length()!=0){
-                   valaszLehetS +=jtfFile3.getText()+ ";";
-               }
-               if (jtfFile4.getText().length()!=0){
-                   valaszLehetS +=jtfFile4.getText()+ ";";
-               }
-               valaszLehetS = valaszLehetS.substring(0, valaszLehetS.length() - 1);
-               //System.out.println(valaszLehetS);
-               cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),jtfKerdes.getText(),jcbValasz.getSelectedItem().toString(),valaszLehetS,(int)jcbPontszam.getSelectedItem());
-               JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
-           }else{
-               JOptionPane.showMessageDialog(null,"Jelöljön ki helyes választ!");
-           }
+                    if (jfcKep.getSelectedFile() != null) {
 
+                        cont.fileMasol(jfcKep.getSelectedFile());
+
+                    }
+                    if (jfcKep2.getSelectedFile() != null) {
+                        cont.fileMasol(jfcKep2.getSelectedFile());
+                    }
+                    if (jfcKep3.getSelectedFile() != null) {
+                        cont.fileMasol(jfcKep3.getSelectedFile());
+                    }
+                    if (jfcKep4.getSelectedFile() != null) {
+                        cont.fileMasol(jfcKep4.getSelectedFile());
+                    }
+                    if (jcbValasz.getItemCount() != 0) {
+                        String valaszLehetS = "";
+
+                        if (jtfFile1.getText().length() != 0) {
+                            valaszLehetS += jtfFile1.getText() + ";";
+                        }
+                        if (jtfFile2.getText().length() != 0) {
+                            valaszLehetS += jtfFile2.getText() + ";";
+                        }
+                        if (jtfFile3.getText().length() != 0) {
+                            valaszLehetS += jtfFile3.getText() + ";";
+                        }
+                        if (jtfFile4.getText().length() != 0) {
+                            valaszLehetS += jtfFile4.getText() + ";";
+                        }
+                        valaszLehetS = valaszLehetS.substring(0, valaszLehetS.length() - 1);
+                        //System.out.println(valaszLehetS);
+                        cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(), jcbAlkat.getSelectedItem().toString(), jcbTipus.getSelectedIndex(), jtfKerdes.getText(), jcbValasz.getSelectedItem().toString(), valaszLehetS, (int) jcbPontszam.getSelectedItem());
+                        JOptionPane.showMessageDialog(null, "Sikeresen létrehozta a kérdést!");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Jelöljön ki helyes választ!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nem töltheti fel ugyanazt a képet többször!");
+                }
+            }catch (FileAlreadyExistsException f){
+                f.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Egy ilyen nevű fájl már létezik. A kérdés nem jött létre");
+            }catch (IOException b){
+                b.printStackTrace();
+            }
         });
         jcbValasz.addPopupMenuListener(cont.fajlNevek(jtfFile1,jtfFile2,jtfFile3,jtfFile4,jcbValasz));
 
@@ -487,6 +525,30 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
         return jpMain;
     }
 
+    private boolean kulonbozoekAkepek(ArrayList<JFileChooser> jfcKepekLista) {
+        boolean kulonbozoek = true;
+        int j=0;
+            do {
+
+                if (jfcKepekLista.get(j)!=null){
+                    JFileChooser jf = jfcKepekLista.get(j);
+                    for (int i = 0; i < jfcKepekLista.size() ; i++) {
+
+                        if (i!=j && kulonbozoek&& jfcKepekLista.get(i).getSelectedFile()!=null && jf.getSelectedFile()!=null){
+                            System.out.println("j: "+j);
+                            System.out.println("i: "+i);
+                            System.out.println("j path : "+jf.getSelectedFile().getPath());
+                            System.out.println("i path : "+jfcKepekLista.get(i).getSelectedFile().getPath());
+                            kulonbozoek=!(jf.getSelectedFile().getPath().equals(jfcKepekLista.get(i).getSelectedFile().getPath()));
+                        }
+                    }
+                }
+                j++;
+            }while(j<jfcKepekLista.size() && kulonbozoek);
+
+        return kulonbozoek;
+    }
+
     private JPanel jpEgykep(){
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new GridBagLayout());
@@ -504,6 +566,7 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
         jfcKep.setFileFilter( new FileNameExtensionFilter("Képek", ImageIO.getReaderFileSuffixes()));
 
         JTextField jtfKerdes = new JTextField(15);
+        jtfKerdes.addKeyListener(cont.pontosVesszoTilt());
         JTextField jtfValasz = new JTextField(15);
 
 
@@ -511,13 +574,22 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
         jbOK.addActionListener(e -> {
             String kerdesEsKep = "";
             kerdesEsKep+=jtfKerdes.getText()+";";
+            if (jfcKep.getSelectedFile()!=null) {
             kerdesEsKep+=jfcKep.getSelectedFile().getName();
-
-            cont.fileMasol(jfcKep.getSelectedFile());
-            cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(),jcbAlkat.getSelectedItem().toString(),jcbTipus.getSelectedIndex(),kerdesEsKep
-                    ,jtfValasz.getText(),"",(int)jcbPontszam.getSelectedItem());
-            JOptionPane.showMessageDialog(null,"Sikeresen létrehozta a kérdést!");
-
+            }else{
+                JOptionPane.showMessageDialog(null,"Kép hozzáadása kötelező!");
+            }
+            try {
+                cont.fileMasol(jfcKep.getSelectedFile());
+            } catch (FileAlreadyExistsException e1) {
+                JOptionPane.showMessageDialog(null,"Ilyen nevű kép már létezik. A kérdés nem jött létre");
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+                cont.getModell().kerdesLetrehoz(jcbFokat.getSelectedItem().toString(), jcbAlkat.getSelectedItem().toString(), jcbTipus.getSelectedIndex(), kerdesEsKep
+                        , jtfValasz.getText(), "", (int) jcbPontszam.getSelectedItem());
+                JOptionPane.showMessageDialog(null, "Sikeresen létrehozta a kérdést!");
         });
 
         gbcMain.insets= new Insets(5,5,5,5);
@@ -559,6 +631,7 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
         JLabel jlValasz = new JLabel("Helyes válasz(ok)");
 
         JTextField jtfKerd = new JTextField(20);
+        jtfKerd.addKeyListener(cont.pontosVesszoTilt());
         JTextField jtfValsz = new JTextField(20);
         jtfValsz.setToolTipText("Ide írhatja a helyes választ. Amennyiben több megoldás is van ';'- vel elválasztva soroloja fel őket.");
 
@@ -601,6 +674,7 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
         JLabel jlValasz = new JLabel("Helyes válasz(ok)");
 
         JTextField jtfKerd = new JTextField(20);
+        jtfKerd.addKeyListener(cont.pontosVesszoTilt());
         JTextField jtfValsz = new JTextField(20);
         jtfValsz.setToolTipText("Ide írhatja a helyes választ. Amennyiben több megoldás is van ';'- vel elválasztva soroloja fel őket.");
 
@@ -638,108 +712,119 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
                 jfKerdesSzerk.setTitle("Quiz 1.0");
                 jfKerdesSzerk.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 jfKerdesSzerk.setMinimumSize(new Dimension(1000,700));
-                JPanel jpMain = new JPanel(new GridBagLayout());
-                JPanel jpKerdesSzerk = new JPanel(new GridBagLayout());
 
-                GridBagConstraints gbc = new GridBagConstraints();
-                gbc.insets = new Insets(2,5,2,5);
-                JLabel jlFokat = new JLabel("<html><u>Főkategória</u></html>");
-                JLabel jlAlkat = new JLabel("<html><u>Alkategória</u></html>");
-                JLabel jlTipus = new JLabel("<html><u>Típus<u></html>");
-                JLabel jlKerdesSzovege = new JLabel("<html><u>Kérdés szövege</u></html>");
-                JLabel jlValasz = new JLabel("<html><u>Válasz</u></html>");
-                JLabel jlValaszLehet = new JLabel("<html><u>Válasz lehetőségek</u></html>");
-                JLabel jlPontszam = new JLabel("<html><u>Pontszám</u></html>");
-
-                gbc.gridx = 0;
-                gbc.gridy = 0;
-                jpKerdesSzerk.add(jlFokat,gbc);
-                gbc.gridx = 1;
-                gbc.gridy = 0;
-                jpKerdesSzerk.add(jlAlkat,gbc);
-                gbc.gridx = 2;
-                gbc.gridy = 0;
-                jpKerdesSzerk.add(jlTipus,gbc);
-                gbc.gridx = 3;
-                gbc.gridy = 0;
-                jpKerdesSzerk.add(jlKerdesSzovege,gbc);
-                gbc.gridx = 4;
-                gbc.gridy = 0;
-                jpKerdesSzerk.add(jlValasz,gbc);
-                gbc.gridx = 5;
-                gbc.gridy = 0;
-                jpKerdesSzerk.add(jlValaszLehet,gbc);
-                gbc.gridx = 6;
-                gbc.gridy = 0;
-                jpKerdesSzerk.add(jlPontszam,gbc);
-
-                gbc.gridy=1;
-                for (int i = 0; i < cont.getModell().letezoKerdesek().size(); i++) {
-                    int kerdesId = cont.getModell().letezoKerdesek().get(i).getId();
-                        gbc.gridx=0;
-                        JLabel jlFokatSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getFoKategoria());
-                        jpKerdesSzerk.add(jlFokatSzerk,gbc);
-                        gbc.gridx++;
-                        JLabel jlAlkatSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getAlkategoria());
-                        jpKerdesSzerk.add(jlAlkatSzerk,gbc);
-                        gbc.gridx++;
-                        JLabel jlTipusSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getTipusNev());
-                        jpKerdesSzerk.add(jlTipusSzerk,gbc);
-                        gbc.gridx++;
-                        JTextField jtfKerdes = new JTextField(cont.getModell().letezoKerdesek().get(i).getKerdesSzovege());
-                        jpKerdesSzerk.add(jtfKerdes,gbc);
-                        gbc.gridx++;
-                        JTextField jtfHelyesValasz = new JTextField(cont.getModell().letezoKerdesek().get(i).getHelyesValasz());
-                        jpKerdesSzerk.add(jtfHelyesValasz,gbc);
-                        gbc.gridx++;
-                        JTextField jtfvalaszLehet=new JTextField(cont.getModell().letezoKerdesek().get(i).getValaszlehetosegek());
-                        jpKerdesSzerk.add(jtfvalaszLehet,gbc);
-                        gbc.gridx++;
-                        JComboBox jcbPontszam = new JComboBox();
-                        jcbPontszam.addItem(1);
-                        jcbPontszam.addItem(2);
-                        jcbPontszam.addItem(3);
-                        jcbPontszam.addItem(4);
-                        jcbPontszam.addItem(5);
-                        jcbPontszam.setSelectedItem(cont.getModell().letezoKerdesek().get(i).getPontszam());
-                        jpKerdesSzerk.add(jcbPontszam,gbc);
-                        gbc.gridx++;
-                        JButton jbOk= new JButton("Elment");
-                        jbOk.addActionListener(e -> {
-                            try {
-                                cont.getModell().kerdesSzerk(jtfKerdes.getText(),jtfHelyesValasz.getText(),jtfvalaszLehet.getText(),(int)jcbPontszam.getSelectedItem(),kerdesId);
-                            } catch (SQLException e1) {
-                                e1.printStackTrace();
-                            }
-                            JOptionPane.showMessageDialog(jfKerdesSzerk,"Sikeres Változtatás");
-                        });
-                        jpKerdesSzerk.add(jbOk,gbc);
-                        gbc.gridx++;
-                        JButton jbTorol= new JButton("Kérdés törlése");
-                        jbTorol.addActionListener(e ->{
-                            int biztosAblak = JOptionPane.YES_NO_OPTION;
-                            int eredmeny = JOptionPane.showConfirmDialog(jfKerdesSzerk, "Biztos benne? A kérdés ezután nem lesz elérhető.", "Figyelem",biztosAblak);
-                                if (eredmeny==0){
-                                    try {
-                                        cont.getModell().kerdesTorol(kerdesId);
-                                        jpKerdesSzerk.revalidate();
-                                    } catch (SQLException e1) {
-                                        e1.printStackTrace();
-                                    }
-                                }
-                        });
-                        jpKerdesSzerk.add(jbTorol,gbc);
-                        gbc.gridy++;
-                }
-
-
-                JScrollPane jsPane = new JScrollPane(jpKerdesSzerk);
-                jsPane.setMinimumSize(new Dimension(600,600));
-                jsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                jpMain.add(jsPane);
-                jfKerdesSzerk.add(jpMain);
+                jfKerdesSzerk.add(kerdesSzerkPanel(jfKerdesSzerk));
                 return jfKerdesSzerk;
         }
+
+       private JPanel kerdesSzerkPanel(JFrame jfKerdesSzerk){
+           JPanel jpMain = new JPanel(new GridBagLayout());
+           JPanel jpKerdesSzerk = new JPanel(new GridBagLayout());
+           JScrollPane jsPane = new JScrollPane(jpKerdesSzerk);
+
+           GridBagConstraints gbc = new GridBagConstraints();
+           gbc.insets = new Insets(2,5,2,5);
+           JLabel jlFokat = new JLabel("<html><u>Főkategória</u></html>");
+           JLabel jlAlkat = new JLabel("<html><u>Alkategória</u></html>");
+           JLabel jlTipus = new JLabel("<html><u>Típus<u></html>");
+           JLabel jlKerdesSzovege = new JLabel("<html><u>Kérdés szövege</u></html>");
+           JLabel jlValasz = new JLabel("<html><u>Válasz</u></html>");
+           JLabel jlValaszLehet = new JLabel("<html><u>Válasz lehetőségek</u></html>");
+           JLabel jlPontszam = new JLabel("<html><u>Pontszám</u></html>");
+
+           gbc.gridx = 0;
+           gbc.gridy = 0;
+           jpKerdesSzerk.add(jlFokat,gbc);
+           gbc.gridx = 1;
+           gbc.gridy = 0;
+           jpKerdesSzerk.add(jlAlkat,gbc);
+           gbc.gridx = 2;
+           gbc.gridy = 0;
+           jpKerdesSzerk.add(jlTipus,gbc);
+           gbc.gridx = 3;
+           gbc.gridy = 0;
+           jpKerdesSzerk.add(jlKerdesSzovege,gbc);
+           gbc.gridx = 4;
+           gbc.gridy = 0;
+           jpKerdesSzerk.add(jlValasz,gbc);
+           gbc.gridx = 5;
+           gbc.gridy = 0;
+           jpKerdesSzerk.add(jlValaszLehet,gbc);
+           gbc.gridx = 6;
+           gbc.gridy = 0;
+           jpKerdesSzerk.add(jlPontszam,gbc);
+
+           gbc.gridy=1;
+           for (int i = 0; i < cont.getModell().letezoKerdesek().size(); i++) {
+               int kerdesId = cont.getModell().letezoKerdesek().get(i).getId();
+               gbc.gridx=0;
+               JLabel jlFokatSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getFoKategoria());
+               jpKerdesSzerk.add(jlFokatSzerk,gbc);
+               gbc.gridx++;
+               JLabel jlAlkatSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getAlkategoria());
+               jpKerdesSzerk.add(jlAlkatSzerk,gbc);
+               gbc.gridx++;
+               JLabel jlTipusSzerk = new JLabel(cont.getModell().letezoKerdesek().get(i).getTipusNev());
+               jpKerdesSzerk.add(jlTipusSzerk,gbc);
+               gbc.gridx++;
+               JTextField jtfKerdes = new JTextField(cont.getModell().letezoKerdesek().get(i).getKerdesSzovege());
+               jpKerdesSzerk.add(jtfKerdes,gbc);
+               gbc.gridx++;
+               JTextField jtfHelyesValasz = new JTextField(cont.getModell().letezoKerdesek().get(i).getHelyesValasz());
+               jpKerdesSzerk.add(jtfHelyesValasz,gbc);
+               gbc.gridx++;
+               JTextField jtfvalaszLehet=new JTextField(cont.getModell().letezoKerdesek().get(i).getValaszlehetosegek());
+               jpKerdesSzerk.add(jtfvalaszLehet,gbc);
+               gbc.gridx++;
+               JComboBox jcbPontszam = new JComboBox();
+               jcbPontszam.addItem(1);
+               jcbPontszam.addItem(2);
+               jcbPontszam.addItem(3);
+               jcbPontszam.addItem(4);
+               jcbPontszam.addItem(5);
+               jcbPontszam.setSelectedItem(cont.getModell().letezoKerdesek().get(i).getPontszam());
+               jpKerdesSzerk.add(jcbPontszam,gbc);
+               gbc.gridx++;
+               JButton jbOk= new JButton("Elment");
+               jbOk.addActionListener(e -> {
+                   try {
+                       cont.getModell().kerdesSzerk(jtfKerdes.getText(),jtfHelyesValasz.getText(),jtfvalaszLehet.getText(),(int)jcbPontszam.getSelectedItem(),kerdesId);
+                   } catch (SQLException e1) {
+                       e1.printStackTrace();
+                   }
+                   JOptionPane.showMessageDialog(jfKerdesSzerk,"Sikeres Változtatás");
+
+               });
+               jpKerdesSzerk.add(jbOk,gbc);
+               gbc.gridx++;
+               JButton jbTorol= new JButton("Kérdés törlése");
+               jbTorol.addActionListener(e ->{
+                   int biztosAblak = JOptionPane.YES_NO_OPTION;
+                   int eredmeny = JOptionPane.showConfirmDialog(jfKerdesSzerk, "Biztos benne? A kérdés ezután nem lesz elérhető.", "Figyelem",biztosAblak);
+                   if (eredmeny==0){
+                       try {
+                           cont.getModell().kerdesTorol(kerdesId);
+                          // jfKerdesSzerk.removeAll();
+                          /*  jfKerdesSzerk.add(kerdesSzerkPanel(jfKerdesSzerk));
+                            jfKerdesSzerk.invalidate();
+                            jfKerdesSzerk.revalidate();
+                            jfKerdesSzerk.repaint();*/
+                       } catch (SQLException e1) {
+                           e1.printStackTrace();
+                       }
+                   }
+               });
+               jpKerdesSzerk.add(jbTorol,gbc);
+               gbc.gridy++;
+           }
+
+
+
+           jsPane.setMinimumSize(new Dimension(600,600));
+           jsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+           jpMain.add(jsPane);
+           return jpMain;
+       }
 
 
         private JFrame diakokEredmenyei() throws SQLException {
@@ -790,7 +875,7 @@ public class TanarView extends JPanel implements AdatbazisKapcsolat{
             }
 
                 JScrollPane jscp = new JScrollPane(jpDiakEredmeny);
-                jscp.setPreferredSize(new Dimension(600,400));
+                jscp.setPreferredSize(new Dimension(900,600));
                 jscp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
                 jpMain.add(jscp);
                 jfdiakEredmeny.add(jpMain);

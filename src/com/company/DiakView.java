@@ -17,7 +17,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
     private String fokategoria = "";
     private String alkategoria = "";
     private ArrayList<Kerdes> klist;
-    //ArrayList<String> valaszok;
     private String[] valaszok;
     private int id;
 
@@ -64,9 +63,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         JPanel jpVissza = new JPanel();
         jpVissza.setLayout(new GridBagLayout());
         jpanUj.setLayout(new FlowLayout());
-
-        //JPanel jpTolt = new JPanel();
-
 
         for (int i = 0; i < alkatokL.size(); i++) {
             JButton b = new JButton(alkatokL.get(i));
@@ -128,10 +124,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
 
         klist = cont.getModell().alkatKerdesei(alkat);
         valaszok = new String[klist.size()];
-        ProgressMonitor pgm = new ProgressMonitor(this,"A teszt töltődik","Tölt",0,klist.size());
-        pgm.setProgress(0);
         for (int i = 0; i < klist.size(); i++) {
-            pgm.setProgress(i);
             switch (klist.get(i).getTipus()) {
                 case 0:
                     jpanKerdesek.add(jpHianyos(klist.get(i),i), (i + 1) + "");
@@ -150,7 +143,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
                     break;
             }
         }
-        pgm.close();
 
         //Lépegetés a kérdések között
         ArrayList<JButton> lepegetGombok = new ArrayList<>();
@@ -226,6 +218,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
 
         JLabel jlKerd1 = new JLabel(kerdesResz1);
         JTextField jtfValasz = new JTextField(valasz.length());
+        jtfValasz.setText("");
         jtfValasz.addKeyListener(cont.gepelFiegyel(jtfValasz,index,valaszok));
         jtfValasz.isFocusOwner();
         JLabel jlKerd2 = new JLabel(kerdesResz2);
@@ -270,12 +263,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
 
         ButtonGroup bgroup = new ButtonGroup();
         gbcKepek.insets = new Insets(5, 5, 5, 5);
-
-
-        JProgressBar jpbToltoCsik = new JProgressBar(0,valaszLehet.length);
-        jpbToltoCsik.setValue(0);
-        jpbToltoCsik.setStringPainted(true);
-
         for (int i = 0; i < valaszLehet.length; i++) {
 
             System.out.println(valaszLehet[i] + " - tölt...");
@@ -304,10 +291,7 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //jpbToltoCsik.setValue(i);
-
         }
-        //jpbToltoCsik.setVisible(false);
 
         JLabel jlKerdes = new JLabel(kerdesSzov);
 
@@ -334,7 +318,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         GridBagConstraints gbcKep = new GridBagConstraints();
 
         JPanel jpValasz = new JPanel();
-        //jpValasz.setLayout(gbl);
         GridBagConstraints gbcValasz = new GridBagConstraints();
         gbcValasz.gridx = 0;
         gbcValasz.gridy = 0;
@@ -415,7 +398,6 @@ public class DiakView extends JPanel implements AdatbazisKapcsolat {
         jpMain.add(jlKerdes,gbcMain);
         gbcMain.gridx++;
         jpMain.add(jtfValasz,gbcMain);
-
         return jpMain;
     }
 

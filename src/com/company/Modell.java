@@ -49,17 +49,17 @@ public class Modell implements AdatbazisKapcsolat {
     public boolean torolhetoEAdmin() throws SQLException {
         boolean torolheto=false;
         int adminDb=0;
-        String SQL_COUNTADMIN = "SELECT COUNT('id') FROM felhasznalok WHERE 'tipus'=2";
+        String SQL_COUNTADMIN = "SELECT COUNT(id) FROM felhasznalok WHERE tipus=2";
 
         PreparedStatement ps = CON.prepareStatement(SQL_COUNTADMIN);
         ResultSet res = ps.executeQuery();
         while (res.next()){
-            adminDb++;
+            adminDb = res.getInt(1);
         }
         if (adminDb>1){
             torolheto=true;
         }
-        System.out.println(adminDb);
+        System.out.println("Törölhető admindb: "+adminDb);
         return torolheto;
     }
 
@@ -549,6 +549,27 @@ public class Modell implements AdatbazisKapcsolat {
             e.printStackTrace();
         }
         return titkositott;
+    }
+
+    public void jelszoValtoztat(int felhId,String ujJelszo) throws SQLException {
+        String SQL_JELSZOVALTOZTAT = "UPDATE `felhasznalok` SET `jelszo` = ? WHERE `felhasznalok`.`id` = ?";
+        PreparedStatement ps = getCON().prepareStatement(SQL_JELSZOVALTOZTAT);
+        ujJelszo = titkosit(ujJelszo);
+        ps.setString(1,ujJelszo);
+        ps.setInt(2,felhId);
+        ps.executeUpdate();
+    }
+
+    public int felhasznaloTipusa(int id) throws SQLException {
+        int tipus =-1;
+        String SQL_FELHTIP = "SELECT tipus FROM felhasznalok WHERE id = ?";
+        PreparedStatement ps = getCON().prepareStatement(SQL_FELHTIP);
+        ps.setInt(1,id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            tipus=rs.getInt(1);
+        }
+        return tipus;
     }
 
 
