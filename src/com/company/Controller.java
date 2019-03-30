@@ -120,17 +120,9 @@ public class Controller {
      * @param fnev
      */
     public void bejelentkezesFolyamat(String fnev) throws SQLException {
-        String SQL_JELSZO = "SELECT id FROM felhasznalok WHERE felhasznalonev='"+ fnev +"';";
         int felhasznaloId = -1;
-        try {
-            Statement stFelhasznalok = modell.getCON().createStatement();
-            ResultSet rs = stFelhasznalok.executeQuery(SQL_JELSZO);
-            while (rs.next()){
-                felhasznaloId = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        felhasznaloId = getModell().felhasznId(fnev);
 
         modell.setFelhasznalo(modell.felhasznaloBetolt(felhasznaloId));
         int felhasznaloTipus = modell.felhasznaloBetolt(felhasznaloId).getTipus();
@@ -155,8 +147,6 @@ public class Controller {
                     System.out.println("Nincs ilyen típus!");
                     break;
         }
-        //view.getJt().addTab("Szótár",view.szotarFul());
-        //felhasznaloPanelBetolt(view.getJt());
         view.felhasznaloPanelBetolt(view.getJt());
         modell.naplozas(felhasznaloId);
     }
@@ -304,10 +294,7 @@ public class Controller {
      * @throws IOException
      */
     public void fileMasol(File forras) throws IOException {
-
         File cel = new File("./Images/"+forras.getName());
-        System.out.println("cél: "+Paths.get("/Images"));
-        System.out.println("forrás: "+forras.getAbsolutePath());
          Files.copy(forras.toPath(),cel.toPath());
     }
 

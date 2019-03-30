@@ -8,10 +8,6 @@ import java.util.ArrayList;
 public class Modell implements AdatbazisKapcsolat {
 
     private Connection CON;
-    private Statement ST;
-    //private ArrayList<Kerdes> kerdesekLista;
-    private int felhasznaloTipus;
-    private int aktualisKerdesDb;
     private Felhasznalo felhasznalo;
 
 
@@ -19,14 +15,13 @@ public class Modell implements AdatbazisKapcsolat {
 
     public Modell() {
         adatbazisKapcsolatLetrehoz();
-        //kerdesekLista = new ArrayList<>();
     }
 
     private void adatbazisKapcsolatLetrehoz() {
         try{
             Class.forName(ABDRIVER);
             CON = DriverManager.getConnection(ABURL,ABFELHASZNALO,"");
-            ST = CON.createStatement();
+            Statement ST = CON.createStatement();
         }catch(Exception e){
             System.out.println("Adatbázis kapcsolódási hiba: "+e.getLocalizedMessage());
         }
@@ -209,24 +204,6 @@ public class Modell implements AdatbazisKapcsolat {
         return list;
     }
 
-    /**
-     * Visszaadja a diákokat egy Felhasznalo típusú listában.
-     * @return
-     */
-    public ArrayList<Felhasznalo> osszesDiak(){
-        ArrayList<Felhasznalo> list = new ArrayList<>();
-        String SQL_DIAKERED = "SELECT * FROM felhasznalok WHERE tipus=0";
-        try{
-            Statement st = getCON().createStatement();
-            ResultSet res = st.executeQuery(SQL_DIAKERED);
-            while(res.next()){
-                list.add(new Felhasznalo(res.getInt(1),res.getString(2),res.getString(3),res.getString(4),res.getInt(5),res.getInt(6),res.getInt(7),res.getInt(8),res.getInt(9)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 
     public ArrayList<Felhasznalo> felhasznalokLista(){
         ArrayList<Felhasznalo> felhasznL = new ArrayList<>();
@@ -445,26 +422,6 @@ public class Modell implements AdatbazisKapcsolat {
     }
 
     /**
-     * Ez a metódus létrehozza a diák felhasználókat az adatbázisban
-     * @param felhasznalonev
-     * @param teljesNev
-     * @param jelszo
-     */
-    public void diakRegisztracio(String felhasznalonev, String teljesNev, String jelszo){
-        String SQL_UJFELHASZNALOT_LETREHOZZ = "INSERT INTO `felhasznalok` (`id`, `felhasznaloNev`, `teljesNev`, `jelszo`, `szint`, `tipus`, `joValaszDb`, `rosszValaszDb`) " +
-                "VALUES ( NULL , ?, ?,?, '1', '0', '0', '0')";
-        try {
-            PreparedStatement ps = getCON().prepareStatement(SQL_UJFELHASZNALOT_LETREHOZZ);
-            ps.setString(1,felhasznalonev);
-            ps.setString(2,teljesNev);
-            ps.setString(3,jelszo);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Ez a metódus létrehozza a felhasználókat az adatbázisban
      * @param felhasznalonev
      * @param teljesNev
@@ -573,5 +530,20 @@ public class Modell implements AdatbazisKapcsolat {
     }
 
 
+    public int felhasznId(String fnev) {
+        int felhasznaloId=-1;
+        String SQL_JELSZO = "SELECT id FROM felhasznalok WHERE felhasznalonev=?;";
 
+        try {
+            PreparedStatement ps = getCON().prepareStatement(SQL_JELSZO);
+            ps.setString(1,fnev);
+            ResultSet rs = ps.executeQuery(SQL_JELSZO);
+            while (rs.next()){
+                felhasznaloId = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return felhasznaloId;
+    }
 }

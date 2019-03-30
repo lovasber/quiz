@@ -164,7 +164,7 @@ public class View extends JFrame{
                 String jelszoMeg = new String(jpfMegerosit.getPassword());
                 if (controller.egyezoJelszo(jelszoSzoveg, jelszoMeg)) {
                     if (controller.getModell().szabadFelhasznaloNev(jtfFnev.getText())) {
-                        controller.getModell().diakRegisztracio(jtfFnev.getText(), jtfTnev.getText(), controller.getModell().titkosit(jelszoSzoveg));
+                        controller.getModell().regisztracio(jtfFnev.getText(), jtfTnev.getText(), controller.getModell().titkosit(jelszoSzoveg),0,0);
                         JOptionPane.showMessageDialog(regisztracioFrame, "Sikeres regisztráció!");
                     } else {
                         JOptionPane.showMessageDialog(regisztracioFrame, "Foglalt felhasználónév!");
