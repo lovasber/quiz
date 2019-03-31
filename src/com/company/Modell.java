@@ -188,8 +188,6 @@ public class Modell implements AdatbazisKapcsolat {
         ArrayList<Kerdes> list = new ArrayList<>();
         String SQL_ALKATKERDESEI = "SELECT * FROM kerdes WHERE alKategoria=?";
         try {
-//            Statement st = getCON().createStatement();
-//            ResultSet res = st.executeQuery(SQL_ALKATKERDESEI);
             PreparedStatement ps = getCON().prepareStatement(SQL_ALKATKERDESEI);
             ps.setString(1,alkat);
             ResultSet res = ps.executeQuery();
@@ -532,12 +530,12 @@ public class Modell implements AdatbazisKapcsolat {
 
     public int felhasznId(String fnev) {
         int felhasznaloId=-1;
-        String SQL_JELSZO = "SELECT id FROM felhasznalok WHERE felhasznalonev=?;";
+        String SQL_JELSZO = "SELECT id FROM felhasznalok WHERE felhasznalonev =? ";
 
         try {
             PreparedStatement ps = getCON().prepareStatement(SQL_JELSZO);
             ps.setString(1,fnev);
-            ResultSet rs = ps.executeQuery(SQL_JELSZO);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 felhasznaloId = rs.getInt(1);
             }

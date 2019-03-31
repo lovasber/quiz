@@ -24,18 +24,13 @@ import java.util.HashMap;
 
 public class Controller {
 
-
     private Modell modell;
     private View view;
-    public HashMap<String,Integer> felhtipus;
 
     public Modell getModell() {
         return modell;
     }
 
-    public View getView() {
-        return view;
-    }
 
     public Controller() {
         modell = new Modell();
@@ -119,7 +114,7 @@ public class Controller {
      * A bejelentkezés folyamata. Itt jön létre a Felhasználó objektum.
      * @param fnev
      */
-    public void bejelentkezesFolyamat(String fnev) throws SQLException {
+        public void bejelentkezesFolyamat(String fnev) throws SQLException {
         int felhasznaloId = -1;
 
         felhasznaloId = getModell().felhasznId(fnev);
@@ -174,11 +169,7 @@ public class Controller {
         fr.setVisible(true);
     }
 
-    public void ujPaneletolt(JPanel jpRegi,JPanel jpUj){
-        jpRegi.removeAll();
-        jpRegi.add(jpUj);
-        jpRegi.revalidate();
-    }
+
 
     public KeyListener pontosVesszoTilt(){
         KeyListener klTilt= new KeyListener() {
@@ -297,11 +288,5 @@ public class Controller {
         File cel = new File("./Images/"+forras.getName());
          Files.copy(forras.toPath(),cel.toPath());
     }
-
-
-
-
-
-
 
 }

@@ -9,17 +9,12 @@ public class View extends JFrame{
     private JTabbedPane jt;
     private JFrame regisztracioFrame;
 
-    public JTabbedPane getJt() {
-        return jt;
-    }
-
     public View(Controller controller) {
         super("Quiz alkalmazás 1.0");
         if(this.controller==null && controller!=null)
             this.controller=controller;
         fooldalBeallit();
         bejelentkezes().setVisible(true);
-
     }
 
     /**
@@ -244,8 +239,7 @@ public class View extends JFrame{
         return jpTanreg;
     }
 
-
-    private void fooldalBeallit() {
+        private void fooldalBeallit() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(1000,700));
         jt = new JTabbedPane();
@@ -258,7 +252,7 @@ public class View extends JFrame{
     /**
      *
      * A szótár fül megjelenését biztosítja.
-     */
+     *//*
     public JPanel szotarFul() {
         JPanel szotarPanel = new JPanel();
 
@@ -282,7 +276,7 @@ public class View extends JFrame{
 
         return szotarPanel;
     }
-
+*/
     public void felhasznaloPanelBetolt(JTabbedPane jt) {
         JPanel felh = new JPanel();
         felh.setLayout(new GridBagLayout());
@@ -374,7 +368,9 @@ public class View extends JFrame{
         return jfMain;
     }
 
-
+    public JTabbedPane getJt() {
+        return jt;
+    }
 
 
 

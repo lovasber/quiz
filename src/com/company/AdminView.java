@@ -11,16 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AdminView extends JPanel implements AdatbazisKapcsolat {
-    private JButton jbUjKat;
-    private JButton jbUjKerdes;
-    private JButton jbKerdesSzerk;
-    private JButton jbDiakokEredmenyei;
-    private JButton jbFelhasznalok;
-    private Controller cont;
-    private JComboBox jcbFokat;
-    private JComboBox jcbAlkat;
-    private JComboBox jcbTipus;
-    private JComboBox jcbPontszam;
+        private JButton jbUjKat;
+        private JButton jbUjKerdes;
+        private JButton jbKerdesSzerk;
+        private JButton jbDiakokEredmenyei;
+        private JButton jbFelhasznalok;
+        private Controller cont;
+        private JComboBox jcbFokat;
+        private JComboBox jcbAlkat;
+        private JComboBox jcbTipus;
+        private JComboBox jcbPontszam;
 
     public AdminView(Controller conntroller)  throws SQLException {
         this.cont = conntroller;
@@ -524,29 +524,7 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         return jpMain;
     }
 
-    private boolean kulonbozoekAkepek(ArrayList<JFileChooser> jfcKepekLista) {
-        boolean kulonbozoek = true;
-        int j=0;
-        do {
 
-            if (jfcKepekLista.get(j)!=null){
-                JFileChooser jf = jfcKepekLista.get(j);
-                for (int i = 0; i < jfcKepekLista.size() ; i++) {
-
-                    if (i!=j && kulonbozoek&& jfcKepekLista.get(i).getSelectedFile()!=null && jf.getSelectedFile()!=null){
-                        System.out.println("j: "+j);
-                        System.out.println("i: "+i);
-                        System.out.println("j path : "+jf.getSelectedFile().getPath());
-                        System.out.println("i path : "+jfcKepekLista.get(i).getSelectedFile().getPath());
-                        kulonbozoek=!(jf.getSelectedFile().getPath().equals(jfcKepekLista.get(i).getSelectedFile().getPath()));
-                    }
-                }
-            }
-            j++;
-        }while(j<jfcKepekLista.size() && kulonbozoek);
-
-        return kulonbozoek;
-    }
 
     private JPanel jpEgykep(){
         JPanel jpMain = new JPanel();
@@ -1058,6 +1036,30 @@ public class AdminView extends JPanel implements AdatbazisKapcsolat {
         jpMain.add(jscUjfelh,gbcMain );
         jfFelh.add(jpMain);
         return jfFelh;
+    }
+
+    private boolean kulonbozoekAkepek(ArrayList<JFileChooser> jfcKepekLista) {
+        boolean kulonbozoek = true;
+        int j=0;
+        do {
+
+            if (jfcKepekLista.get(j)!=null){
+                JFileChooser jf = jfcKepekLista.get(j);
+                for (int i = 0; i < jfcKepekLista.size() ; i++) {
+
+                    if (i!=j && kulonbozoek&& jfcKepekLista.get(i).getSelectedFile()!=null && jf.getSelectedFile()!=null){
+                        System.out.println("j: "+j);
+                        System.out.println("i: "+i);
+                        System.out.println("j path : "+jf.getSelectedFile().getPath());
+                        System.out.println("i path : "+jfcKepekLista.get(i).getSelectedFile().getPath());
+                        kulonbozoek=!(jf.getSelectedFile().getPath().equals(jfcKepekLista.get(i).getSelectedFile().getPath()));
+                    }
+                }
+            }
+            j++;
+        }while(j<jfcKepekLista.size() && kulonbozoek);
+
+        return kulonbozoek;
     }
 
 
